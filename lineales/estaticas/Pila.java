@@ -47,7 +47,12 @@ public class Pila{
        return elem;
    }
    public boolean esVacia(){//retorna verdadero si la pila es vacia
-       return (this.tope!=-1);
+       return (this.tope==-1);
+   }
+   //vacia la pila
+   public void vaciar(){
+      this.arreglo=new Object[TAMANIO-1];
+      this.tope=-1;
    }
    //retorna la pila en string
    public String toString(){

@@ -25,9 +25,45 @@ public class Pila{
         }
         return logico;
     }
+    //obetien el tope
+    public Object obtenerTope(){
+        return this.tope.getElem();
+    }
+    //vacia la pila
+    public void vaciar(){
+        this.tope=null;
+    }
     //retorna true si la pila esta vacia
     public boolean esVacia(){
         return this.tope==null;
         
+    }
+    //muestra la pila por pantalla
+    public String toString(){
+        Nodo aux=this.tope;//se va a mover atraves de la pila con este nodo auxiliar sin cambiar el tope original
+        return toStringRec(aux);
+    }
+    public String toStringRec(Nodo aux){
+        String txt="";
+        if(this.esVacia()){
+            txt="LA PILA ESTA VACIA";
+        }else{
+            if(aux.getEnlace()==null){
+                txt=""+aux.getElem();
+            }else{
+               txt=aux.getElem()+" "+toStringRec(aux.getEnlace());
+            }
+            
+        }
+        return txt;
+    }
+    //clonar pila
+    public Pila clone(){
+        Pila clon=new Pila();
+        clonRec(clon,this.tope);
+        return clon;
+    }
+    public void clonRec(Pila clon,Nodo aux){
+         
     }
 }

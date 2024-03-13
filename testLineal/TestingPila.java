@@ -11,8 +11,7 @@ import lineales.estaticas.Pila;
 public class TestingPila {
 
     static String sOk = "OK!", sErr = "ERROR";
-
-    public static void main(String[]args){
+    public static void main(String[]args) {
         
           testPila();
     }
@@ -92,7 +91,7 @@ public class TestingPila {
         System.out.println("Desapila: \t\t\t\t\t\t" + ((p2.desapilar()) ? sOk : sErr));
         System.out.println("Desapila: \t\t\t\t\t\t" + ((p2.desapilar()) ? sOk : sErr));
         System.out.println("Verifica copia modificada, espera 1,2,3,4,5,6: \t\t\t--> " + p2.toString());
-        //p2.vaciar();
+        p2.vaciar();
         System.out.println("Vacia copia espera pila vacia: \t\t\t\t\t--> " + p2.toString());
     }
 }

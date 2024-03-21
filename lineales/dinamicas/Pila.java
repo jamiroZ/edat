@@ -60,10 +60,16 @@ public class Pila{
     //clonar pila
     public Pila clone(){
         Pila clon=new Pila();
-        clonRec(clon,this.tope);
+        clonRec(this.tope);
         return clon;
     }
-    public void clonRec(Pila clon,Nodo aux){
-         
+    public Nodo clonRec(Nodo aux){
+        Nodo ret;
+        if(aux.getEnlace()!=null){
+            ret=new Nodo(aux.getElem(),clonRec(aux.getEnlace()) );
+        }else{
+         ret=null;
+        } 
+        return ret;
     }
 }

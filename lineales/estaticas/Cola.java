@@ -64,7 +64,7 @@ public class Cola{
             txt="COLA VACIA NO TIENE ELEMENTOS";
 
         }else{
-            if(!this.esVacia()){
+            if(aux!=this.fin){
                txt=cola[aux]+" ; "+toStringRec(((aux+1) % (this.TAMANIO-1)));
             }else{
                 txt=".";
@@ -75,8 +75,6 @@ public class Cola{
     //clona la cola 
     public Cola clone(){
         Cola clon=new Cola();
-        
-
         if(!this.esVacia()){
             int aux=this.frente;
             clon.frente=this.frente;

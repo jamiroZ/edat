@@ -1,6 +1,6 @@
 package testLineal;
 
-import lineales.estaticas.Cola;
+import lineales.dinamicas.Cola;
 
 
 

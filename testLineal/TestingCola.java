@@ -12,7 +12,7 @@ public class TestingCola {
 	/**
 	 *
 	 * @author Catedra Estructuras de Datos
-	 * 
+	 *
 	 */
 
 	static String sOk = "OK!", sErr = "ERROR";

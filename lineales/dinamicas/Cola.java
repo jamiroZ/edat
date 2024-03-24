@@ -10,7 +10,7 @@ public class Cola{
      }
      //metodo que retorna vacio si fin y frente tienen como enlace=null(esta vacia la cola)
      public boolean esVacia(){//si esta vacia retorna true
-        return (this.fin.getEnlace()==null && this.frente.getEnlace()==null);
+        return (this.fin==null && this.frente==null);
      }
      public Object obtenerFrente(){
          Object elem=null;
@@ -25,12 +25,14 @@ public class Cola{
          Nodo nodo=new Nodo(elem, null);//crea y instancia el nuevo nodo,enlazado a null
          if(this.esVacia()){//si la cola esta vacia enlaza el frente
              this.frente=nodo;
+             this.fin=nodo;
              logico=true;
          }else{//si la cola NO esta vacia enlaza anterior nodo enlazado al fin al nuevo nodo
-             (fin.getEnlace()).setEnlace(nodo);
+              this.fin.setEnlace(nodo);
+              this.fin=nodo;//enlaza el fin al nuevo nodo
              logico=true;
          }
-         fin.setEnlace(nodo);//enlaza el fin al nuevo nodo
+        
         return logico;
      }
      //elimina nodo de la cola y sus enlazes
@@ -81,5 +83,10 @@ public class Cola{
               ret=null;
         }
         return ret;
+     }
+     //vacia la cola
+     public void vaciar(){
+         this.fin=null;
+         this.frente=null;
      }
 }

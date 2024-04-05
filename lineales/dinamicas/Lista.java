@@ -27,9 +27,8 @@ public class Lista {
                 //crea el nodo y lo enlaza
                 Nodo nuevo=new Nodo(elem,aux.getEnlace());
                 aux.setEnlace(nuevo);
-                this.longitud++;
             }
-            
+            this.longitud++;
         
         }
         //nunca hay error de lista llena,entonces devuelve true
@@ -47,7 +46,7 @@ public class Lista {
                     aux=aux.getEnlace();
                     i++;
                   }
-                  cabecera.setEnlace((cabecera.getEnlace()).getEnlace());
+                  aux.setEnlace((aux.getEnlace()).getEnlace());
                   this.longitud--;
                }
               exito=true;
@@ -106,7 +105,7 @@ public class Lista {
       }
       public Nodo cloneRec(Nodo cursor){
           Nodo ret;
-          if(cursor.getEnlace()!=null){
+          if(cursor!=null){
               ret=new Nodo(cursor.getElem(),cursor.getEnlace());
           }else{
               ret=null;
@@ -121,10 +120,10 @@ public class Lista {
          if(this.estaVacia()){
              txt="la lista esta vacia";
          }else{
-             if(cursor.getEnlace()!=null){
+             if(cursor!=null){
                  txt= cursor.getElem()+" ; "+toStringRec(cursor.getEnlace());
              }else{
-                 txt="";
+                 txt="\t longitud "+this.longitud();
              }
          } 
          return txt;

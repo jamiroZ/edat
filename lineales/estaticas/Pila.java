@@ -1,84 +1,99 @@
 package lineales.estaticas;
 public class Pila{
    
-   private int TAMANIO=20;
+   private int TAMANIO=10;
    private Object [] arreglo;
    private int tope;
    public Pila(){//constructor
-        this.arreglo=new Object[TAMANIO-1];
+        this.arreglo=new Object[TAMANIO];
         this.tope=-1;
    }
-   public boolean apilar(Object unObjeto){//apila el nuevo elemento en el tope
-      boolean valor=false;
-      if(this.tope<TAMANIO){//si la pila tiene espacio apila
-         if(tope==-1){//la pila esta vacia
-            this.tope=0;
-            arreglo[0]=unObjeto;
-         }else{//la pila tiene objetos
-            this.tope=this.tope+1;
-            arreglo[tope]=unObjeto;
-         }
-         valor=true;
-      }
-      return valor;
-    }
-    public boolean desapilar(){//saca tope
-      boolean x=false;
-        if(this.tope!=-1){
-           if(this.tope==0){
-              arreglo[this.tope]=null;
-              this.tope=-1;
-              x=true;
-           }else{
-              arreglo[this.tope]=null;
-              this.tope=this.tope-1;
-              x=true;
-           }
-        }
-        return x;
+  //apilamos un nuevo elemento a la pila
+  public boolean apilar(Object nuevoElem){
+   boolean verif;
+
+   if (this.tope+1 < TAMANIO){
+       //incrementa el tope y coloca el elemento en su lugar
+       tope++;
+       arreglo[tope] = nuevoElem;
+       verif = true;
+   } else {
+       //error: pila llena
+       verif = false;
    }
-   public Object obtenerTope(){//retorna el elemento del Tope
-       Object elem;
-       if(this.tope!=-1){
-         elem=arreglo[tope];
-       }else{
-         elem=null;
+   return verif;
+}
+
+//desapilamos el tope de la pila
+public boolean desapilar(){
+   boolean verif;
+
+   if (this.tope != -1){
+       arreglo[tope] = null;
+       tope--;
+       verif = true; 
+   } else {
+       verif = false;
+   }
+
+   return verif;
+}
+
+// obtiene el elemento tope de la pila
+public Object obtenerTope(){
+   Object elem;
+
+   if (this.tope >= 0){
+       elem = arreglo[tope];
+   } else {
+       elem = null;
+   }
+
+   return elem;
+}
+
+//verifica si la pila esta vacia
+public boolean esVacia(){
+   return this.tope == -1;
+}
+
+//vacia la pila
+public void vaciar(){
+   this.arreglo = new Object[TAMANIO]; //creo un nuevo arreglo y lo reemplazo
+   this.tope = -1;
+}
+//crea un clon de la pila actual
+public Pila clone(){
+   Pila clon = new Pila();
+   int i = 0;
+   
+   while(i <= this.tope){
+       clon.arreglo[i] = this.arreglo[i];
+       i++;
+   }
+   clon.tope = this.tope;
+   return clon;
+}
+
+//retorna una cadena con todos los elementos de la pila
+public String toString(){
+   String cad = "";
+
+   if (this.tope == -1){
+       cad = "Pila vacia";
+   } else {
+       int j;
+       cad = "[";
+       for (j = this.tope; j >= 0; j--){
+           cad = cad + this.arreglo[j].toString();
+           if (j != 0){
+               cad = cad + ", ";
+           }  
        }
-       return elem;
+       cad = cad + "]";
    }
-   public boolean esVacia(){//retorna verdadero si la pila es vacia
-       return (this.tope==-1);
-   }
-   //vacia la pila
-   public void vaciar(){
-      this.arreglo=new Object[TAMANIO-1];
-      this.tope=-1;
-   }
-   //retorna la pila en string
-   public String toString(){
-        return toStringRec(0);
-   }
-   public String toStringRec(int i){//crea el txt de la pila
-       String txt="";
-       if(this.esVacia()){
-         return "la pila esta vacia";
-       }else{
-          if(i<this.tope){
-             txt=arreglo[i]+","+toStringRec(i+1);
-          }else if(i==this.tope){
-             txt=""+arreglo[tope];
-          }
-       }
-       return txt;
-   }
-   public Pila clone(){//clona la pila
-        Pila clon=new Pila();
-        int i=0;
-        while(i<=this.tope){
-                  clon.arreglo[i]=this.arreglo[i];
-         }
-        clon.tope=this.tope;
-        return clon;
-   }
- 
+   
+   return cad;
+} 
+   
 }

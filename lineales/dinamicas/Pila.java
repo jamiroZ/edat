@@ -27,7 +27,13 @@ public class Pila{
     }
     //obetien el tope
     public Object obtenerTope(){
-        return this.tope.getElem();
+        Object ret;
+        if(this.esVacia()){
+            ret=null;
+        }else{
+            ret=this.tope.getElem();
+        }
+        return ret;
     }
     //vacia la pila
     public void vaciar(){
@@ -40,16 +46,15 @@ public class Pila{
     }
     //muestra la pila por pantalla
     public String toString(){
-        Nodo aux=this.tope;//se va a mover atraves de la pila con este nodo auxiliar sin cambiar el tope original
-        return toStringRec(aux);
+        return toStringRec(this.tope);
     }
     public String toStringRec(Nodo aux){
         String txt="";
         if(this.esVacia()){
             txt="LA PILA ESTA VACIA";
         }else{
-            if(aux.getEnlace()==null){
-                txt=""+aux.getElem();
+            if(aux == null){
+                txt="";
             }else{
                txt=aux.getElem()+" "+toStringRec(aux.getEnlace());
             }
@@ -60,13 +65,16 @@ public class Pila{
     //clonar pila
     public Pila clone(){
         Pila clon=new Pila();
-        clonRec(this.tope);
+        clon.tope=this.tope;
+        if(!this.esVacia()){
+            clonRec(this.tope);
+        }
         return clon;
     }
     public Nodo clonRec(Nodo aux){
         Nodo ret;
-        if(aux.getEnlace()!=null){
-            ret=new Nodo(aux.getElem(),clonRec(aux.getEnlace()) );
+        if(aux!=null){
+            ret=new Nodo(aux.getElem(),aux.getEnlace() );
         }else{
          ret=null;
         } 

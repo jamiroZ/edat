@@ -77,23 +77,22 @@ public Pila clone(){
 
 //retorna una cadena con todos los elementos de la pila
 public String toString(){
-   String cad = "";
+    String cad = "";
 
-   if (this.tope == -1){
-       cad = "Pila vacia";
-   } else {
-       int j;
-       cad = "[";
-       for (j = this.tope; j >= 0; j--){
-           cad = cad + this.arreglo[j].toString();
-           if (j != 0){
-               cad = cad + ", ";
-           }  
-       }
-       cad = cad + "]";
-   }
-   
-   return cad;
-} 
-   
-}
+    if (this.tope == -1){
+        cad = "Pila vacia";
+    } else {
+        int j;
+        cad = "";
+        for (j = this.tope; j >= 0; j--){
+            cad =  this.arreglo[j].toString()+cad ;
+            if(j!=0){
+               cad=","+cad;  
+            }
+            
+        }
+        cad = "["+cad + "]";
+    }
+    
+    return cad;
+  } }

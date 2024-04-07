@@ -56,7 +56,7 @@ public class Pila{
             if(aux == null){
                 txt="";
             }else{
-               txt=aux.getElem()+" "+toStringRec(aux.getEnlace());
+               txt=toStringRec(aux.getEnlace())+","+aux.getElem();
             }
             
         }

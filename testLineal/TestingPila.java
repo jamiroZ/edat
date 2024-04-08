@@ -2,6 +2,8 @@ package testLineal;
 //import lineales.estaticas.Pila;
 import java.util.Scanner;
 
+//importa la clase Alumno para su implementacion
+import clasesParticulares.Alumno;
 //import lineales.estaticas.Pila;
 import lineales.dinamicas.Pila;
 /**
@@ -27,27 +29,47 @@ public class TestingPila {
     }
 
     public static void testPila() {
+        String capicua="";
         Scanner sc = new Scanner(System.in);
         String entrada="",rep="";
         //ambos arreglos tienen longitud=11
         //si es dinamica debe acomodar los 11, si es estatica hasta 10
         int[]enteros={1,2,3,4,5,6,7,8,9,10,11};//arreglo ordenado de manera creciente
-        int[]capicua={0,1,2,3,4,5,4,3,2,1,0};//arreglo de enteros capicua
+        int[]capicuaArray={0,1,2,3,4,5,4,3,2,1,0};//arreglo de enteros capicua
         String[]txt={"a","b","c","d","e","f","g","h","i","j","k"};//arreglo de string alfabetico
+        //creo y instancio arreglo Alumnos con alumnos
+        Alumno[]alumnos=new Alumno[10];
+        //el metodo mas que nada es para ejemplificar el uso del tda alumnos solo carga el legajo
+        cargarAlumnos(alumnos);
         Object []aux=new Object[enteros.length];
         System.out.println("COMIENZO TEST PILA");
         Pila p1 = new Pila();
-        System.out.println("ingrese 'txt' o 'int' para elegir el tipo de Objecto que componen la Pila: ");
+        System.out.println("ingrese 'txt' , 'int' o 'Alumno' para elegir el tipo de Objecto que componen la Pila: ");
         entrada=sc.nextLine();
         //carga un arreglo auxiliar para asi ir modificando y asignando en la Pila 
-        if(entrada.equalsIgnoreCase("txt")){
+        if(entrada.equalsIgnoreCase("txt")){//carga un arreglo de String
            for(int i=0; i< aux.length ;i++){
                 aux[i]= txt[i];
            }
-        }else if(entrada.equalsIgnoreCase("int")){
-            for(int i=0; i< aux.length ;i++){
-                aux[i]=enteros[i];
-           }
+        }else if(entrada.equalsIgnoreCase("int")){//carga un arreglo de enteros
+            //si se ingreso 'int' pregunta si la pila que quiere esta ordenada de forma creciente o capicua
+            System.err.println("ingrese 'c' si es capicua si no ingrese cualquiera otra letra");
+            capicua=sc.nextLine();
+
+            if(capicua.equalsIgnoreCase("c")){//si es capicua carga el arreglo de enteros capicua
+                for(int i=0; i< aux.length ;i++){
+                aux[i]=capicuaArray[i];
+                }
+            }else{
+
+                for(int i=0; i< aux.length ;i++){//si No es capicua carga un arreglo de enteros en forma creciente
+                    aux[i]=enteros[i];
+                }
+            }    
+        }else if(entrada.equalsIgnoreCase("Alumno")){//carga el arreglo con alumnos
+              for(int i=0; i<aux.length; i++){
+                 aux[i]=alumnos[i];
+              }
         }
         System.out.println("\t\t\t\t\t\t\t\t--> " + p1.toString());
         //probamos que la Pila funciona con objetos de tipo string y y despues vaciamos la pila para usar el test con enteros
@@ -73,17 +95,24 @@ public class TestingPila {
         System.out.println("\t--> " + p1.toString());
         System.out.print("Apila "+aux[10]+" espera false en estatica true en dinamica:\t" + p1.apilar(aux[10]));
         System.out.println("\t--> " + p1.toString());
+        //llamada al metodo que verifica si es capicua la Pila(solo si se eligio la Pila con objectos de tipo enteros)
+
         if(p1.obtenerTope() instanceof String){
             if (((String) p1.obtenerTope()).equalsIgnoreCase("k")) {
                  System.out.println("si pudo apilar el "+aux[10]+" , lo saca para continuar");
                  p1.desapilar();
             }
-        }else {
+        }else if(p1.obtenerTope() instanceof Integer) {
             if((int)p1.obtenerTope()==11){
                 System.out.println("si pudo apilar el "+aux[10]+" , lo saca para continuar");
                 p1.desapilar();
             }        
-        }
+        }else if(p1.obtenerTope() instanceof Alumno){
+            if((Alumno)p1.obtenerTope()==aux[10]){
+                System.out.println("si pudo apilar el "+aux[10]+" , lo saca para continuar");
+                p1.desapilar();
+            }
+        }   
            
         /*
         *un método que, dada una pila llena con dígitos (0..9), verique si la secuencia
@@ -156,4 +185,29 @@ public class TestingPila {
         p2.vaciar();
         System.out.println("Vacia copia espera pila vacia: \t\t\t\t\t--> " + p2.toString());
     } 
+    public static boolean esCapicua(Pila pila1){
+        boolean esCap = true;
+        Pila pila2 = pila1.clone();
+        Pila pilaAux = new Pila();
+        String cadena1 = pila1.toString();
+        String cadena2 ;
+        while(pila1.esVacia()!=true){
+            pilaAux.apilar(pila2.obtenerTope());
+            pila2.desapilar();
+        }
+
+        cadena2 = pilaAux.toString();
+        if(cadena1.equals(cadena2)){
+            esCap = true;
+        }
+        else{
+            esCap = false;
+        }
+        return esCap;
+    }
+    public static void cargarAlumnos(Alumno[]alumnos){
+        for(int i=0;i<alumnos.length;i++){
+             alumnos[i]=new Alumno(i+"");
+        }
+    }
 }

@@ -29,7 +29,7 @@ public class TestingPila {
     }
 
     public static void testPila() {
-        String capicua="";
+        String capicua=" ";
         Scanner sc = new Scanner(System.in);
         String entrada="",rep="";
         //ambos arreglos tienen longitud=11
@@ -38,7 +38,7 @@ public class TestingPila {
         int[]capicuaArray={0,1,2,3,4,5,4,3,2,1,0};//arreglo de enteros capicua
         String[]txt={"a","b","c","d","e","f","g","h","i","j","k"};//arreglo de string alfabetico
         //creo y instancio arreglo Alumnos con alumnos
-        Alumno[]alumnos=new Alumno[10];
+        Alumno[]alumnos=new Alumno[11];
         //el metodo mas que nada es para ejemplificar el uso del tda alumnos solo carga el legajo
         cargarAlumnos(alumnos);
         Object []aux=new Object[enteros.length];
@@ -96,7 +96,17 @@ public class TestingPila {
         System.out.print("Apila "+aux[10]+" espera false en estatica true en dinamica:\t" + p1.apilar(aux[10]));
         System.out.println("\t--> " + p1.toString());
         //llamada al metodo que verifica si es capicua la Pila(solo si se eligio la Pila con objectos de tipo enteros)
-
+        /*
+        *un método que, dada una pila llena con dígitos (0..9), verique si la secuencia
+        *forma un número capicúa o no. Nota: Utilizar una pila auxiliar para facilitar la operación
+        */
+        if(p1.obtenerTope() instanceof Integer){
+           if(esCapicua(p1)){
+              System.out.println("la Pila es capicua");
+           }else{
+              System.out.println("la Pila No es capicua");
+           }
+        }
         if(p1.obtenerTope() instanceof String){
             if (((String) p1.obtenerTope()).equalsIgnoreCase("k")) {
                  System.out.println("si pudo apilar el "+aux[10]+" , lo saca para continuar");
@@ -114,16 +124,15 @@ public class TestingPila {
             }
         }   
            
-        /*
-        *un método que, dada una pila llena con dígitos (0..9), verique si la secuencia
-        *forma un número capicúa o no. Nota: Utilizar una pila auxiliar para facilitar la operación
-        */
+       
         System.out.print("espera \t["+aux[0]+","+aux[1]+","+aux[2]+","+aux[3]+","+aux[4]+","+aux[5]+","+aux[6]+","+aux[7]+","+aux[8]+","+aux[9]+"]");
         System.out.println("\t\t\t\t\t--> " + p1.toString());
         if(p1.obtenerTope() instanceof String){
              System.out.println("Recupera tope espera "+aux[9]+" recupera: " + (String) p1.obtenerTope() + "\t\t\t" + ((((String) p1.obtenerTope()).equalsIgnoreCase("j")) ? sOk : sErr));
-        }else{
+        }else if(p1.obtenerTope() instanceof Integer){
              System.out.println("Recupera tope espera "+aux[9]+" recupera: " + (int) p1.obtenerTope() + "\t\t\t" + (((int) p1.obtenerTope() == 10 ) ? sOk : sErr));
+        }else{
+            System.out.println("Recupera tope espera "+aux[9]+" recupera: " + (Alumno) p1.obtenerTope() + "\t\t\t" + (((Alumno) p1.obtenerTope() == aux[9] ) ? sOk : sErr));
         }
        
 
@@ -133,15 +142,19 @@ public class TestingPila {
         System.out.println("espera \t["+aux[0]+","+aux[1]+","+aux[2]+","+aux[3]+","+aux[4]+","+aux[5]+","+aux[6]+","+aux[7]+","+aux[8]+"] recupera \t\t\t\t--> " + p1.toString());
         if(p1.obtenerTope() instanceof String){
             System.out.println("Apila z: \t\t\t\t\t\t" + ((p1.apilar("z")) ? sOk : sErr));
-        }else{
+        }else if(p1.obtenerTope() instanceof Integer){
             System.out.println("Apila 6: \t\t\t\t\t\t" + ((p1.apilar(6)) ? sOk : sErr));
+        }else{
+            System.out.println("Apila "+aux[4]+ " : \t\t\t\t\t\t" + ((p1.apilar(aux[4])) ? sOk : sErr));
         }
         
         System.out.println("espera \t["+aux[0]+","+aux[1]+","+aux[2]+","+aux[3]+","+aux[4]+","+aux[5]+","+aux[6]+","+aux[7]+","+aux[8]+","+aux[9]+"] recupera \t\t\t\t--> " + p1.toString());
         if(p1.obtenerTope() instanceof String){
             System.out.println("Recupera tope, espera "+aux[9]+" recupera " + (String) p1.obtenerTope() + "\t\t\t" + ((((String) p1.obtenerTope()).equalsIgnoreCase("z")) ? sOk : sErr));
-        }else{
+        }else if(p1.obtenerTope() instanceof Integer){
             System.out.println("Recupera tope, espera "+aux[9]+" recupera " + (int) p1.obtenerTope() + "\t\t\t" + (((int) p1.obtenerTope() == 6) ? sOk : sErr));  
+        }else{
+            System.out.println("Recupera tope, espera "+aux[9]+" recupera " + (Alumno) p1.obtenerTope() + "\t\t\t" + (((Alumno) p1.obtenerTope() == aux[9]) ? sOk : sErr));
         }
 
         Pila p2 = p1.clone();
@@ -173,6 +186,12 @@ public class TestingPila {
                p2.desapilar();
                p2.desapilar();
             }
+        }else{
+            if ((Alumno) p2.obtenerTope() == aux[8] ) {
+                System.out.println("si apilo el 8 y el 9, los saca para continuar");
+                p2.desapilar();
+                p2.desapilar();
+             }
         }
 
         System.out.println("Verifica copia modificada ["+aux[0]+","+aux[1]+","+aux[2]+","+aux[3]+","+aux[4]+","+aux[5]+","+aux[6]+","+aux[7]+","+aux[8]+","+aux[9]+"] : \t\t\t--> " + p2.toString());
@@ -191,7 +210,8 @@ public class TestingPila {
         Pila pilaAux = new Pila();
         String cadena1 = pila1.toString();
         String cadena2 ;
-        while(pila1.esVacia()!=true){
+        while(!pila2.esVacia()){
+            System.out.println("x");
             pilaAux.apilar(pila2.obtenerTope());
             pila2.desapilar();
         }
@@ -205,6 +225,7 @@ public class TestingPila {
         }
         return esCap;
     }
+    //metodo que crea hasta 11 alumnos 'los legajos van de 0 a 10'
     public static void cargarAlumnos(Alumno[]alumnos){
         for(int i=0;i<alumnos.length;i++){
              alumnos[i]=new Alumno(i+"");

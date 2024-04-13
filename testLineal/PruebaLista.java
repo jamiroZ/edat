@@ -51,7 +51,7 @@ public class PruebaLista {
             opcion=sc.nextLine();
             switch(opcion){
                 case "concatenar":
-                     concatenarLista(concatenacion,l1,l2);
+                     concatenacion=concatenarLista(l1,l2);
                      System.out.println("concatenacion de l1 y l2 :");
                      System.out.println(concatenacion.toString());
                 break;
@@ -92,23 +92,28 @@ public class PruebaLista {
             l.insertar(0, 9);
             l.insertar(9, 10);
     }
-    public static void concatenarLista(Lista concatenacion,Lista l1,Lista l2){
+    public static Lista concatenarLista(Lista l1,Lista l2){
         //  l3 se comporta primero como l1 y despues se agregar los elementos de l2
-        concatenacion=l1.clone();
-        Lista aux=l2.clone();//uso esta lista auxiliar para no modificar l2
-        int i=1,longitud=l2.longitud();
-        while(i< longitud){
-            concatenacion.insertar(aux.recuperar(i), concatenacion.longitud()+1);
-            i++;
+        Lista concatenacion=l1.clone();
+        int i=1;
+        int longitudC=concatenacion.longitud()+1;//longitud de la concatenacion
+        int longitudL2=l2.longitud();//longitud de la segunda Lista que se concatena
+        while(i<= longitudL2){//copia elementos de la lista 2
+            concatenacion.insertar(l2.recuperar(i),longitudC);
+            longitudC++;//incrementa la longitud de la concatenacion
+            i++;// pasa a la siguiente posicion de la lista 2
         }
+        return concatenacion;
     }
     public static Lista invertir(Lista l){
         Lista invertida=new Lista();
-        int i=1,longitud=l.longitud();
-        while( i < longitud){
-            invertida.insertar(l.recuperar(i), i);
+        int i=1,longitud;
+        for(longitud=l.longitud();longitud>0; longitud--){
+            invertida.insertar(l.recuperar(longitud), i);
             i++;
         }
+            
+        
         return invertida;
     }
 }

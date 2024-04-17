@@ -1,5 +1,6 @@
 package jerarquicas.dinamicas;
 
+import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
 
 public class ArbolBinario {
@@ -102,4 +103,71 @@ public class ArbolBinario {
             preOrdenRec(aux.getDerecho(), list);//se mueve por la derecha hasta el ultimo nodo(null)
         }
     }
+    public Lista listarInorden(){
+        Lista listaElem=new Lista();
+        inordenRec(this.raiz,listaElem);
+        return listaElem;
+    }
+    public void inordenRec(NodoArbol aux,Lista list){
+        if(aux!=null){
+            inordenRec(aux.getIzquierdo(),list);//se mueve por la izquierda hasta el ultimo nodo(null)
+            list.insertar(aux.getElem(), list.longitud()+1);//inserta en la lista nueva
+            inordenRec(aux.getDerecho(), list);//se mueve por la derecha hasta el ultimo nodo(null)
+        }
+    }
+    public Lista listarPosOrden(){
+        Lista listaElem=new Lista();
+        posOrdenRec(this.raiz,listaElem);
+        return listaElem;
+    }
+    public void posOrdenRec(NodoArbol aux,Lista list){
+        if(aux!=null){
+            posOrdenRec(aux.getIzquierdo(),list);//se mueve por la izquierda hasta el ultimo nodo(null)
+            posOrdenRec(aux.getDerecho(), list);//se mueve por la derecha hasta el ultimo nodo(null)
+            list.insertar(aux.getElem(), list.longitud()+1);//inserta en la lista nueva
+        }
+    }
+    public Cola listarNivel(){
+        Cola colaElem=new Cola();
+        
+        if(!this.esVacia()){
+            colaElem.poner(this.raiz);
+            NodoArbol nodoActual;
+            while(!colaElem.esVacia()){
+                 nodoActual= (NodoArbol) colaElem.obtenerFrente();
+                 colaElem.
+            }
+        }
+        return colaElem;
+    }
+    public String toString(){
+        String txt="Arbol Vacio";
+        if(!this.esVacia()){
+            txt=toStringRec(this.raiz);
+        }
+        return txt;
+    }
+    public String toStringRec(NodoArbol aux){
+        String cad="";
+        if(aux!=null){
+            cad="("+aux.getElem()+")";
+            NodoArbol izq,der;
+            izq=aux.getIzquierdo();
+            der=aux.getDerecho();
+            if(izq!=null){
+                cad=cad+"HI:"+izq.getElem()+" ";
+            }else{
+                cad=cad+"HI:--";
+            }
+            if(der!=null){
+                 cad=cad+"HD:"+der.getElem()+"-\n";  
+            }else{
+                 cad=cad+"HD:-- -\n";
+            }
+            cad=cad+toStringRec(izq);
+            cad=cad+toStringRec(der);
+        }
+        return cad;
+    }
+    
 }    

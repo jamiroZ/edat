@@ -128,14 +128,24 @@ public class ArbolBinario {
         }
     }
     public Cola listarNivel(){
-        Cola colaElem=new Cola();
+        Cola colaElem=new Cola();//COLA QUE SE RETORNA
         
-        if(!this.esVacia()){
-            colaElem.poner(this.raiz);
-            NodoArbol nodoActual;
-            while(!colaElem.esVacia()){
-                 nodoActual= (NodoArbol) colaElem.obtenerFrente();
-                 colaElem.
+        if(this.raiz!=null){//si el arbol no esta vacio
+            Cola colaAux=new Cola();//cola auxiliar
+            colaAux.poner(this.raiz);//frente de la cola=raiz del arbol
+            NodoArbol nodoActual;//nodo puntero(aux)
+            while(!colaAux.esVacia()){//mientras la cola no este vacia
+                 //asigna al nodo actual el frente de colaAux
+                 nodoActual= (NodoArbol) colaAux.obtenerFrente();
+                 colaAux.sacar();//cambia de frente (frente.getEnlace())
+                 colaElem.poner(nodoActual.getElem());//coloca en la cola un elemento del arbol
+                 //coloca por nivel de izq a derecha
+                 if(nodoActual.getIzquierdo()!=null){//si tiene hijo izq el nodo lo coloca en la cola
+                    colaElem.poner(nodoActual.getIzquierdo());
+                 }
+                 if(nodoActual.getDerecho()!=null){//si tiene hijo der el nodo lo coloca en la cola
+                    colaElem.poner(nodoActual.getDerecho());
+                 }
             }
         }
         return colaElem;
@@ -150,24 +160,39 @@ public class ArbolBinario {
     public String toStringRec(NodoArbol aux){
         String cad="";
         if(aux!=null){
-            cad="("+aux.getElem()+")";
-            NodoArbol izq,der;
+            cad="("+aux.getElem()+")";//concatena el elemento del nodo
+            NodoArbol izq,der;//nodos auxiliares(izquierdo y derecho)
             izq=aux.getIzquierdo();
             der=aux.getDerecho();
-            if(izq!=null){
-                cad=cad+"HI:"+izq.getElem()+" ";
+            if(izq!=null){//si hay nodo hijo izquierdo
+                cad=cad+"HI:"+izq.getElem()+" ";//concatena hijo izq
             }else{
-                cad=cad+"HI:--";
+                cad=cad+"HI:--";//si no hay nodo hijo izquierdo
             }
-            if(der!=null){
-                 cad=cad+"HD:"+der.getElem()+"-\n";  
+            if(der!=null){//si hay nodo hijo derecho
+                 cad=cad+"HD:"+der.getElem()+"-\n";//concatena hijo der
             }else{
-                 cad=cad+"HD:-- -\n";
+                 cad=cad+"HD:-- -\n";//si no hay nodo hijo derecho
             }
-            cad=cad+toStringRec(izq);
-            cad=cad+toStringRec(der);
+            cad=cad+toStringRec(izq);//caso recursivo hijo izquierdo
+            cad=cad+toStringRec(der);//caso recursivo hijo derecho
         }
         return cad;
     }
-    
+    public ArbolBinario clone(){
+          ArbolBinario clon=new ArbolBinario();
+          clon.raiz=cloneRec(this.raiz);
+          return clon;
+    }
+    public NodoArbol cloneRec(NodoArbol aux){
+        NodoArbol ret;
+        if(aux!=null){//mientras el nodo no sea nulo(caso recursivo)
+            NodoArbol izq=cloneRec(aux.getIzquierdo());//consigo el subArbol izquierdo
+            NodoArbol der=cloneRec(aux.getDerecho());//consigo el subArbol derecho
+            ret=new NodoArbol(aux.getElem(), izq, der);//crea el nodo clon con el elemento y sus hijos izq y der
+        }else{//caso base
+            ret=null;
+        }
+        return ret;
+    }
 }    

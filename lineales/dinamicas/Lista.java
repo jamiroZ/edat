@@ -150,5 +150,30 @@ public class Lista {
         }
         return cad;
     }
+    //ejercicio de parcial
+    /*retorna una lista con las pisiciones que son multiplos de num */
+    public Lista obtenerMultiplos(int  num){
+           Lista nueva=new Lista();
+           if(!this.estaVacia()){//si la lista no esta vacia
+              Nodo aux=this.cabecera;//nodo puntero
+              if((this.longitud() % num) ==0){//si la posicion de la cabecera es multiplo la añade
+                nueva.cabecera=new Nodo(aux.getElem(),null);
+                nueva.longitud++;
+              }
+              obtenerMultiplosRec(nueva,num,nueva.cabecera,aux.getEnlace());
+           
+           }
+           return nueva;
+    }
+    public void obtenerMultiplosRec(Lista nueva,int multiplo,Nodo puntero,Nodo aux){
+           if(aux!=null){
+              if((this.longitud() % multiplo) ==0){//si la posicion del nodo es multiplo la añade
+                  Nodo nuevo=new Nodo(aux.getElem(),puntero);//crea el nuevo nodo
+                  nueva.longitud++;
+                  puntero.setEnlace(nuevo);//enlaza la cabecera al nodo añadido
+              }
+              obtenerMultiplosRec(nueva, multiplo, puntero, aux.getEnlace());
+           }
+    }
    
 }

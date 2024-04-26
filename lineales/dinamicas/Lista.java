@@ -153,27 +153,51 @@ public class Lista {
     //ejercicio de parcial
     /*retorna una lista con las pisiciones que son multiplos de num */
     public Lista obtenerMultiplos(int  num){
-           Lista nueva=new Lista();
-           if(!this.estaVacia()){//si la lista no esta vacia
-              Nodo aux=this.cabecera;//nodo puntero
-              if((this.longitud() % num) ==0){//si la posicion de la cabecera es multiplo la añade
-                nueva.cabecera=new Nodo(aux.getElem(),null);
-                nueva.longitud++;
-              }
-              obtenerMultiplosRec(nueva,num,nueva.cabecera,aux.getEnlace());
-           
+           Lista list=new Lista();
+           if(!this.estaVacia()){
+              obtenerMultiplosRec(list,this.cabecera,num,1);
            }
-           return nueva;
+           return list;
     }
-    public void obtenerMultiplosRec(Lista nueva,int multiplo,Nodo puntero,Nodo aux){
+    public void obtenerMultiplosRec(Lista list,Nodo aux,int mult,int i){
            if(aux!=null){
-              if((this.longitud() % multiplo) ==0){//si la posicion del nodo es multiplo la añade
-                  Nodo nuevo=new Nodo(aux.getElem(),puntero);//crea el nuevo nodo
-                  nueva.longitud++;
-                  puntero.setEnlace(nuevo);//enlaza la cabecera al nodo añadido
-              }
-              obtenerMultiplosRec(nueva, multiplo, puntero, aux.getEnlace());
+                if(i % mult ==0){//si la posicion es multiplo 
+                    if(list.longitud+1 == 1){//caso especial de insertar en pos 1(long es 0 le sumo 1 )
+                        list.cabecera=new Nodo(aux.getElem(), null);
+                    }else{//inserta en la ultima pos
+                        Nodo pos=list.cabecera;
+                        int j=1;
+                        while(j < list.longitud){// avanza hasta el ultimo nodo
+                             pos=pos.getEnlace();
+                             j++;
+                        }
+                        //crea 
+                        Nodo nuevo=new Nodo(aux.getElem(), null);
+                        pos.setEnlace(nuevo);//enlaza el ultimo nodo de la lista al nuevo nodo
+                    }
+                    list.longitud++;
+                }
+                obtenerMultiplosRec(list, aux.getEnlace(), mult, i+1);//si busca el multiplo busca en la siguiente posicion y siguiente nodo
            }
     }
-   
+    //elimina un objeto de la Lista si aparece 1 o masveces (retorna true si se encontro el objeto o false si no existe)
+    public void eliminarApariciones(Object x){
+        if(!this.estaVacia()){
+           eliminarAparicionRec(x,this.cabecera);
+        }
+    }
+    public void eliminarAparicionRec(Object x, Nodo aux){
+        if(aux!=null){
+            if( aux.getElem() == x){//si la cabecera tiene el elemento 
+                this.cabecera=this.cabecera.getEnlace();//cambia la cabecera al nodo enlazado por esta
+                this.longitud--;
+            }else{
+                if(aux.getEnlace()!=null && aux.getEnlace().getElem()==x){
+                   aux.setEnlace(aux.getEnlace().getEnlace());
+                   this.longitud--;
+                }
+            }
+            eliminarAparicionRec(x, aux.getEnlace());
+        }
+    }
 }

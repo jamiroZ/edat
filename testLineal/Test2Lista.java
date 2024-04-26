@@ -12,16 +12,21 @@ public class Test2Lista {
     public static void pruebaLista(){
        Lista l=new Lista();
        cargarLista(l);
-       System.out.println(l.toString());
-       Lista l2=l.obtenerMultiplos(2);
-       System.out.println(l2.toString());
+       System.out.println(l.toString()+" longitud:"+l.longitud());
+       l.eliminarApariciones(1);
+       System.out.println(l.toString()+" longitud:"+l.longitud());
+       //Lista l2=l.obtenerMultiplos(2);
+       //System.out.println(l2.toString());
     }
     public static void cargarLista(Lista l){
-        int TAMAÑO=10;
-        int i;
-        for(i=1; i <= TAMAÑO; i++){
-            l.insertar(i, i);
-        }
+            l.insertar(3, 1);
+            l.insertar(3, 2);
+            l.insertar(1, 3);
+            l.insertar(3, 4);
+            l.insertar(1, 5);
+            l.insertar(3, 6);
+            l.insertar(1, 7);
+        
    }
 }
 

@@ -19,13 +19,13 @@ public class Test2Lista {
        //System.out.println(l2.toString());
     }
     public static void cargarLista(Lista l){
-            l.insertar(3, 1);
-            l.insertar(3, 2);
-            l.insertar(1, 3);
-            l.insertar(3, 4);
+            l.insertar(4, 1);
+            l.insertar(1, 2);
+            l.insertar(3, 3);
+            /*l.insertar(3, 4);
             l.insertar(1, 5);
             l.insertar(3, 6);
-            l.insertar(1, 7);
+            l.insertar(1, 7);*/
         
    }
 }

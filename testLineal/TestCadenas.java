@@ -21,18 +21,17 @@ public class TestCadenas {
             Cola clon=c1.clone(); //clona cola c1 para no modificar la original
             Cola c3=new Cola();//copia los caracteres en el mismo orden(ab ->ab)
             Pila aux=new Pila();//copia los caracteres al revez(ab->ba)
-            boolean logico=true;
-            while(!clon.esVacia() || logico){
-               logico=false;
-               if(!clon.esVacia()){
-                   if( (char) clon.obtenerFrente() !='#' && !clon.esVacia()){
-
+            Boolean copiado=false;//
+            while(!clon.esVacia()){
+                   if( (char) clon.obtenerFrente() !='#' ){
                        c3.poner(clon.obtenerFrente());//clona ab(3)
                        c2.poner(clon.obtenerFrente());//clona ab (1)
                        aux.apilar(clon.obtenerFrente());//clona de ab a ba(2)
-                       logico=true;
                    }else {
-                   
+                       copiado=true;// termino de copiar y alcanzo el'#'
+                   }
+                   clon.sacar();
+                   if( copiado || clon.esVacia()){
                        while(!aux.esVacia()){
                            c2.poner((char) aux.obtenerTope());
                            aux.desapilar();
@@ -44,10 +43,9 @@ public class TestCadenas {
                        if(!clon.esVacia()){
                            c2.poner('#');
                        }
+                       copiado=false;
                   }
-               }
-              clon.sacar();
-                    
+          
             }
         }
         return c2;

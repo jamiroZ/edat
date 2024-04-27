@@ -1,6 +1,5 @@
 package testLineal;
 import lineales.dinamicas.Cola;
-import lineales.dinamicas.Lista;
 import lineales.dinamicas.Pila;
 
 public class TestCadenas {
@@ -20,31 +19,35 @@ public class TestCadenas {
         Cola c2=new Cola();
         if(!c1.esVacia()){
             Cola clon=c1.clone(); //clona cola c1 para no modificar la original
-            Lista list=new Lista();//
-            Pila aux=new Pila();
-            int i=1;//contador
-            while(!clon.esVacia()){
-               if( (char) clon.obtenerFrente() !='#'){
-                   list.insertar(clon.obtenerFrente(), i);
-                   c2.poner(clon.obtenerFrente());
-                   aux.apilar(clon.obtenerFrente());
-                   i++;
-               }else if((char) clon.obtenerFrente() =='#'){
-                  i=1;
-                  while(!aux.esVacia()){
-                      c2.poner((char) aux.obtenerTope());
-                      aux.desapilar();
+            Cola c3=new Cola();//copia los caracteres en el mismo orden(ab ->ab)
+            Pila aux=new Pila();//copia los caracteres al revez(ab->ba)
+            boolean logico=true;
+            while(!clon.esVacia() || logico){
+               logico=false;
+               if(!clon.esVacia()){
+                   if( (char) clon.obtenerFrente() !='#' && !clon.esVacia()){
+
+                       c3.poner(clon.obtenerFrente());//clona ab(3)
+                       c2.poner(clon.obtenerFrente());//clona ab (1)
+                       aux.apilar(clon.obtenerFrente());//clona de ab a ba(2)
+                       logico=true;
+                   }else {
+                   
+                       while(!aux.esVacia()){
+                           c2.poner((char) aux.obtenerTope());
+                           aux.desapilar();
+                       }
+                       while(!c3.esVacia()){
+                           c2.poner( (char) c3.obtenerFrente());
+                           c3.sacar();
+                       }
+                       if(!clon.esVacia()){
+                           c2.poner('#');
+                       }
                   }
-                  int j=1;
-                  while(!list.estaVacia()){
-                      c2.poner( list.recuperar(j));
-                      list.eliminar(j);
-                      j++;
-                  }
-                  c2.poner('#');
-                 
                }
-               clon.sacar();
+              clon.sacar();
+                    
             }
         }
         return c2;

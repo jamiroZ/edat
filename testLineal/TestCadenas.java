@@ -65,35 +65,36 @@ public class TestCadenas {
          if(!c.esVacia()){
              Cola clon=c.clone();
              Pila p=new Pila();
+             Cola col=new Cola();
              int i=1;
              String txt=" ";
              while(!clon.esVacia()){
                    char elem= (char) clon.obtenerFrente();//castea el objecto a uno de tipo char
-                   if(elem=='{' || elem=='}'|| elem=='[' || elem==']' || elem=='('|| elem==')' ){
-                        txt=txt+ elem+"";
-                   }else{
-                        
+                   if(elem=='{' || elem=='('|| elem=='['){
+                        p.apilar(elem);
+                   }else if(  elem==']' || elem==')'|| elem=='}' ){
+                        col.poner(elem);
                    }
                    clon.sacar();//se mueve en la cola
              }
-             System.out.println(txt);
-             if(txt!= " "){
-               verificado=compararCaracteres(txt);
-             }
-             
+             System.out.println(p.toString());
+             System.out.println(col.toString());
+             verificado=compararCaracteres(p,col);
          }
          return verificado;
     }
-    public static Boolean compararCaracteres(String txt){
-        Boolean v=false;
-        int i=0, j=txt.length()-1;
-        while(i < txt.length() && !v){
-            System.out.println("i:"+i+"j:"+j);
-            if(txt.charAt(i)== txt.charAt(j)){
-                v=true;
+    public static Boolean compararCaracteres(Pila p, Cola c){
+        Boolean v=true,n=false;
+        while( v && !n){
+            System.out.println("pila:"+p.obtenerTope()+"cola:"+c.obtenerFrente());
+            if( p.obtenerTope() != c.obtenerFrente()){
+                v=false;
             }
-            j--;
-            i++;
+            if(p.esVacia()){
+                n=true;
+            }
+            p.desapilar();
+            c.sacar();
         }
         return v;
     }

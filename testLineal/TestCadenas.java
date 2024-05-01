@@ -7,14 +7,21 @@ public class TestCadenas {
         testCadena();
     }
     public static void testCadena(){
-        Cola c1,c2;
+        Cola c1,c2,c3;
         c1=new Cola();
+        c3=new Cola();
+        cargarCola2(c3);//carga una cola una expresion matematica
         cargarCola(c1);//carga la cola c1
         System.out.println(c1.toString());
         c2=generar(c1);
         System.out.println(c2.toString());
-
+        if(verificarBalanceo(c3)){
+            System.out.println("la cola esta valanceada");
+        }else{
+            System.out.println("la cola NO esta valanceada");
+        }
     }
+    /* */
     public static Cola generar(Cola c1){
         Cola c2=new Cola();
         if(!c1.esVacia()){
@@ -27,11 +34,13 @@ public class TestCadenas {
                        c3.poner(clon.obtenerFrente());//clona ab(3)
                        c2.poner(clon.obtenerFrente());//clona ab (1)
                        aux.apilar(clon.obtenerFrente());//clona de ab a ba(2)
+                       
                    }else {
                        copiado=true;// termino de copiar y alcanzo el'#'
                    }
                    clon.sacar();
                    if( copiado || clon.esVacia()){
+                       //se coloca las cadenas de caracteres en forma (1)(2)(3)
                        while(!aux.esVacia()){
                            c2.poner((char) aux.obtenerTope());
                            aux.desapilar();
@@ -50,6 +59,44 @@ public class TestCadenas {
         }
         return c2;
     }
+    /* */
+    public static Boolean verificarBalanceo(Cola c){
+         Boolean verificado=false;
+         if(!c.esVacia()){
+             Cola clon=c.clone();
+             Pila p=new Pila();
+             int i=1;
+             String txt=" ";
+             while(!clon.esVacia()){
+                   char elem= (char) clon.obtenerFrente();//castea el objecto a uno de tipo char
+                   if(elem=='{' || elem=='}'|| elem=='[' || elem==']' || elem=='('|| elem==')' ){
+                        txt=txt+ elem+"";
+                   }else{
+                        
+                   }
+                   clon.sacar();//se mueve en la cola
+             }
+             System.out.println(txt);
+             if(txt!= " "){
+               verificado=compararCaracteres(txt);
+             }
+             
+         }
+         return verificado;
+    }
+    public static Boolean compararCaracteres(String txt){
+        Boolean v=false;
+        int i=0, j=txt.length()-1;
+        while(i < txt.length() && !v){
+            System.out.println("i:"+i+"j:"+j);
+            if(txt.charAt(i)== txt.charAt(j)){
+                v=true;
+            }
+            j--;
+            i++;
+        }
+        return v;
+    }
     public static void cargarCola(Cola c1){
             c1.poner('A');
             c1.poner('B');
@@ -59,4 +106,22 @@ public class TestCadenas {
             c1.poner('B');
             c1.poner('A');
     }
+    public static void cargarCola2(Cola c3){
+        c3.poner('{');
+        c3.poner('4');
+        c3.poner('[');
+        //c3.poner('(');
+        c3.poner('3');
+        c3.poner('*');
+        c3.poner('2');
+        //c3.poner(')');
+        c3.poner('-');
+        c3.poner('6');
+        c3.poner(']');
+        c3.poner('+');
+        c3.poner('2');
+        c3.poner('}');
+        //cola:{4[(3*2)-6]+2}
+    }
 }
+

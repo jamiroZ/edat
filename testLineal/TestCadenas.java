@@ -34,7 +34,6 @@ public class TestCadenas {
                        c3.poner(clon.obtenerFrente());//clona ab(3)
                        c2.poner(clon.obtenerFrente());//clona ab (1)
                        aux.apilar(clon.obtenerFrente());//clona de ab a ba(2)
-                       
                    }else {
                        copiado=true;// termino de copiar y alcanzo el'#'
                    }
@@ -61,7 +60,7 @@ public class TestCadenas {
     }
     /* */
     public static Boolean verificarBalanceo(Cola c){
-         Boolean verificado=false;
+         Boolean verificado=true;
          if(!c.esVacia()){
              Cola clon=c.clone();
              Pila p=new Pila();
@@ -70,31 +69,27 @@ public class TestCadenas {
              String txt=" ";
              while(!clon.esVacia()){
                    char elem= (char) clon.obtenerFrente();//castea el objecto a uno de tipo char
-                   if(elem=='{' || elem=='('|| elem=='['){
+                   if(elem=='{' || elem=='('|| elem=='[' || elem==']' || elem==')'|| elem=='}'){
                         p.apilar(elem);
-                   }else if(  elem==']' || elem==')'|| elem=='}' ){
-                        col.poner(elem);
                    }
                    clon.sacar();//se mueve en la cola
              }
              System.out.println(p.toString());
-             System.out.println(col.toString());
-             verificado=compararCaracteres(p,col);
+             System.out.println(p.obtenerTope());
+             verificado=compararCaracteres(p);
          }
          return verificado;
     }
-    public static Boolean compararCaracteres(Pila p, Cola c){
-        Boolean v=true,n=false;
-        while( v && !n){
-            System.out.println("pila:"+p.obtenerTope()+"cola:"+c.obtenerFrente());
-            if( p.obtenerTope() != c.obtenerFrente()){
-                v=false;
+    public static Boolean compararCaracteres(Pila p){
+        Boolean v=true;
+        String txt="{[()]}";
+        int i=txt.length()-1;
+        while(!p.esVacia() && v){
+            if(txt.charAt(i) != (char) p.obtenerTope()){
+                  v=false;
             }
-            if(p.esVacia()){
-                n=true;
-            }
+            i--;
             p.desapilar();
-            c.sacar();
         }
         return v;
     }
@@ -110,12 +105,12 @@ public class TestCadenas {
     public static void cargarCola2(Cola c3){
         c3.poner('{');
         c3.poner('4');
-        c3.poner('[');
-        //c3.poner('(');
+        //c3.poner('[');
+        c3.poner('(');
         c3.poner('3');
         c3.poner('*');
         c3.poner('2');
-        //c3.poner(')');
+        c3.poner(')');
         c3.poner('-');
         c3.poner('6');
         c3.poner(']');

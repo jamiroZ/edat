@@ -5,13 +5,13 @@ import lineales.dinamicas.Lista;
 
 public class ArbolBinario {
     private NodoArbol raiz;
-    public ArbolBinario(){
+    public ArbolBinario(){//constructor
         this.raiz=null;
     }
-    public void vaciar(){
+    public void vaciar(){//vacia el arbol
         this.raiz=null;
     }
-    public Boolean esVacia(){
+    public Boolean esVacia(){//revisa si esta vacio el arbol
         return this.raiz==null;
     }
     public Boolean insertar(Object nuevo,Object padre,char lado){
@@ -19,7 +19,7 @@ public class ArbolBinario {
        if(this.esVacia()){
            this.raiz=new NodoArbol(nuevo, null, null);
        }else{
-           NodoArbol aux=obtenerNodo(this.raiz,padre);
+           NodoArbol aux=obtenerNodo(this.raiz,padre);//busca el nodo padre (aux=nodo padre)
            if(lado=='I' && aux.getIzquierdo()==null){//si no hay nodo en la izquierda del padre lo inserta
                 //enlaza el nodo padre con su nuevo nodo a la izquierda (este nuevo nodo no tiene hijos)
                 aux.setIzquierdo(new NodoArbol(nuevo, null, null));

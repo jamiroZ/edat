@@ -85,6 +85,7 @@ public class TestCadenas {
         String txt="{[()]}";
         int i=txt.length()-1;
         while(!p.esVacia() && v){
+            System.out.println(txt.charAt(i)+" "+p.obtenerTope());
             if(txt.charAt(i) != (char) p.obtenerTope()){
                   v=false;
             }
@@ -113,7 +114,7 @@ public class TestCadenas {
         c3.poner(')');
         c3.poner('-');
         c3.poner('6');
-        c3.poner(']');
+        //c3.poner(']');
         c3.poner('+');
         c3.poner('2');
         c3.poner('}');

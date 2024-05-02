@@ -20,15 +20,20 @@ public class ArbolBinario {
            this.raiz=new NodoArbol(nuevo, null, null);
        }else{
            NodoArbol aux=obtenerNodo(this.raiz,padre);//busca el nodo padre (aux=nodo padre)
-           if(lado=='I' && aux.getIzquierdo()==null){//si no hay nodo en la izquierda del padre lo inserta
-                //enlaza el nodo padre con su nuevo nodo a la izquierda (este nuevo nodo no tiene hijos)
-                aux.setIzquierdo(new NodoArbol(nuevo, null, null));
-           }else if(lado == 'D' && aux.getDerecho()==null){//si no hay nodo en la derecha del padre lo inserta
-                //enlaza el nodo padre con su nuevo nodo a la derecha (este nuevo nodo no tiene hijos)
-                aux.setIzquierdo(new NodoArbol(nuevo, null, null));
+           if(aux!=null){
+                 if(lado=='I' && aux.getIzquierdo()==null){//si no hay nodo en la izquierda del padre lo inserta
+                      //enlaza el nodo padre con su nuevo nodo a la izquierda (este nuevo nodo no tiene hijos)
+                      aux.setIzquierdo(new NodoArbol(nuevo, null, null));
+                 }else if(lado =='D' && aux.getDerecho()==null){//si no hay nodo en la derecha del padre lo inserta
+                      //enlaza el nodo padre con su nuevo nodo a la derecha (este nuevo nodo no tiene hijos)
+                      aux.setDerecho(new NodoArbol(nuevo, null, null));
+                 }else{
+                      exito=false;//posicion ocupada,retorna falso
+                 }
            }else{
-                exito=false;//posicion ocupada,retorna falso
+             exito=false;
            }
+
        }
        return exito;
     }
@@ -36,7 +41,7 @@ public class ArbolBinario {
     public NodoArbol obtenerNodo(NodoArbol aux,Object padre){
          NodoArbol ret=null;
          if(aux!=null){//repite hasta terminar de buscar por todo el arbol(por todas las hojas)
-            if(aux.getElem()==padre){//caso base
+            if(aux.getElem().equals(padre)){//caso base
                  ret=aux;
             }else{//casos recursivos
        
@@ -160,7 +165,7 @@ public class ArbolBinario {
     public String toStringRec(NodoArbol aux){
         String cad="";
         if(aux!=null){
-            cad="("+aux.getElem()+")";//concatena el elemento del nodo
+            cad=cad+"("+aux.getElem()+")";//concatena el elemento del nodo
             NodoArbol izq,der;//nodos auxiliares(izquierdo y derecho)
             izq=aux.getIzquierdo();
             der=aux.getDerecho();
@@ -195,4 +200,65 @@ public class ArbolBinario {
         }
         return ret;
     }
-}    
+    //verifica si existe un recorrido desde la raiz a alguna hoja que coincida con la lista patron
+    public Boolean verificarPatron(Lista patron){
+         Boolean verificado=false;
+         if(! this.esVacia() && !patron.estaVacia()){
+           verificado= patronRec(this.raiz,patron,1,true);
+         }
+         return verificado;
+    }
+    private Boolean patronRec(NodoArbol n, Lista p,int i,Boolean v){
+         Boolean c=false;//booleano final 
+         if( n !=null && v && !c){
+               System.out.println(n.getElem());
+               //si el objeto es igual y no es la hoja repite ( caso recursivo)
+               if(n.getElem().equals(p.recuperar(i)) && i< p.longitud()){
+                   c=patronRec(n.getIzquierdo(), p, i+1,true);//recorre subArbolIzq 
+                   if(!c){//no se encontro el patron por lado izquierdo revisa derecho
+                      c=patronRec(n.getDerecho(), p, i+1,true);//recorre subArbolDer
+                   }
+               }else if(n.getElem().equals(p.recuperar(i)) && v){//llego a la hoja(caso base 1)
+                    v=false;
+                    c=true;
+               }else{//si recorrio todo el arbol y no esta el patron retorna falso (caso base 2)
+                   c=false;
+               }
+               
+               
+         }
+         return c;
+    }
+    public Lista frontera(){//devuelve una lista de las hojas de izq a der
+       Lista hojas=new Lista();
+       if(!this.esVacia()){
+          fronteraRec(this.raiz,hojas);
+       }
+       return hojas;
+    }
+    public void fronteraRec(NodoArbol n,Lista hojas){
+       if(n!=null){
+           if(n.getDerecho()==null && n.getIzquierdo()==null){
+                    hojas.insertar(n.getElem(), hojas.longitud()+1);
+           }
+           fronteraRec(n.getIzquierdo(),hojas);
+           fronteraRec(n.getDerecho(),hojas);
+       }
+    }
+    public ArbolBinario clonInvertido(){
+        ArbolBinario clon=new ArbolBinario();
+        clon.raiz=invertidoRec(this.raiz);
+        return clon;
+    }
+    public NodoArbol invertidoRec(NodoArbol n){
+        NodoArbol ret;
+        if(n!=null){
+            NodoArbol izq=invertidoRec(n.getIzquierdo());//me muevo por subArbol izq
+            NodoArbol der=invertidoRec(n.getDerecho());//me muevo por subArbol der
+            ret=new NodoArbol(n.getElem(),der, izq);//crean nodo y lo inlaza pero cambia lo hijos d lugar
+        }else{
+            ret=null;//caso base (hoja.getDer()==null o hoja.getIzq()==null)
+        }
+        return ret;
+    }
+}

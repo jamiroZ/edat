@@ -66,7 +66,6 @@ public class TestCadenas {
              Pila p=new Pila();
              Cola col=new Cola();
              int i=1;
-             String txt=" ";
              while(!clon.esVacia()){
                    char elem= (char) clon.obtenerFrente();//castea el objecto a uno de tipo char
                    if(elem=='{' || elem=='('|| elem=='[' || elem==']' || elem==')'|| elem=='}'){

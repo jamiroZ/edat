@@ -80,4 +80,23 @@ public class Pila{
         } 
         return ret;
     }
+    public Boolean equals(Pila p){//retorna true si la pila ingresada es igual a la misma pila
+          Boolean v=false;
+          if(!this.esVacia()){
+               v=equalsRec(this.tope,p.tope);
+          }
+          return v;
+    }
+    public Boolean equalsRec(Nodo t,Nodo t2){
+         Boolean v=true;
+         if(t!=null){
+            //System.out.println(t.getElem()+" "+t2.getElem());
+             if(t.getElem().equals(t2.getElem())){
+                v=equalsRec(t.getEnlace(),t2.getEnlace());
+             }else{
+                v=false;
+             }
+         }
+         return v;
+    }
 }

@@ -2,6 +2,7 @@ package parcial;
 //importa TDA pila,cola,lista
 import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
+import lineales.dinamicas.Pila;
 
 public class testLineal {
     public static void main(String[] args) {
@@ -9,6 +10,16 @@ public class testLineal {
     }
     public static void testL(){
         Cola c=new Cola();
+        Pila p=new Pila(),p2=new Pila();
+        cargarPila(p);
+        cargarPila2(p2);
+        System.out.println(p.toString());
+        System.out.println(p2.toString());
+        if(p.equals(p2)){
+            System.out.println("ambas pilas son iguales");
+        }else{
+            System.out.println("las pilas son diferentes");
+        }
         cargarCola(c);
         System.out.println("la cola tiene "+cuentaSecuencias(c)+" secuencias capicua");
         
@@ -60,5 +71,19 @@ public class testLineal {
             c.poner('T');
             c.poner('C');
             c.poner('A');
+    }
+    public static void cargarPila(Pila p){
+        p.apilar(1);
+        p.apilar(2);
+        p.apilar(3);
+        p.apilar(4);
+        p.apilar(5);
+    }
+    public static void cargarPila2(Pila p2){
+        p2.apilar(1);
+        p2.apilar(2);
+        p2.apilar(3);
+        p2.apilar(4);
+        p2.apilar(5);
     }
 }

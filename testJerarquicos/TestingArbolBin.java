@@ -19,13 +19,15 @@ public class TestingArbolBin {
         if(arbol.verificarPatron(patron)){
            System.out.println("hay un recorrido con ese patron");
         }
-        //
+        //da una lista con las hojas
         hojas=arbol.frontera();
         System.out.println(hojas.toString());
-        //
+        //invierte los hijos de lugar 
         arbolInv=arbol.clonInvertido();
         System.out.println(arbolInv.toString());
-
+        //completar hijos
+        arbol.completarHijos();
+        System.out.println(arbol.toString());
     }
     public static void cargarArbol(ArbolBinario arbol){
              arbol.insertar('A',null,' ');

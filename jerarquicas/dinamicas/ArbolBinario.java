@@ -261,4 +261,18 @@ public class ArbolBinario {
         }
         return ret;
     }
+    public void completarHijos(){
+        completarHijosRec(this.raiz);
+    }
+    public void completarHijosRec(NodoArbol n){
+        if(n!= null){
+            if(n.getIzquierdo()== null && n.getDerecho()!= null){
+                 n.setIzquierdo(new NodoArbol(n.getDerecho().getElem(),null,null));
+            }else if(n.getIzquierdo()!= null && n.getDerecho()== null){
+                n.setDerecho(new NodoArbol(n.getIzquierdo().getElem(),null,null));
+            }
+            completarHijosRec(n.getIzquierdo());//recorre subArbol izquierdo
+            completarHijosRec(n.getDerecho());//recorre subArbol derecho
+        }
+    }
 }

@@ -54,6 +54,11 @@ public class ArbolGenerico{
             }
             return ret;
        }
+       public Boolean insertarPorPosicion(Object elem,Object posPadre){
+            Boolean exito=false;
+
+            return exito;
+       }
        public Lista ancestros(Object elem){
             Lista listAncestros=new Lista();
             if(!this.esVacia() && obtenerNodo(this.raiz,elem)!=null){// si no esta vacio el arbol y el elemento existe en este 
@@ -296,4 +301,35 @@ public class ArbolGenerico{
         }
         return ret;
     }
+    //EJERCICIOS DEL SEGUNDO PARCIAL
+    public Boolean verificarCamino(Lista list){
+        Lista camino=list.clone();//usamos un clon para no modificar la lista original
+        return verificarCaminoAux(this.raiz ,camino);
+    }
+    private Boolean verificarCaminoAux(NodoGen n,Lista camino){
+        Boolean existe=false;
+        if(n!=null && !existe){
+              if( n.getElem().equals(camino.obtenerCabecera()) && camino.longitud()>=1){//caso recursivo hijo izq
+                   camino.eliminar(1);//va eliminando la cabecera (hachica la lista)
+                   existe=verificarCaminoAux(n.getHijoIzq(),camino);
+              
+              }else if( camino.estaVacia()){//caso base final de la lista
+                  existe=true;
+              }
+              existe=verificarCaminoAux(n.getHermanoDer(),camino);//caso recursivo hermanoDerecho
+        }
+        return existe;
+    }
+    public Lista listarEntreNiveles(int niv1, int niv2){
+        Lista niveles=new Lista();
+        if(!this.esVacia()){
+            listarEntreNivRec(this.raiz,niveles,niv1, niv2);
+        }
+        return niveles;
+    }
+    private void listarEntreNivRec(NodoGen n,Lista niveles ,int niv1,int niv2){
+        
+    }
+    
+    
 }

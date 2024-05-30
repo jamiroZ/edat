@@ -264,9 +264,9 @@ public class ArbolGenerico{
     }
     public Lista listarPorNivel(){
         Lista list=new Lista();
-        if(!this.esVacia()){
-             Cola q=new Cola();
-             q.poner(this.raiz);
+        if(!this.esVacia()){//arbol no vacio
+             Cola q=new Cola();//
+             q.poner(this.raiz);//
              NodoGen nodoActual,hijo;
              while(!q.esVacia()){
                    nodoActual= (NodoGen) q.obtenerFrente();
@@ -322,14 +322,62 @@ public class ArbolGenerico{
     }
     public Lista listarEntreNiveles(int niv1, int niv2){
         Lista niveles=new Lista();
-        if(!this.esVacia()){
-            listarEntreNivRec(this.raiz,niveles,niv1, niv2);
+        if(!this.esVacia()){//el arbol no esta vacio 
+                listarEntreNivRec(this.raiz,niveles,niv1, niv2,0);
+            
         }
         return niveles;
     }
-    private void listarEntreNivRec(NodoGen n,Lista niveles ,int niv1,int niv2){
-        
+    //actual:variable de nivel actual en movimiento
+    //niv1 y niv2 :limites de la busqueda
+    //n:nodo puntero
+    //niveles:lista con los nodos entre los 2 niveles
+    private void listarEntreNivRec(NodoGen n,Lista niveles ,int niv1,int niv2,int actual){
+        if(n!=null && actual<=niv2){
+              if(niv1<=actual && actual<=niv2){//lista entre esos 2 niveles
+                  niveles.insertar(n.getElem(), niveles.longitud()+1);//inserta elemento
+                  if(n.getHermanoDer()!=null){//SI HAY HERMANOS EN ESE NIVEL
+                       //Me muevo hacia los hermanos
+                       listarEntreNivRec(n.getHermanoDer(), niveles, niv1, niv2, actual);
+                  }
+              }
+              //me muevo al siguiente nivel ,usando el hijo izquierdo
+              listarEntreNivRec(n.getHijoIzq(), niveles, niv1, niv2, actual+1);
+              
+        }
     }
-    
-    
+    public Boolean eliminar(Object elem){//elimina un elemento junto asu decendencia
+         Boolean listo=false;
+         if(this.esVacia()){
+            if(this.raiz.getElem().equals(elem)){//el elemento esta en la raiz
+                 this.raiz=null;//vacia el arbol por completo
+                 listo=true;
+            }else{//busca por subArbol
+                 listo=eliminarRec(this.raiz,this.raiz,elem,false);//busca el elemento y elimina
+            }
+         }
+         return listo;
+    }
+    private Boolean eliminarRec(NodoGen padre,NodoGen n,Object elem,Boolean eliminado){
+        Boolean listo=false;
+        if(n!=null && !eliminado){
+            if(n.getElem().equals(elem)){//se encontro elemento
+                   //no tiene hermanos
+                   if(n.getHermanoDer()==null){
+                       padre.setElem(null);
+                   }else{//tiene hermanos
+                      while(n.getHermanoDer()!=null){
+                         padre.setElem();
+                      }
+                   }
+            }
+            //CASOS RECURSIVOS
+            listo=eliminarRec(padre,n.getHijoIzq(), elem, eliminado);//revisa el hijoIzquierdo
+            if(!listo){//si no se elimino revisa sus hermanos
+                listo=eliminarRec(padre.getHijoIzq(),n.getHermanoDer(),elem,eliminado);
+            }
+        }
+        return listo;
+    }
+
 }

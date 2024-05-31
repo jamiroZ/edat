@@ -118,6 +118,7 @@ public class ArbolGenerico{
             int cont=1;//la raiz vale 1
             if(n!=null){
                 if(n.getHijoIzq()!=null){
+                    System.out.println(n.getElem());
                     cont= cont + 1;
                     cont= cont+alturaRec(n.getHijoIzq(),i);
                 }else{
@@ -368,14 +369,20 @@ public class ArbolGenerico{
         if(n!=null && aux !=null){
             System.out.println("aux"+aux.getElem());
             System.out.println("n"+n.getElem());
-             if(n.getElem().equals(elem)){//se encontro el elemento
-                   if(n.getHermanoDer()==null){
-                        //si el hijo no tiene hermanos
-                        aux.setHijoIZq(null);
-                   }else if(aux.getHijoIzq().equals(n)){//si tiene hermano este pasa a ser el nuevo hijoIzquierdo
-                        aux.setHijoIZq(n.getHermanoDer());
-                   }else{
-                       aux.setHermanoDer((n.getHermanoDer()));
+             if(n.getElem().equals(elem) ){//se encontro el elemento
+                   if(aux.getHijoIzq()==n){//SI ES HIJO IZQUIERDO
+                       if(n.getHermanoDer()!=null){//TIENE HERMANO
+                           aux.setHijoIZq(n.getHermanoDer());
+                       }else{
+                           aux.setHijoIZq(null);
+                       }
+                   }else{//NO ES EL HIJO
+                       if(n.getHermanoDer()!=null){//SI TIENE
+                           aux.setHermanoDer(n.getHermanoDer());
+                       }else{
+                           aux.setHermanoDer(null);
+                       }
+                       
                    }
                    listo=true;
              }else{

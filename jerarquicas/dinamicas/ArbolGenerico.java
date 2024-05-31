@@ -309,14 +309,19 @@ public class ArbolGenerico{
     private Boolean verificarCaminoAux(NodoGen n,Lista camino){
         Boolean existe=false;
         if(n!=null && !existe){
-              if( n.getElem().equals(camino.obtenerCabecera()) && camino.longitud()>=1){//caso recursivo hijo izq
-                   camino.eliminar(1);//va eliminando la cabecera (hachica la lista)
-                   existe=verificarCaminoAux(n.getHijoIzq(),camino);
-              
+              if( !camino.estaVacia()){//caso recursivo hijo izq
+                 System.out.println(camino.obtenerCabecera().getElem());
+                  if(n.getElem().equals(camino.obtenerCabecera().getElem())){
+                     camino.eliminar(1);//va eliminando la cabecera (hachica la lista)
+                     existe=verificarCaminoAux(n.getHijoIzq(),camino);
+                  }
               }else if( camino.estaVacia()){//caso base final de la lista
                   existe=true;
               }
-              existe=verificarCaminoAux(n.getHermanoDer(),camino);//caso recursivo hermanoDerecho
+              if(!existe){
+                existe=verificarCaminoAux(n.getHermanoDer(),camino);//caso recursivo hermanoDerecho
+              }
+
         }
         return existe;
     }
@@ -348,36 +353,39 @@ public class ArbolGenerico{
     }
     public Boolean eliminar(Object elem){//elimina un elemento junto asu decendencia
          Boolean listo=false;
-         if(this.esVacia()){
+         if(!this.esVacia()){
             if(this.raiz.getElem().equals(elem)){//el elemento esta en la raiz
                  this.raiz=null;//vacia el arbol por completo
                  listo=true;
             }else{//busca por subArbol
-                 listo=eliminarRec(this.raiz,this.raiz,elem,false);//busca el elemento y elimina
+                 listo=eliminarRec(this.raiz,this.raiz.getHijoIzq(),elem);//busca el elemento y elimina
             }
          }
          return listo;
     }
-    private Boolean eliminarRec(NodoGen padre,NodoGen n,Object elem,Boolean eliminado){
+    private Boolean eliminarRec(NodoGen aux,NodoGen n,Object elem){
         Boolean listo=false;
-        if(n!=null && !eliminado){
-            if(n.getElem().equals(elem)){//se encontro elemento
-                   //no tiene hermanos
+        if(n!=null && aux !=null){
+            System.out.println("aux"+aux.getElem());
+            System.out.println("n"+n.getElem());
+             if(n.getElem().equals(elem)){//se encontro el elemento
                    if(n.getHermanoDer()==null){
-                       padre.setElem(null);
-                   }else{//tiene hermanos
-                      while(n.getHermanoDer()!=null){
-                         padre.setElem();
-                      }
+                        //si el hijo no tiene hermanos
+                        aux.setHijoIZq(null);
+                   }else if(aux.getHijoIzq().equals(n)){//si tiene hermano este pasa a ser el nuevo hijoIzquierdo
+                        aux.setHijoIZq(n.getHermanoDer());
+                   }else{
+                       aux.setHermanoDer((n.getHermanoDer()));
                    }
-            }
-            //CASOS RECURSIVOS
-            listo=eliminarRec(padre,n.getHijoIzq(), elem, eliminado);//revisa el hijoIzquierdo
-            if(!listo){//si no se elimino revisa sus hermanos
-                listo=eliminarRec(padre.getHijoIzq(),n.getHermanoDer(),elem,eliminado);
-            }
+                   listo=true;
+             }else{
+                listo=eliminarRec(n,n.getHijoIzq(),elem);//me muevo al hijo
+                if(!listo){
+                   listo=eliminarRec(n,n.getHermanoDer(),elem);//me muevo al hermano
+                }
+             }
         }
         return listo;
     }
-
+    
 }

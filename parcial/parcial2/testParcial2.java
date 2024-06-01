@@ -1,4 +1,5 @@
 package parcial.parcial2;
+import conjuntistas.dinamicas.ArbolBB;
 import jerarquicas.dinamicas.ArbolGenerico;
 import lineales.dinamicas.Lista;
 public class testParcial2 {
@@ -9,6 +10,22 @@ public class testParcial2 {
        }
        public static void testingParcial(){
            ArbolGenerico arbol1=new ArbolGenerico();
+           ArbolBB A=new ArbolBB();
+           ArbolBB B=new ArbolBB();
+           //CARGO ARBOL BINARIO DE BUSQUEDA
+           //A
+           A.insertar(56);
+           A.insertar(13);
+           A.insertar(78);
+           A.insertar(7);
+           A.insertar(24);
+           A.insertar(15);
+           A.insertar(100);
+           //B
+            B.insertar(13);
+            B.insertar(24);
+            B.insertar(15);
+            B.insertar(7);
            Lista list,list2,list3;
            //CARGO LAS LISTAS DE COMPARCION
            list=new Lista();
@@ -34,8 +51,24 @@ public class testParcial2 {
            if(arbol1.eliminar(17)){
                System.out.println(arbol1.toString());
            }
+           System.out.println(arbol1.altura());
+           System.out.println("  ");
 
-        }
+           //ARBOL BINARIO DE BUSQUEDA
+           System.out.println("ARBOL A");
+           System.out.println(A.toString());
+           System.out.println(" ");
+           System.out.println("ARBOL B");
+           System.out.println(B.toString());
+           System.out.println(" ");
+
+           if(A.eliminarMinimo()){
+                System.out.println("ELIMINA 56 DEL ARBOL A");
+                System.out.println(A.toString());
+           }
+      }
+
+        
         public static void cargarArbol(ArbolGenerico arbol){
            arbol.insertar(20, null);
            arbol.insertar(13, 20);

@@ -224,4 +224,54 @@ public class ArbolBB{
         }
         return ret;
     }
+    public Boolean eliminarMinimo(){//elimina el elemento mas pequeño del arbol
+        Boolean eliminado=false;
+        if(this.raiz.getIzquierdo()==null){//la raiz es el elemento minimo no tiene subArbolIzquierdo
+            this.raiz=this.raiz.getDerecho();
+            eliminado=true;
+        }else{
+              eliminado=eliminarMinAux(this.raiz,this.raiz.getIzquierdo());
+        }
+        eliminado=eliminarMinAux(this.raiz,this.raiz.getIzquierdo());
+        return eliminado;
+    }
+    private Boolean eliminarMinAux(NodoABB padre,NodoABB n){
+        Boolean el=false;
+
+        if(n!=null){
+            if(n.getIzquierdo()==null){
+               padre.setIzquierdo(n.getDerecho());
+               el=true;
+            }else{
+               el=eliminarMinAux(padre.getIzquierdo(),n.getIzquierdo());
+            }
+        }
+        if(padre.getIzquierdo()==null){//si la raiz tiene hijo izquierdo es nulo
+            this.raiz=this.raiz.getDerecho();//elimina y asigna como raiz al hijo derecho 
+            el=true;
+
+        }else{//
+            if(n!=null){//se mueve por el hijo izquierdo hasta el minimo
+                if(n.getIzquierdo()==null){//llego al minimo
+                  //al padre le enlaza el nuevo hijo izquierdo que corresponde al antiguo hijo derecho
+                  //funciona si no tiene hijo derecho
+                  padre.setIzquierdo(n.getDerecho());
+                  el=true;
+                }else{
+                   el=eliminarMinAux(padre.getIzquierdo(),n.getIzquierdo());
+                }
+            }
+        }
+        return el;
+    }
+    public ArbolBB clonarParteInvertida(Comparable elem){
+          ArbolBB arbol=new ArbolBB();
+          if(!this.esVacio()){
+            clonarInvertidoAux(this.raiz);
+          }
+          return arbol;
+    }
+    private void clonarInvertidoAux(NodoABB n){
+
+    }
 }

@@ -226,56 +226,30 @@ public class ArbolBB{
     }
     public Boolean eliminarMinimo(){//elimina el elemento mas pequeño del arbol
         Boolean eliminado=false;
-<<<<<<< HEAD
         if(this.raiz.getIzquierdo()==null){//la raiz es el elemento minimo no tiene subArbolIzquierdo
-=======
-        /*if(this.raiz.getIzquierdo()==null){//la raiz es el elemento minimo no tiene subArbolIzquierdo
->>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
             this.raiz=this.raiz.getDerecho();
             eliminado=true;
         }else{
               eliminado=eliminarMinAux(this.raiz,this.raiz.getIzquierdo());
-<<<<<<< HEAD
         }
-=======
-        }*/
->>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
-        eliminado=eliminarMinAux(this.raiz,this.raiz.getIzquierdo());
         return eliminado;
     }
-    private Boolean eliminarMinAux(NodoABB padre,NodoABB n){
+    public Boolean eliminarMinAux(NodoABB aux,NodoABB n){
         Boolean el=false;
-<<<<<<< HEAD
-
         if(n!=null){
-=======
-        
-        /*if(n!=null){
->>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
-            if(n.getIzquierdo()==null){
-               padre.setIzquierdo(n.getDerecho());
+            if(aux.getIzquierdo()==null){//si la raiz tiene hijo izquierdo es nulo
+               this.raiz=this.raiz.getDerecho();//elimina y asigna como raiz al hijo derecho 
                el=true;
-            }else{
-               el=eliminarMinAux(padre.getIzquierdo(),n.getIzquierdo());
-            }
-<<<<<<< HEAD
-        }
-=======
-        }*/
->>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
-        if(padre.getIzquierdo()==null){//si la raiz tiene hijo izquierdo es nulo
-            this.raiz=this.raiz.getDerecho();//elimina y asigna como raiz al hijo derecho 
-            el=true;
-
-        }else{//
-            if(n!=null){//se mueve por el hijo izquierdo hasta el minimo
-                if(n.getIzquierdo()==null){//llego al minimo
-                  //al padre le enlaza el nuevo hijo izquierdo que corresponde al antiguo hijo derecho
-                  //funciona si no tiene hijo derecho
-                  padre.setIzquierdo(n.getDerecho());
-                  el=true;
-                }else{
-                   el=eliminarMinAux(padre.getIzquierdo(),n.getIzquierdo());
+            }else{//
+                if(n!=null){//se mueve por el hijo izquierdo hasta el minimo
+                     if(n.getIzquierdo()==null){//llego al minimo
+                     //al padre le enlaza el nuevo hijo izquierdo que corresponde al antiguo hijo derecho
+                     //funciona si no tiene hijo derecho
+                     aux.setIzquierdo(n.getDerecho());
+                     el=true;
+                     }else{
+                        el=eliminarMinAux(aux.getIzquierdo(),n.getIzquierdo());
+                     }
                 }
             }
         }
@@ -289,10 +263,5 @@ public class ArbolBB{
           return arbol;
     }
     private void clonarInvertidoAux(NodoABB n){
-<<<<<<< HEAD
-
-=======
-          
->>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
     }
 }

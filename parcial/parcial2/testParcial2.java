@@ -52,9 +52,6 @@ public class testParcial2 {
            }
            System.out.println(arbol1.altura());
            System.out.println("  ");
-<<<<<<< HEAD
-=======
-
 
            //ARBOL BINARIO DE BUSQUEDA
            System.out.println("ARBOL A");
@@ -65,11 +62,9 @@ public class testParcial2 {
            System.out.println(" ");
 
            if(A.eliminarMinimo()){
-                System.out.printl n("ELIMINA 56 DEL ARBOL A");
+                System.out.println("ELIMINA 56 DEL ARBOL A");
                 System.out.println(A.toString());
            }
->>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
-
            //ARBOL BINARIO DE BUSQUEDA
            System.out.println("ARBOL A");
            System.out.println(A.toString());

@@ -34,9 +34,8 @@ public class testParcial2 {
            list.insertar(27, 3);
            list2=new Lista();
            list2.insertar(20, 1);
-           list2.insertar(54, 2);
-           list2.insertar(27, 3);
-           list2.insertar(17, 4);
+           list2.insertar(27, 2);
+           list2.insertar(17, 3);
            cargarArbol(arbol1);
            list3=new Lista();
            list3.insertar(20, 1);
@@ -47,12 +46,29 @@ public class testParcial2 {
            System.out.println("la lista:20,13,12,45 se encuentra en el arbol:"+arbol1.verificarCamino(list2));
            System.out.println("la lista:20,17 se encuentra en el arbol:"+arbol1.verificarCamino(list3));
            //PRUEBO METODO LISTAR ENTRE NIVELES
-           System.out.println(arbol1.listarEntreNiveles(1, 2).toString());
-           if(arbol1.eliminar(17)){
+           System.out.println("entre niveles:"+arbol1.listarEntreNiveles(1, 3).toString());
+           if(arbol1.eliminar(54)){
                System.out.println(arbol1.toString());
            }
            System.out.println(arbol1.altura());
            System.out.println("  ");
+<<<<<<< HEAD
+=======
+
+
+           //ARBOL BINARIO DE BUSQUEDA
+           System.out.println("ARBOL A");
+           System.out.println(A.toString());
+           System.out.println(" ");
+           System.out.println("ARBOL B");
+           System.out.println(B.toString());
+           System.out.println(" ");
+
+           if(A.eliminarMinimo()){
+                System.out.printl n("ELIMINA 56 DEL ARBOL A");
+                System.out.println(A.toString());
+           }
+>>>>>>> 86a6f79a861dd744e884312084ab1bac7d9ac141
 
            //ARBOL BINARIO DE BUSQUEDA
            System.out.println("ARBOL A");
@@ -79,5 +95,6 @@ public class testParcial2 {
            arbol.insertar(27, 54);
            arbol.insertar(4, 54);
            arbol.insertar(17, 27);
+           arbol.insertar(90, 17);
         }
 }

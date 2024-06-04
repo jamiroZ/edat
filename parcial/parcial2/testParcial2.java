@@ -21,6 +21,14 @@ public class testParcial2 {
            A.insertar(24);
            A.insertar(15);
            A.insertar(100);
+           A.insertar(2);
+           A.insertar(120);
+           A.insertar(80);
+           A.insertar(89);
+           A.insertar(130);
+           A.insertar(110);
+           A.insertar(112);
+           A.insertar(93);
            //B
             B.insertar(13); 
             B.insertar(7);

@@ -269,7 +269,7 @@ public class ArbolBB{
         if(n!=null && elem.compareTo((Comparable) n.getElem())!=0){//si no es el elemento sigue buscando
                 System.out.println(n.getElem());
                 clonarInvertidoAux(n.getIzquierdo(),elem, arbol);
-                if(arbol.esVacio()){
+                if(arbol.esVacio()){//si el arbol esta vacio significa que no lo encontro,busca por el otro subArbol derecho
                     clonarInvertidoAux(n.getDerecho(),elem, arbol);
                 }
          }else if(n!=null){//encontro el elemento(por lo tanto no es n nulo)

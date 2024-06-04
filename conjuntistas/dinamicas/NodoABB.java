@@ -12,6 +12,8 @@ public class NodoABB{
        }
        public NodoABB(Object elem){
               this.elem=elem;
+              this.izquierdo=null;
+              this.derecho=null;
        }
        //observadores
        public Object getElem(){

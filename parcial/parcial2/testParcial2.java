@@ -65,7 +65,7 @@ public class testParcial2 {
                 System.out.println("ELIMINA 56 DEL ARBOL A");
                 System.out.println(A.toString());
            }*/
-           System.out.println(A.clonarParteInvertida(13).toString());
+           System.out.println(A.clonarParteInvertida(78).toString());
 
       }
 

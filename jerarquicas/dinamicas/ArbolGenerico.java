@@ -305,22 +305,20 @@ public class ArbolGenerico{
     //EJERCICIOS DEL SEGUNDO PARCIAL
     public Boolean verificarCamino(Lista list){
         Lista camino=list.clone();//usamos un clon para no modificar la lista original
-        return verificarCaminoAux(this.raiz ,camino);
+        return verificarCaminoAux(this.raiz ,camino,1);
     }
-    private Boolean verificarCaminoAux(NodoGen n,Lista camino){
+    private Boolean verificarCaminoAux(NodoGen n,Lista camino,int pos){
         Boolean existe=false;
-        if(n!=null && !existe){
-              if( !camino.estaVacia()){//caso recursivo hijo izq
-                 System.out.println(camino.obtenerCabecera().getElem());
-                  if(n.getElem().equals(camino.obtenerCabecera().getElem())){
-                     camino.eliminar(1);//va eliminando la cabecera (hachica la lista)
-                     existe=verificarCaminoAux(n.getHijoIzq(),camino);
-                  }
-              }else if( camino.estaVacia()){//caso base final de la lista
+        if(n!=null ){
+              if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq
+                  System.out.println("clon"+camino.recuperar(pos));
+                  pos++;
+                  existe=verificarCaminoAux(n.getHijoIzq(),camino,pos);
+              }else if(pos==camino.longitud() &&  n.getElem().equals(camino.recuperar(pos))){//caso base final de la lista
                   existe=true;
               }
               if(!existe){
-                existe=verificarCaminoAux(n.getHermanoDer(),camino);//caso recursivo hermanoDerecho
+                existe=verificarCaminoAux(n.getHermanoDer(),camino,pos);//caso recursivo hermanoDerecho
               }
 
         }
@@ -394,5 +392,25 @@ public class ArbolGenerico{
         }
         return listo;
     }
-    
+    //este metodo atraves de una lista si el ultimo elemento de la lista es hoja del arbol retorna true
+    public Boolean verificarCamino2(Lista list){
+        Lista camino=list.clone();//usamos un clon para no modificar la lista original
+        return verificarCaminoAux2(this.raiz ,camino,1);
+    }
+    private Boolean verificarCaminoAux2(NodoGen n,Lista camino,int pos){
+        Boolean existe=false;
+        if(n!=null ){
+              if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq,tienen mismo objeto
+                  System.out.println("clon"+camino.recuperar(pos));
+                  pos++;
+                  existe=verificarCaminoAux2(n.getHijoIzq(),camino,pos);
+              }else if (n.getHijoIzq()==null && n.getElem().equals(camino.recuperar(pos)) ){//caso base final de la lista,mismo objecto y el nodo del arbol es hoja
+                         existe=true;
+              }
+              if(!existe){
+                existe=verificarCaminoAux2(n.getHermanoDer(),camino,pos);//caso recursivo hermanoDerecho
+              }
+        }
+        return existe;
+    }
 }

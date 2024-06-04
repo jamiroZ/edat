@@ -8,9 +8,6 @@ public class Lista {
           this.cabecera=null;
           this.longitud=0;
       } 
-      public Nodo obtenerCabecera(){
-         return cabecera;
-      }
       public int longitud(){//devuelve 0 (lista vacia)o n numero si NO esta vacia
         return this.longitud;
       }

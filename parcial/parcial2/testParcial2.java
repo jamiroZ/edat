@@ -41,22 +41,33 @@ public class testParcial2 {
            list.insertar(20, 1);
            list.insertar(54, 2);
            list.insertar(27, 3);
+
            list2=new Lista();
            list2.insertar(20, 1);
-           list2.insertar(27, 2);
-           list2.insertar(17, 3);
-           cargarArbol(arbol1);
+           list2.insertar(54,2);
+           list2.insertar(27, 3);
+           list2.insertar(17, 4);
+           
+
            list3=new Lista();
            list3.insertar(20, 1);
            list3.insertar(17, 2);
+           
+           cargarArbol(arbol1);
            System.out.println(arbol1.toString());
-           //PRUEBO METODO VERIFICARCAMINO con 3 listas
+          
+           //PRUEBO METODO VERIFICARCAMINO con 3 listas 
            System.out.println("la lista:20,54,27 se encuentra en el arbol: "+arbol1.verificarCamino(list));
-           System.out.println("la lista:20,13,12,45 se encuentra en el arbol:"+arbol1.verificarCamino(list2));
+           System.out.println("la lista:20,54,27,17 se encuentra en el arbol:"+arbol1.verificarCamino(list2));
            System.out.println("la lista:20,17 se encuentra en el arbol:"+arbol1.verificarCamino(list3));
+           
+           //PRUEBO METODO VERIFICARCAMINO2 CON 3 LISTAS
+           System.out.println("la lista:20,54,27 se encuentra en el arbol: "+ arbol1.verificarCamino2(list));
+           System.out.println("la lista:20,54,27,17 se encuentra en el arbol:"+ arbol1.verificarCamino2(list2));
+           System.out.println("la lista:20,17 se encuentra en el arbol:"+ arbol1.verificarCamino2(list3));
            //PRUEBO METODO LISTAR ENTRE NIVELES
            System.out.println("entre niveles:"+arbol1.listarEntreNiveles(1, 3).toString());
-           if(arbol1.eliminar(54)){
+           if(arbol1.eliminar(7)){
                System.out.println(arbol1.toString());
            }
            System.out.println(arbol1.altura());
@@ -73,7 +84,7 @@ public class testParcial2 {
                 System.out.println("ELIMINA 56 DEL ARBOL A");
                 System.out.println(A.toString());
            }*/
-           System.out.println(A.clonarParteInvertida(78).toString());
+           System.out.println(A.clonarParteInvertida(100).toString());
 
       }
 
@@ -88,6 +99,5 @@ public class testParcial2 {
            arbol.insertar(27, 54);
            arbol.insertar(4, 54);
            arbol.insertar(17, 27);
-           arbol.insertar(90, 17);
         }
 }

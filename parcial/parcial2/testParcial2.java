@@ -22,10 +22,11 @@ public class testParcial2 {
            A.insertar(15);
            A.insertar(100);
            //B
-            B.insertar(13);
+            B.insertar(13); 
+            B.insertar(7);
             B.insertar(24);
             B.insertar(15);
-            B.insertar(7);
+
            Lista list,list2,list3;
            //CARGO LAS LISTAS DE COMPARCION
            list=new Lista();
@@ -60,23 +61,12 @@ public class testParcial2 {
            System.out.println("ARBOL B");
            System.out.println(B.toString());
            System.out.println(" ");
-
-           if(A.eliminarMinimo()){
+           /*if(A.eliminarMinimo()){
                 System.out.println("ELIMINA 56 DEL ARBOL A");
                 System.out.println(A.toString());
-           }
-           //ARBOL BINARIO DE BUSQUEDA
-           System.out.println("ARBOL A");
-           System.out.println(A.toString());
-           System.out.println(" ");
-           System.out.println("ARBOL B");
-           System.out.println(B.toString());
-           System.out.println(" ");
+           }*/
+           System.out.println(A.clonarParteInvertida(13).toString());
 
-           if(A.eliminarMinimo()){
-                System.out.println("ELIMINA 56 DEL ARBOL A");
-                System.out.println(A.toString());
-           }
       }
 
         

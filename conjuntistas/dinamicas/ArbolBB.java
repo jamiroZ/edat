@@ -258,10 +258,34 @@ public class ArbolBB{
     public ArbolBB clonarParteInvertida(Comparable elem){
           ArbolBB arbol=new ArbolBB();
           if(!this.esVacio()){
-            clonarInvertidoAux(this.raiz);
+            clonarInvertidoAux(this.raiz,elem,arbol);
           }
           return arbol;
     }
-    private void clonarInvertidoAux(NodoABB n){
+    //SI EL ELEMENTO NO EXISTE EN EL ARBOL RETORNA UN ARBOL VACIO
+    //BUSCA  EL ELEMENTO SI EXISTE Y CREA UN SUBARBOL  CON EL ELEMENTO DE RAIZ Y SUS HIJOS INVERTIDOS
+    private void clonarInvertidoAux(NodoABB n,Comparable elem, ArbolBB arbol){
+        //busca hasta encontrar el elemento o hasta ya haber recorrido el arbol en el peor caso
+        if(n!=null && !elem.equals((Comparable) n.getElem())){//si no es el elemento sigue buscando
+                clonarInvertidoAux(n.getIzquierdo(),elem, arbol);
+                clonarInvertidoAux(n.getDerecho(),elem, arbol);
+         }else if(n!=null){//encontro el elemento(por lo tanto no es n nulo)
+                arbol.raiz=new NodoABB(elem);
+                clonarSubArbolInvertido(n,arbol.raiz);//invierte el arbol cambiando sus hijos de lugar
+        }
+    }
+    private void clonarSubArbolInvertido(NodoABB n,NodoABB clon){
+        if(n!=null && clon!=null){
+            if(n.getIzquierdo()!=null){
+                //enlaza el hijo derecho con un nuevo nodo con el objeto del hijo izquierdo de n
+                clon.setDerecho(new NodoABB(n.getIzquierdo().getElem()));
+            }
+            if(n.getDerecho()!=null){//tiene 2 hijos
+                  //enlaza el hijo izquierdo con un nuevo nodo con el objeto del hijo derecho de n
+                  clon.setIzquierdo(new NodoABB(n.getDerecho().getElem()));
+            }
+            clonarSubArbolInvertido(n.getIzquierdo(),clon.getDerecho());
+            clonarSubArbolInvertido(n.getDerecho(), clon.getIzquierdo());
+        }
     }
 }

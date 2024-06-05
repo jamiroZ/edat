@@ -85,7 +85,9 @@ public class testParcial2 {
                 System.out.println(A.toString());
            }*/
            System.out.println(A.clonarParteInvertida(100).toString());
-
+           //
+           System.out.println(" ");//ESPACIO
+           System.out.println(A.listarMayorIgual(13).toString());
       }
 
         

@@ -293,4 +293,48 @@ public class ArbolBB{
             clonarSubArbolInvertido(n.getDerecho(), clon.getIzquierdo());
         }
     }
+    public Lista listarMayorIgual(Comparable elem){//metodo publico que implementa metodos privados de busqueda y insercion
+        Lista mayorIgual=new Lista();
+        if(!this.esVacio()){
+             listarMayorIgualRec(this.raiz,elem,mayorIgual);
+        }
+        return mayorIgual;
+    }
+    private void listarMayorIgualRec(NodoABB n,Comparable elem,Lista list){//metodo privado que busca el elemento que quiero
+        if(n!=null && elem.compareTo((Comparable) n.getElem())!=0){//repite hasta encontrar el objeto o en el peor caso el arbol este vacio 
+                if(elem.compareTo((Comparable) n.getElem())<0){//el EL OBJETO ES MENOR QUE EL DEL NODO 
+                    
+                     listarMayorIgualRec(n.getIzquierdo(),elem,list);
+                     System.out.println("l"+n.getElem());
+                     list.insertar(n.getElem(), 1);//INSERTA EL OBJETO DEL NODO
+
+                     if(n.getDerecho()!=null){//si tiene hijo derecho
+                         listarSubArbolMayor(n.getDerecho(),list);
+                     }
+                }else if(elem.compareTo((Comparable) n.getElem())>0){
+                     listarMayorIgualRec(n.getDerecho(),elem,list);
+                }
+               
+        }else if( n!=null){
+            list.insertar(elem, 1);//inserta el objeto en la lista
+            if(n.getDerecho()!=null){//si tiene hijo derecho
+                listarSubArbolMayor(n.getDerecho(), list);//lista subArbol derecho(objetos mayores)
+            }
+        }
+    }
+    private void listarSubArbolMayor(NodoABB n,Lista list){
+        if(n!=null){
+            System.out.println("H"+n.getElem());
+             //lista de menor a mayor, osea de izquierda a derecha  
+             //con respecto a la lista en posicion(1),la cabecera
+             listarSubArbolMayor(n.getIzquierdo(),list);//DESPUES nodos del subArbol izquierdo (menores) 
+             list.insertar(n.getElem(),1);
+             listarSubArbolMayor(n.getDerecho(),list); //PRIMERO nodos del subArbol derecho(mayores)
+        }
+    }
+
+
+    public Lista listarMenorIgual(Comparable elem){
+
+    }
 }

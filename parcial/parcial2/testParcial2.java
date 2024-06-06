@@ -51,20 +51,19 @@ public class testParcial2 {
            Lista list,list2,list3;
            //CARGO LAS LISTAS DE COMPARCION
            list=new Lista();
-           list.insertar(20, 1);
-           list.insertar(54, 2);
-           list.insertar(27, 3);
+           list.insertar(56, 1);
+           list.insertar(78, 2);
 
            list2=new Lista();
-           list2.insertar(20, 1);
-           list2.insertar(54,2);
-           list2.insertar(27, 3);
-           list2.insertar(17, 4);
+           list2.insertar(56, 1);
+           list2.insertar(78,2);
+           list2.insertar(100, 3);
            
 
            list3=new Lista();
-           list3.insertar(20, 1);
-           list3.insertar(17, 2);
+           list3.insertar(56, 1);
+           list3.insertar(13, 2);
+           list3.insertar(10, 3);
            
            cargarArbol(arbol1);
            System.out.println(arbol1.toString());
@@ -83,10 +82,13 @@ public class testParcial2 {
            if(arbol1.eliminar(7)){
                System.out.println(arbol1.toString());
            }
-           System.out.println(arbol1.altura());
+           System.out.println( " ");
+           //PRUEBO LISTAR HASTA NIVEL 
+           System.out.println(arbol1.listarHastaNivel(3).toString());
            System.out.println("  ");
            //PRUEBO REPETIR HEI
-           arbol1.repetirHEI(13);
+           arbol1.repetirHEI(13);//tiene 14 repetido NO HACE NADA
+           arbol1.repetirHEI(78);//tiene a 100 no repetido debe copiar y pegar
            System.out.println(arbol1.toString());
 
            //ARBOL BINARIO DE BUSQUEDA
@@ -107,15 +109,16 @@ public class testParcial2 {
            System.out.println("    ");//ESPACIO
            System.out.println("listar menor "+A.listarMenorIgual(56).toString());
            System.out.println("  ");//ESPACIO
-           A.eliminarHojasEnRango(5,100);
+           System.out.println("ELIMINAR HOJAS ENTRE RANGOS ");
+           A.eliminarHojasEnRango(5, 100);
            System.out.println(A.toString());
       }
-
-        
         public static void cargarArbol(ArbolGenerico arbol){
            arbol.insertar(56, null);
            arbol.insertar(13, 56);
            arbol.insertar(78, 56);
+           arbol.insertar(9,13);
+           arbol.insertar(24,13);
            arbol.insertar(10, 13);
            arbol.insertar(24, 13);
            arbol.insertar(15, 78);

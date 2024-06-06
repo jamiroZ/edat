@@ -360,6 +360,7 @@ public class ArbolBB{
         }
     }
     public void eliminarHojasEnRango(Comparable min,Comparable max){
+
         moverseEnRango(this.raiz,min,max);
     }
     private void moverseEnRango(NodoABB n,Comparable min,Comparable max){
@@ -397,5 +398,4 @@ public class ArbolBB{
                 eliminarHoja(n,n.getIzquierdo(),min,max);
         }
     }
-    
 }

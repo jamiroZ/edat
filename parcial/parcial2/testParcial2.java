@@ -51,20 +51,19 @@ public class testParcial2 {
            Lista list,list2,list3;
            //CARGO LAS LISTAS DE COMPARCION
            list=new Lista();
-           list.insertar(20, 1);
-           list.insertar(54, 2);
-           list.insertar(27, 3);
+           list.insertar(56, 1);
+           list.insertar(78, 2);
 
            list2=new Lista();
-           list2.insertar(20, 1);
-           list2.insertar(54,2);
-           list2.insertar(27, 3);
-           list2.insertar(17, 4);
+           list2.insertar(56, 1);
+           list2.insertar(78,2);
+           list2.insertar(100, 3);
            
 
            list3=new Lista();
-           list3.insertar(20, 1);
-           list3.insertar(17, 2);
+           list3.insertar(56, 1);
+           list3.insertar(13, 2);
+           list3.insertar(10, 3);
            
            cargarArbol(arbol1);
            System.out.println(arbol1.toString());
@@ -83,7 +82,9 @@ public class testParcial2 {
            if(arbol1.eliminar(7)){
                System.out.println(arbol1.toString());
            }
-           System.out.println(arbol1.altura());
+           System.out.println( " ");
+           //PRUEBO LISTAR HASTA NIVEL 
+           System.out.println(arbol1.listarHastaNivel(3).toString());
            System.out.println("  ");
 
            //ARBOL BINARIO DE BUSQUEDA
@@ -103,6 +104,10 @@ public class testParcial2 {
            System.out.println("listar mayor "+A.listarMayorIgual(13).toString());
            System.out.println("    ");//ESPACIO
            System.out.println("listar menor "+A.listarMenorIgual(56).toString());
+           System.out.println(" ");
+           System.out.println("ELIMINAR HOJAS ENTRE RANGOS ");
+           A.eliminarHojasEnRango(5, 100);
+           System.out.println(A.toString());
       }
 
         

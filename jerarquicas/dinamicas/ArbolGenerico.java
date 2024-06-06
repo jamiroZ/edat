@@ -311,7 +311,6 @@ public class ArbolGenerico{
         Boolean existe=false;
         if(n!=null ){
               if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq
-                  System.out.println("clon"+camino.recuperar(pos));
                   pos++;
                   existe=verificarCaminoAux(n.getHijoIzq(),camino,pos);
               }else if(pos==camino.longitud() &&  n.getElem().equals(camino.recuperar(pos))){//caso base final de la lista
@@ -403,11 +402,11 @@ public class ArbolGenerico{
     private Boolean verificarCaminoAux2(NodoGen n,Lista camino,int pos){
         Boolean existe=false;
         if(n!=null ){
+            System.out.println("posicion "+pos+" objeto "+n.getElem());
               if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq,tienen mismo objeto
-                  System.out.println("clon"+camino.recuperar(pos));
                   pos++;
                   existe=verificarCaminoAux2(n.getHijoIzq(),camino,pos);
-              }else if (n.getHijoIzq()==null && n.getElem().equals(camino.recuperar(pos)) ){//caso base final de la lista,mismo objecto y el nodo del arbol es hoja
+              }else if (n.getHijoIzq()==null && camino.longitud()==pos ){//caso base final de la lista,mismo objecto y el nodo del arbol es hoja
                          existe=true;
               }
               if(!existe){
@@ -423,12 +422,15 @@ public class ArbolGenerico{
         return list;
     }
     private void hastaNivelRec(NodoGen n,int niv,int tope,Lista list){
-        if(n!=null && niv<=tope){
-             list.insertar(n.getElem(), 1);
-             hastaNivelRec(n.getHermanoDer(), niv, tope, list);
-             if(n.getHijoIzq()!=null){
-                  hastaNivelRec(n.getHermanoDer(),niv+1,tope,list);
-             }
+        if(n!=null){
+            if(niv<=tope){
+                list.insertar(n.getElem(), list.longitud()+1);
+                hastaNivelRec(n.getHermanoDer(), niv, tope, list);
+                if(n.getHijoIzq()!=null){
+                     hastaNivelRec(n.getHijoIzq(),niv+1,tope,list);
+                }
+            }
         }
     }
+    
 }

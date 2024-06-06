@@ -359,5 +359,34 @@ public class ArbolBB{
             listarSubArbolMenor(n.getIzquierdo(),list);
         }
     }
+    public void eliminarHojasEnRango(Comparable min,Comparable max){
+        eliminarHojasRec(min, max, this.raiz, this.raiz);
+    }
+    private void eliminarHojasRec(Comparable min,Comparable max, NodoABB n,NodoABB padre){
+        if(n!=null && ( min.compareTo(n.getElem())<0   &&   max.compareTo(n.getElem())>0  ) ){
+            //si el hijo izquierdo es hoja lo elimina
+             if(n.getIzquierdo()==null && n.getDerecho()==null){
+                 if(padre.getIzquierdo()==n){
+                     padre.setIzquierdo(null);
+                 }else if(padre.getDerecho()==n){
+                     padre.setDerecho(null);
+                 }
+            }else{
+                //si es mayor al minimo y hay hijo izquierdo me muevo a la izquierda
+                if(min.compareTo(n.getElem())<0 && n.getIzquierdo()!= null){
+                   eliminarHojasRec(min, max, n.getIzquierdo(),n);
+                }else if(n.getDerecho()!=null){
+                   eliminarHojasRec(min, max, n.getDerecho(),n);
+                }
+            
+                if(max.compareTo(n.getElem())>0 && n.getDerecho()!=null){
+                    eliminarHojasRec(min, max, n.getDerecho(),n);
+                }else if(n.getIzquierdo()!=null){
+                    eliminarHojasRec(min, max, n.getIzquierdo(),n);
+                }
+            }
+            
+        }
+    }
     
 }

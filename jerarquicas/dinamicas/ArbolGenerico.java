@@ -339,11 +339,14 @@ public class ArbolGenerico{
     private void listarEntreNivRec(NodoGen n,Lista niveles ,int niv1,int niv2,int actual){
         if(n!=null && actual<=niv2){
               if(niv1<=actual && actual<=niv2){//lista entre esos 2 niveles
+                
                   niveles.insertar(n.getElem(), niveles.longitud()+1);//inserta elemento
+                  
                   if(n.getHermanoDer()!=null){//SI HAY HERMANOS EN ESE NIVEL
                        //Me muevo hacia los hermanos
                        listarEntreNivRec(n.getHermanoDer(), niveles, niv1, niv2, actual);
                   }
+                  
               }
               //me muevo al siguiente nivel ,usando el hijo izquierdo
               listarEntreNivRec(n.getHijoIzq(), niveles, niv1, niv2, actual+1);
@@ -412,5 +415,20 @@ public class ArbolGenerico{
               }
         }
         return existe;
+    }
+    public Lista listarHastaNivel(int tope){
+        Lista list=new Lista();
+        //si el nivel no existe devulve lista vacia
+        hastaNivelRec(this.raiz,0,tope,list);
+        return list;
+    }
+    private void hastaNivelRec(NodoGen n,int niv,int tope,Lista list){
+        if(n!=null && niv<=tope){
+             list.insertar(n.getElem(), 1);
+             hastaNivelRec(n.getHermanoDer(), niv, tope, list);
+             if(n.getHijoIzq()!=null){
+                  hastaNivelRec(n.getHermanoDer(),niv+1,tope,list);
+             }
+        }
     }
 }

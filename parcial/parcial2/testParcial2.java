@@ -12,6 +12,7 @@ public class testParcial2 {
            ArbolGenerico arbol1=new ArbolGenerico();
            ArbolBB A=new ArbolBB();
            ArbolBB B=new ArbolBB();
+           ArbolBB C=new ArbolBB();
            //CARGO ARBOL BINARIO DE BUSQUEDA
            //A
            A.insertar(56);
@@ -34,7 +35,19 @@ public class testParcial2 {
             B.insertar(7);
             B.insertar(24);
             B.insertar(15);
-
+            //C
+            
+            C.insertar(50);
+            C.insertar(35);
+            C.insertar(27);
+            C.insertar(30);
+            C.insertar(33);
+            C.insertar(20);
+            C.insertar(15);
+            C.insertar(20);
+            C.insertar(18);
+            C.insertar(27);
+            System.out.println(C.toString());
            Lista list,list2,list3;
            //CARGO LAS LISTAS DE COMPARCION
            list=new Lista();
@@ -66,7 +79,7 @@ public class testParcial2 {
            System.out.println("la lista:20,54,27,17 se encuentra en el arbol:"+ arbol1.verificarCamino2(list2));
            System.out.println("la lista:20,17 se encuentra en el arbol:"+ arbol1.verificarCamino2(list3));
            //PRUEBO METODO LISTAR ENTRE NIVELES
-           System.out.println("entre niveles:"+arbol1.listarEntreNiveles(1, 3).toString());
+           System.out.println("entre niveles:"+arbol1.listarEntreNiveles(0, 4).toString());
            if(arbol1.eliminar(7)){
                System.out.println(arbol1.toString());
            }
@@ -87,19 +100,19 @@ public class testParcial2 {
            System.out.println(A.clonarParteInvertida(100).toString());
            //
            System.out.println(" ");//ESPACIO
-           System.out.println(A.listarMayorIgual(13).toString());
+           System.out.println("listar mayor "+A.listarMayorIgual(13).toString());
+           System.out.println("    ");//ESPACIO
+           System.out.println("listar menor "+A.listarMenorIgual(56).toString());
       }
 
         
         public static void cargarArbol(ArbolGenerico arbol){
-           arbol.insertar(20, null);
-           arbol.insertar(13, 20);
-           arbol.insertar(54, 20);
-           arbol.insertar(15, 13);
-           arbol.insertar(12, 13);
-           arbol.insertar(11, 54);
-           arbol.insertar(27, 54);
-           arbol.insertar(4, 54);
-           arbol.insertar(17, 27);
+           arbol.insertar(56, null);
+           arbol.insertar(13, 56);
+           arbol.insertar(78, 56);
+           arbol.insertar(10, 13);
+           arbol.insertar(24, 13);
+           arbol.insertar(15, 78);
+           arbol.insertar(100, 78);
         }
 }

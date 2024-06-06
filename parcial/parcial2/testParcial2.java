@@ -48,6 +48,10 @@ public class testParcial2 {
             C.insertar(18);
             C.insertar(27);
             System.out.println(C.toString());
+            System.out.println(" ");//ESPACIO
+            System.out.println("eliminar Anterior A 15: "+ C.eliminarElemAnterior(15));
+            System.out.println("eliminar Anterior A 20: "+ C.eliminarElemAnterior(20));
+            System.out.println(C.toString());
            Lista list,list2,list3;
            //CARGO LAS LISTAS DE COMPARCION
            list=new Lista();

@@ -398,4 +398,46 @@ public class ArbolBB{
                 eliminarHoja(n,n.getIzquierdo(),min,max);
         }
     }
+    public Boolean eliminarElemAnterior(Comparable elem){
+        Boolean exito=false;
+        exito=eliminarAnteriorRec(this.raiz,elem);
+        return exito;
+    }
+    private Boolean eliminarAnteriorRec(NodoABB n,Comparable elem){
+        Boolean hecho=false;
+        if(n!=null && !hecho){
+            System.out.println(n.getElem());
+             if(elem.equals(n.getElem())){
+                  if(n.getIzquierdo()!=null){
+                      hecho=anteriorSubArbol(n,n.getIzquierdo());
+                  }else{
+                      hecho=false;
+                  }
+             }else{
+                if(elem.compareTo((Comparable) n.getElem())<0){
+                   hecho= eliminarAnteriorRec(n.getIzquierdo(),elem);
+                }else{
+                   hecho= eliminarAnteriorRec(n.getDerecho(),elem);
+                }
+                
+             }
+        }
+        return hecho;
+    }
+    private Boolean anteriorSubArbol(NodoABB padre,NodoABB n ){
+        Boolean exito=false;
+        if(n!=null && !exito){
+             if(n.getDerecho()!=null){//SI TIENE HIJO DERECHO ME MUEVO HASTA EL (PUES ES EL MENOR ANTERIOR)
+                 exito=anteriorSubArbol(n, n.getDerecho());
+             }else {//casos base
+                 if(n.getIzquierdo()!=null){//el nodo a eliminar tiene hijo izquierdo remplazo
+                     padre.setDerecho(n.getIzquierdo());
+                 }else{//no tiene hijo izquierdo inserto null
+                     padre.setDerecho(null); 
+                 }
+                 exito=true;
+             }
+        }
+        return exito;
+    }
 }

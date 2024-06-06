@@ -431,4 +431,30 @@ public class ArbolGenerico{
              }
         }
     }
+    public void repetirHEI(Object a){
+        repetirHEIAux(this.raiz,a);
+    }
+    private void repetirHEIAux(NodoGen n,Object a ){
+        if(n!=null ){
+              if(a.equals(n.getElem())){//objeto encontrado
+                 if(n.getHijoIzq()!=null){
+                    verificarHermanoRepetido(n.getHijoIzq().getHermanoDer(),n.getHijoIzq().getElem());
+                 }
+              }else{
+                 repetirHEIAux(n.getHijoIzq(), a);
+                 repetirHEIAux(n.getHermanoDer(),a);
+              }
+        }
+    }
+    private void verificarHermanoRepetido(NodoGen n,Object hijoIzq){
+        if(n.getHermanoDer()!=null){
+            System.out.println(n.getElem());
+            if(! hijoIzq.equals(n.getElem())){//el objeto esta repetido no modifica
+                verificarHermanoRepetido(n.getHermanoDer(),hijoIzq);
+            }
+            
+        }else{//el objeto no se repite,lo inserta en un nuevo nodo en la lista
+            n.setHermanoDer(new NodoGen(hijoIzq,null,null));
+        }
+    }
 }

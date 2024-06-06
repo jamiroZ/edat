@@ -85,6 +85,9 @@ public class testParcial2 {
            }
            System.out.println(arbol1.altura());
            System.out.println("  ");
+           //PRUEBO REPETIR HEI
+           arbol1.repetirHEI(13);
+           System.out.println(arbol1.toString());
 
            //ARBOL BINARIO DE BUSQUEDA
            System.out.println("ARBOL A");
@@ -103,6 +106,9 @@ public class testParcial2 {
            System.out.println("listar mayor "+A.listarMayorIgual(13).toString());
            System.out.println("    ");//ESPACIO
            System.out.println("listar menor "+A.listarMenorIgual(56).toString());
+           System.out.println("  ");//ESPACIO
+           A.eliminarHojasEnRango(5,100);
+           System.out.println(A.toString());
       }
 
         

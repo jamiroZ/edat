@@ -309,7 +309,7 @@ public class ArbolGenerico{
     }
     private Boolean verificarCaminoAux(NodoGen n,Lista camino,int pos){
         Boolean existe=false;
-        if(n!=null ){
+        if(n!=null && !existe ){
               if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq
                   pos++;
                   existe=verificarCaminoAux(n.getHijoIzq(),camino,pos);
@@ -366,7 +366,7 @@ public class ArbolGenerico{
     }
     private Boolean eliminarRec(NodoGen aux,NodoGen n,Object elem){
         Boolean listo=false;
-        if(n!=null && aux !=null){
+        if(n!=null && aux !=null && !listo){
             System.out.println("aux"+aux.getElem());
             System.out.println("n"+n.getElem());
              if(n.getElem().equals(elem) ){//se encontro el elemento
@@ -409,7 +409,7 @@ public class ArbolGenerico{
               }else if (n.getHijoIzq()==null && camino.longitud()==pos ){//caso base final de la lista,mismo objecto y el nodo del arbol es hoja
                          existe=true;
               }
-              if(!existe){
+              if(!existe && pos < camino.longitud()){
                 existe=verificarCaminoAux2(n.getHermanoDer(),camino,pos);//caso recursivo hermanoDerecho
               }
         }

@@ -9,7 +9,13 @@ public  class NodoAVL{
              this.elem=elem;
              this.izquierdo=izquierdo;
              this.derecho=derecho;
-             this.altura=0;
+             this.recalcularAltura();
+     }
+     public NodoAVL (Comparable elem){
+          this.elem=elem;
+          this.izquierdo=null;
+          this.derecho=null;
+          this.altura=0;
      }
      //OBJETO DEL NODO
      public Comparable getElem(){

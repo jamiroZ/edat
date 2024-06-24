@@ -1,23 +1,23 @@
 package conjuntistas.dinamicas;
 
 public class NodoABB{
-       private Object elem;
+       private Comparable elem;
        private NodoABB izquierdo;
        private NodoABB derecho;
        //constructores
-       public NodoABB(Object elem,NodoABB izquierdo,NodoABB derecho){
+       public NodoABB(Comparable elem,NodoABB izquierdo,NodoABB derecho){
               this.elem=elem;
               this.izquierdo=izquierdo;
               this.derecho=derecho;
        }
-       public NodoABB(Object elem){
+       public NodoABB(Comparable elem){
               this.elem=elem;
               this.izquierdo=null;
               this.derecho=null;
        }
        //observadores
-       public Object getElem(){
-           return this.elem;
+       public Comparable getElem(){
+           return  this.elem;
        }
        public NodoABB getIzquierdo(){
            return this.izquierdo;
@@ -26,7 +26,7 @@ public class NodoABB{
            return this.derecho;
        }
        //modificadores
-       public void setElem(Object elem){
+       public void setElem(Comparable elem){
            this.elem=elem;
        }
        public void setIzquierdo(NodoABB izquierdo){

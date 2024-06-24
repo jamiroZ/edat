@@ -50,7 +50,7 @@ public class ArbolBB{
                  if(n.getDerecho()==null && n.getIzquierdo()==null){//si no tiene hijos(caso hoja)
                       casoHoja(n,padre);
                  }else if((n.getIzquierdo()!=null && n.getDerecho()!=null) ){//si tiene los 2 hijos
-                      Object comp= (Object) menorEnSubArbol(n.getDerecho());//candidato a reemplazar a su padre
+                      Comparable comp=  menorEnSubArbol(n.getDerecho());//candidato a reemplazar a su padre
                       eliminarRec(n.getDerecho(), elem, n);//elimina al candidato
                       n.setElem(comp);//remplazo el nodo actual con el candidato
                  }else{//tiene 1 hijo puede ser derecho o izquierdo
@@ -439,5 +439,54 @@ public class ArbolBB{
              }
         }
         return exito;
+    }
+    public Object mejorCandidato(Comparable elem ){//retorna el mejor candidato para el objeto
+        Comparable n=-1;
+        n=mejorCanRec(this.raiz,elem);
+        return (Object) n;
+    }
+    private Comparable mejorCanRec(NodoABB n,Comparable elem){//busco el objeto
+        Comparable ret=-1;
+        if(n!=null){
+              if(elem.equals(n.getElem())){//encontro el objeto
+                  //n es la raiz del subArbol
+                  Integer i,j;
+                  if(n.getDerecho()!=null || n.getIzquierdo()!=null){
+                     i= (Integer) buscarIzq(n.getIzquierdo());
+                     j= (Integer) buscarDer(n.getDerecho());
+                     if( i -  (Integer) elem < j - (Integer) elem){
+                            ret=i;
+                     }else{
+                            ret=j;
+                     }
+                  }
+                
+              }else{//busca
+                   if(elem.compareTo(n.getElem())<=0){//el objeto es menor al del nodo
+                        ret=mejorCanRec(n.getIzquierdo(),elem);//recorre subArbol Izquierdo
+                   }else{//si es mayor al del nodo
+                    ret=mejorCanRec(n.getDerecho(),elem);//recorre subArbol Derecho
+                   }
+              }
+        }
+        return ret;
+    }
+    private Comparable buscarIzq(NodoABB n){
+        Comparable max;
+        if(n.getDerecho()!=null){
+            max=buscarIzq(n.getDerecho());
+        }else{
+            max=n.getElem();
+        }
+        return max;
+    }
+    private Comparable buscarDer(NodoABB n){
+        Comparable max;
+        if(n.getIzquierdo()!=null){
+            max=buscarIzq(n.getIzquierdo());
+        }else{
+            max=n.getElem();
+        }
+        return max;
     }
 }

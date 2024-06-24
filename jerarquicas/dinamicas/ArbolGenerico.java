@@ -17,7 +17,7 @@ public class ArbolGenerico{
                  }else{//si existe el padre 
                       //crea un nuevo nodo que tiene como hermano al nodoHijoIzq
                       NodoGen m=new NodoGen(elem, null, n.getHijoIzq());
-                      n.setHijoIZq(m);//enlaza el nodo padre al nuevo nodo
+                      n.setHijoIzq(m);//enlaza el nodo padre al nuevo nodo
                  }
             }
             return inserto;
@@ -204,28 +204,6 @@ public class ArbolGenerico{
         }
         return ret;
     }
-    //LISTA Inorden
-    public Lista listarInorden(){
-        Lista salida=new Lista();
-        listarInordenRec(this.raiz,salida);
-        return salida;
-    }
-    private void listarInordenRec(NodoGen n,Lista list){
-        if(n!=null){
-            if(n.getHijoIzq()!=null){//llamado recursivo por el primer hijo de n
-                  listarInordenRec(n.getHijoIzq(),list);
-            }
-            //visita el nodo n
-            list.insertar(n.getElem(),list.longitud()+1);
-            if(n.getHijoIzq()!=null){//llamado recursivo con los otros hijos de n
-               NodoGen hijo=n.getHijoIzq().getHermanoDer();//me muevo a los hermanos del hijo izq
-               while(hijo!=null){
-                   listarInordenRec(hijo,list);
-                   hijo=hijo.getHermanoDer();
-               }
-            }
-        }
-    }
     //lista preOrden
     public Lista listarPreorden(){
         Lista list=new Lista();
@@ -308,50 +286,67 @@ public class ArbolGenerico{
         return verificarCaminoAux(this.raiz ,camino,1);
     }
     private Boolean verificarCaminoAux(NodoGen n,Lista camino,int pos){
-        Boolean existe=false;
-        if(n!=null && !existe ){
-              if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq
-                  pos++;
-                  existe=verificarCaminoAux(n.getHijoIzq(),camino,pos);
-              }else if(pos==camino.longitud() &&  n.getElem().equals(camino.recuperar(pos))){//caso base final de la lista
-                  existe=true;
-              }
-              if(!existe){
-                existe=verificarCaminoAux(n.getHermanoDer(),camino,pos);//caso recursivo hermanoDerecho
-              }
-
-        }
-        return existe;
+         Boolean exito=false;
+         if(n!=null){
+               System.out.println(n.getElem());
+               if(n.getElem().equals(camino.recuperar(pos)) && pos<camino.longitud()){
+                   exito=verificarCaminoAux(n.getHijoIzq(),camino,pos+1);
+               }else if(n.getElem().equals(camino.recuperar(pos)) && pos==camino.longitud()){
+                   exito=true;
+               }
+               if(!exito){
+                   exito=verificarCaminoAux(n.getHermanoDer(),camino,pos);
+               }
+         }
+         return exito;
     }
-    public Lista listarEntreNiveles(int niv1, int niv2){
-        Lista niveles=new Lista();
-        if(!this.esVacia()){//el arbol no esta vacio 
-                listarEntreNivRec(this.raiz,niveles,niv1, niv2,0);
+    public Lista listarEntreNiveles(int niv1,int niv2){
+        Lista listNiv=new Lista();
+        if(this.raiz!=null){
+            listarNivelesRec(this.raiz,0,niv1,niv2,listNiv);
+        }
+        return listNiv;
+    }
+    private void listarNivelesRec(NodoGen n,int niv, int niv1,int niv2, Lista list){
+        if(n!=null && niv<=niv2){
             
-        }
-        return niveles;
-    }
-    //actual:variable de nivel actual en movimiento
-    //niv1 y niv2 :limites de la busqueda
-    //n:nodo puntero
-    //niveles:lista con los nodos entre los 2 niveles
-    private void listarEntreNivRec(NodoGen n,Lista niveles ,int niv1,int niv2,int actual){
-        if(n!=null && actual<=niv2){
-              if(niv1<=actual && actual<=niv2){//lista entre esos 2 niveles
-                
-                  niveles.insertar(n.getElem(), niveles.longitud()+1);//inserta elemento
-                  
-                  if(n.getHermanoDer()!=null){//SI HAY HERMANOS EN ESE NIVEL
-                       //Me muevo hacia los hermanos
-                       listarEntreNivRec(n.getHermanoDer(), niveles, niv1, niv2, actual);
+             if(niv1<=niv && niv<=niv2){
+                  list.insertar(n.getElem(),list.longitud()+1);
+                  if(n.getHermanoDer()!=null){
+                       listarNivelesRec(n.getHermanoDer(), niv, niv1, niv2, list);
                   }
-                  
-              }
-              //me muevo al siguiente nivel ,usando el hijo izquierdo
-              listarEntreNivRec(n.getHijoIzq(), niveles, niv1, niv2, actual+1);
-              
+             }
+             listarNivelesRec(n.getHijoIzq(), niv+1, niv1, niv2, list);
+             
         }
     }
+
+
+    public Boolean verificarCamino2(Lista list){//retorna true si el ultimo de la lista es hoja
+         Boolean exito=false;
+         if(!this.esVacia()){
+            exito=veriCamino2(this.raiz,list,1);
+         }
+         return exito;
+    }
+    private Boolean veriCamino2(NodoGen n,Lista list,int pos){
+        Boolean exito=false;
+         if(n!=null){
+             System.out.println(n.getElem());
+              if(n.getElem().equals(list.recuperar(pos)) && pos < list.longitud()){//RECORRE al hijo si es el objeto
+                   exito=veriCamino2(n.getHijoIzq(), list, pos+1);
+              }else if( n.getHijoIzq()==null){//CASO BASE ES HOJA Y
+                     if( n.getElem().equals(list.recuperar(pos)) && pos == list.longitud()){//ES EL ULTIMO DE LA LISTA
+                          exito=true;
+                     }
+              }
+              if(!exito){
+                  exito=veriCamino2(n.getHermanoDer(),list,pos);
+              }
+         }
+         return exito;
+    }
+   
     public Boolean eliminar(Object elem){//elimina un elemento junto asu decendencia
          Boolean listo=false;
          if(!this.esVacia()){
@@ -372,9 +367,9 @@ public class ArbolGenerico{
              if(n.getElem().equals(elem) ){//se encontro el elemento
                    if(aux.getHijoIzq()==n){//SI ES HIJO IZQUIERDO
                        if(n.getHermanoDer()!=null){//TIENE HERMANO
-                           aux.setHijoIZq(n.getHermanoDer());
+                           aux.setHijoIzq(n.getHermanoDer());
                        }else{
-                           aux.setHijoIZq(null);
+                           aux.setHijoIzq(null);
                        }
                    }else{//NO ES EL HIJO
                        if(n.getHermanoDer()!=null){//SI TIENE
@@ -394,27 +389,7 @@ public class ArbolGenerico{
         }
         return listo;
     }
-    //este metodo atraves de una lista si el ultimo elemento de la lista es hoja del arbol retorna true
-    public Boolean verificarCamino2(Lista list){
-        Lista camino=list.clone();//usamos un clon para no modificar la lista original
-        return verificarCaminoAux2(this.raiz ,camino,1);
-    }
-    private Boolean verificarCaminoAux2(NodoGen n,Lista camino,int pos){
-        Boolean existe=false;
-        if(n!=null ){
-            System.out.println("posicion "+pos+" objeto "+n.getElem());
-              if(n.getElem().equals(camino.recuperar(pos)) && pos < camino.longitud()){//caso recursivo hijo izq,tienen mismo objeto
-                  pos++;
-                  existe=verificarCaminoAux2(n.getHijoIzq(),camino,pos);
-              }else if (n.getHijoIzq()==null && camino.longitud()==pos ){//caso base final de la lista,mismo objecto y el nodo del arbol es hoja
-                         existe=true;
-              }
-              if(!existe && pos < camino.longitud()){
-                existe=verificarCaminoAux2(n.getHermanoDer(),camino,pos);//caso recursivo hermanoDerecho
-              }
-        }
-        return existe;
-    }
+    
     public Lista listarHastaNivel(int tope){
         Lista list=new Lista();
         //si el nivel no existe devulve lista vacia
@@ -459,4 +434,41 @@ public class ArbolGenerico{
         }
         
     }
+    public Boolean jerarquizar(Object elem){
+         Boolean exito;
+         if(this.raiz.getElem()==elem){//NO PUEDE COLOCAR COMO HERMANO DEL PADRE QUE NO TIENE
+            exito=false;
+         }else{
+            exito=jerarquizarR(this.raiz,this.raiz.getHijoIzq(),elem);
+         } 
+         return exito;
+    }
+    //busca el objeto en el arbol si existe en el mejor caso si no recorre hasta null
+    private Boolean jerarquizarR(NodoGen padre, NodoGen hijo,Object elem){
+         Boolean flag=false;
+         if(hijo!=null){
+             System.out.println(hijo.getElem());
+             if(elem.equals(hijo.getElem()) && padre!= this.raiz){//es el objeto deja de recorrer y el padre no sea raiz
+                   NodoGen copia = hijo;//copio el hijo
+                   NodoGen hermanosAux = padre.getHermanoDer();//compio a la lista de hermanos
+                   if(padre.getHijoIzq()==hijo){//el nodo es el hijo izquierdo 
+                       padre.setHijoIzq(hijo.getHermanoDer());
+                   }else{//busca el hermano anterior 
+                       NodoGen hermanoAnt = padre.getHijoIzq();
+                       
+                       hermanoAnt.setHermanoDer(hijo.getHermanoDer());
+                   }
+                   copia.setHermanoDer(hermanosAux);//enlazo nuevo nodo con hermanos del padre
+                   padre.setHermanoDer(copia);//ENLAZO PADRE Con el nuevo hermano
+                   flag=true;
+             }else{//no lo encontro sigue buscando
+                 flag=jerarquizarR(hijo,hijo.getHijoIzq(),elem);//me muevo por hijo izquierdo
+                 if(flag==false){//si no lo encontro por los hermanos
+                     flag=jerarquizarR(hijo,hijo.getHermanoDer(),elem);
+                 }
+             }
+         }
+         return flag;
+    }
+
 }

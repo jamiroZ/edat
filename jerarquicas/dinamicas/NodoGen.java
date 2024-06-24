@@ -23,7 +23,7 @@ public class NodoGen{
     public void setElem(Object elem){
         this.elem=elem;
     }
-    public void setHijoIZq(NodoGen hijoIzq){
+    public void setHijoIzq(NodoGen hijoIzq){
         this.hijoIzq=hijoIzq;
     }
     public void setHermanoDer(NodoGen hermanoDer){

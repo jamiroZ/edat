@@ -28,9 +28,11 @@ public class testParcial2 {
            list3.insertar('Z', 2);
            System.out.println(" ");
            System.out.println(arbol1.toString());
-           arbol1.jerarquizar('X');
+           arbol1.jerarquizar('Y');
            System.out.println(" ");
            System.out.println(arbol1.toString());
+           //VE SI EL ARBOL TIENE MAYOR GRADO QUE N
+           System.out.println("El arbol tiene menor grado que 5"+arbol1.gradoEsMenor(7));
            //PRUEBA DE CAMINOS EN ARBOL
            System.out.println("LA LISTA | "+list.toString() +" | ESTA "+arbol1.verificarCamino(list)+" EN EL ARBOL");
            System.out.println("LA LISTA | "+list2.toString() +" | ESTA "+arbol1.verificarCamino(list2)+" EN EL ARBOL");
@@ -74,6 +76,8 @@ public class testParcial2 {
            A.insertar(31);
            System.out.println(A.toString());
            System.out.println(A.mejorCandidato(100));
+           A.eliminarHojaSubArbol(12);
+           System.out.println(A.toString());
            /* ArbolBB B=new ArbolBB();
            ArbolBB C=new ArbolBB();
            //CARGO ARBOL BINARIO DE BUSQUEDA

@@ -489,4 +489,36 @@ public class ArbolBB{
         }
         return max;
     }
+    public void eliminarHojaSubArbol(Comparable objeto){//elimina hojas de un nodo
+        eliminarHojaRec(this.raiz,objeto);
+    } 
+    private void eliminarHojaRec(NodoABB n,Comparable objeto){
+        if(n!=null){
+            System.out.println(n.getElem());
+            if(objeto.equals(n.getElem())){//encotro el objeto
+                eliminarHojas(n,n);//elimina sus hojas
+            }else{
+                if(objeto.compareTo(n.getElem())<=0){//el objeto es menor al del nodo
+                    eliminarHojaRec(n.getIzquierdo(),objeto);
+                }else{//es mayor
+                    eliminarHojaRec(n.getDerecho(),objeto);
+                }
+            } 
+        }
+    }
+    private void eliminarHojas(NodoABB n,NodoABB padre){//ELIMINA HOJAS DE UN NODO
+        if(n!=null){
+             if(n.getIzquierdo()==null && n.getDerecho()==null){//es hoja
+                  if(padre.getIzquierdo()==n){//es hijo izquierdo
+                       padre.setIzquierdo(null);
+                  }else{ //es hijo derecho
+                       padre.setDerecho(null);
+                  }
+             }else{//casos recursivos 
+                eliminarHojas(n.getIzquierdo(),n);
+                eliminarHojas(n.getDerecho(),n);
+             }
+             
+        }
+    }
 }

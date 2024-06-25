@@ -449,27 +449,65 @@ public class ArbolGenerico{
          if(hijo!=null){
              System.out.println(hijo.getElem());
              if(elem.equals(hijo.getElem()) && padre!= this.raiz){//es el objeto deja de recorrer y el padre no sea raiz
-                   NodoGen copia = hijo;//copio el hijo
-                   NodoGen hermanosAux = padre.getHermanoDer();//compio a la lista de hermanos
-                   if(padre.getHijoIzq()==hijo){//el nodo es el hijo izquierdo 
-                       padre.setHijoIzq(hijo.getHermanoDer());
-                   }else{//busca el hermano anterior 
-                       NodoGen hermanoAnt = padre.getHijoIzq();
 
-                       hermanoAnt.setHermanoDer(hijo.getHermanoDer());
+                   if(padre.getHijoIzq()==hijo){//el nodo es el hijo izquierdo
+                       padre.setHijoIzq(hijo.getHermanoDer());
+                       hijo.setHermanoDer(null);//limpia el hermano derecho del nodo
+                       hijo.setHermanoDer(padre.getHermanoDer());//
+                       padre.setHermanoDer(hijo);//ENLAZO PADRE Con el nuevo hermano
+                   }else{//busca el hermano anterior
+                       NodoGen hermano=padre.getHijoIzq();
+                       while(hermano.getHermanoDer()!=hijo){//busco el hermano anterior
+                            hermano=hermano.getHermanoDer();
+                       }
+                       hermano.setHermanoDer(hijo.getHermanoDer());
                        hijo.setHermanoDer(null);
+                       hijo.setHermanoDer(padre.getHermanoDer());
+                       padre.setHermanoDer(hijo);
                    }
-                   copia.setHermanoDer(hermanosAux);//enlazo nuevo nodo con hermanos del padre
-                   padre.setHermanoDer(copia);//ENLAZO PADRE Con el nuevo hermano
                    flag=true;
              }else{//no lo encontro sigue buscando
                  flag=jerarquizarR(hijo,hijo.getHijoIzq(),elem);//me muevo por hijo izquierdo
                  if(flag==false){//si no lo encontro por los hermanos
-                     flag=jerarquizarR(hijo,hijo.getHermanoDer(),elem);
+                     flag=jerarquizarR(padre,hijo.getHermanoDer(),elem);
                  }
              }
          }
          return flag;
     }
-
+    public Boolean gradoEsMenor (int n){
+         Boolean flag=true;
+         flag=gradoRec(this.raiz,n);
+         return flag;
+    }
+    private Boolean gradoRec(NodoGen nodo,int n){
+         Boolean flag=true;
+         if(nodo != null){
+              System.out.println(nodo.getElem());
+              if(nodo.getHijoIzq()!=null){
+                  int cant= contarHijos(nodo.getHijoIzq());
+                  System.out.println(cant);
+                  if(n <= cant){
+                      flag=false;//si hay un nodo con mayor grado termina
+                  }else{
+                      flag=gradoRec(nodo.getHijoIzq(),n);
+                  }
+              }
+            
+              if(flag){//si no encontro un nodo con mayor grado sigue buscando
+                     flag=gradoRec(nodo.getHijoIzq(),n);
+              }
+              
+         } 
+         return flag;
+    }
+    private int contarHijos(NodoGen n){
+        int cant;//ya tiene un hijo por eso entro al metodo
+        if(n.getHermanoDer()!=null){//aumenta por hermano que tenga
+            cant= 1 + contarHijos(n.getHermanoDer());
+        }else{
+            cant=1;//ya no tiene mas hermanos
+        }
+        return cant;
+    }
 }

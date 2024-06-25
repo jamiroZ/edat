@@ -455,8 +455,9 @@ public class ArbolGenerico{
                        padre.setHijoIzq(hijo.getHermanoDer());
                    }else{//busca el hermano anterior 
                        NodoGen hermanoAnt = padre.getHijoIzq();
-                       
+
                        hermanoAnt.setHermanoDer(hijo.getHermanoDer());
+                       hijo.setHermanoDer(null);
                    }
                    copia.setHermanoDer(hermanosAux);//enlazo nuevo nodo con hermanos del padre
                    padre.setHermanoDer(copia);//ENLAZO PADRE Con el nuevo hermano

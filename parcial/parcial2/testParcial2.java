@@ -28,7 +28,7 @@ public class testParcial2 {
            list3.insertar('Z', 2);
            System.out.println(" ");
            System.out.println(arbol1.toString());
-           arbol1.jerarquizar('E');
+           arbol1.jerarquizar('X');
            System.out.println(" ");
            System.out.println(arbol1.toString());
            //PRUEBA DE CAMINOS EN ARBOL

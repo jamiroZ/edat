@@ -510,4 +510,37 @@ public class ArbolGenerico{
         }
         return cant;
     }
+    public void insertarEnPosicion(Object elem,Object padre,int pos){
+        if(!this.esVacia()){
+                insertarPosicionAux(elem,padre,this.raiz,pos);//si no buscan en el subArbol
+        }else{//arbol vacio
+            this.raiz= new NodoGen(elem, raiz, raiz);//es la raiz 
+        }
+    }
+    private void insertarPosicionAux(Object elem,Object padre,NodoGen n,int pos){
+        if(n!=null){
+            if(padre.equals(n.getElem())){//ENCONTRO EL PADRE TERMINA LA BUSQUEDA
+                 if(n.getHijoIzq()==null){//no posee hijos lo inserta como hijo izquierdo
+                      n.setHijoIzq(new NodoGen(elem, null, null));
+                 }else{//busca su posicion si existe
+                      NodoGen aux=n.getHijoIzq(); 
+                      int i=1;
+                      while(aux.getHermanoDer()!=null && pos < i){//recorre la lista de hermanos
+                           aux=aux.getHermanoDer();
+                           i++;
+                      }
+                      if(pos==i && aux.getHermanoDer()!=null){
+                          NodoGen nuevo=new NodoGen(elem, null, null);
+                          nuevo.setHermanoDer(n.getHermanoDer().getHermanoDer());
+                          aux.setHermanoDer(nuevo);
+                      }else{
+                          
+                      }
+                 }
+            }else{
+                insertarPosicionAux(elem, padre, n.getHijoIzq(), pos);
+                insertarPosicionAux(elem, padre, n.getHermanoDer(), pos);
+            }
+        }
+    }
 }

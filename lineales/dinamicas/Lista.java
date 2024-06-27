@@ -192,9 +192,12 @@ public class Lista {
                 this.cabecera=this.cabecera.getEnlace();//cambia la cabecera al nodo enlazado por esta
                 this.longitud--;
             }else{
-                if(aux.getEnlace()!=null && aux.getEnlace().getElem()==x){
-                   aux.setEnlace(aux.getEnlace().getEnlace());
-                   this.longitud--;
+                if(aux.getEnlace()!=null) {
+
+                    if(aux.getEnlace().getElem()==x){
+                       aux.setEnlace(aux.getEnlace().getEnlace());
+                       this.longitud--;
+                    }
                 }
             }
             eliminarAparicionRec(x, aux.getEnlace());

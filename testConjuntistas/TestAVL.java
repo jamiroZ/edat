@@ -7,10 +7,11 @@ public class TestAVL {
     }
     public static void testing(){
         ArbolAVL arbol=new ArbolAVL();
+        arbol.insertar(5);
+        arbol.insertar(4);
         arbol.insertar(8);
-        arbol.insertar(12);
-        arbol.insertar(10);
-        arbol.insertar(9);
+        arbol.insertar(6);
+        arbol.insertar(7);
         System.out.println(arbol.toString());
     }
 }

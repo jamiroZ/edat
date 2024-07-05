@@ -398,7 +398,7 @@ public class ArbolBB{
                 eliminarHoja(n,n.getIzquierdo(),min,max);
         }
     }
-    public Boolean eliminarElemAnterior(Comparable elem){
+     /*public Boolean eliminarElemAnterior(Comparable elem){
         Boolean exito=false;
         exito=eliminarAnteriorRec(this.raiz,elem);
         return exito;
@@ -439,7 +439,7 @@ public class ArbolBB{
              }
         }
         return exito;
-    }
+    }*/
     public Object mejorCandidato(Comparable elem ){//retorna el mejor candidato para el objeto
         Comparable n=-1;
         n=mejorCanRec(this.raiz,elem);
@@ -520,5 +520,44 @@ public class ArbolBB{
              }
              
         }
+    }
+    public Boolean eliminarElemAnterior(Comparable elem ){
+        Boolean exito=false;
+        if(!this.esVacio()){
+            exito=eliminarAnterior(this.raiz,elem);//busca el elemento
+        }
+        return exito;
+    }
+    private Boolean eliminarAnterior(NodoABB n,Comparable elem){
+        Boolean exito=false;
+        if(n!=null){
+              System.out.println(n.getElem());
+              if(elem.equals(n.getElem())){//lo encontro deja de buscar
+                     exito=eliminarSubArbol(n.getIzquierdo(),n);
+              }else{
+                  if(elem.compareTo(n.getElem())<0){//el elemento es menor que el del nodo
+                      exito=eliminarAnterior(n.getIzquierdo(), elem);//me muevo al subArbol izquierdo
+                  }else{//es mayor que el del nodo
+                      exito=eliminarAnterior(n.getDerecho(), elem);//me muevo al subArbol derecho
+                  }
+              }
+        }
+        return exito;
+    }
+    private Boolean eliminarSubArbol(NodoABB n,NodoABB padre){
+          Boolean v=false;
+          if(n!=null){
+                  if(n.getIzquierdo()==null ){//es el menor del subArbol
+                      if(n.getDerecho()!=null){//tiene hijo derecho
+                            padre.setIzquierdo(n.getDerecho());
+                      }else{
+                            padre.setIzquierdo(null);//no tiene hijo derecho
+                      }
+                      v=true;
+                  }else{
+                     v=eliminarSubArbol(n.getIzquierdo(), n);
+                  }
+          }
+          return v;
     }
 }

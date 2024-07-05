@@ -200,4 +200,72 @@ public class Lista {
             eliminarAparicionRec(x, aux.getEnlace());
         }
     }
+    public Boolean moverAnteultimaPosicion(int pos){
+        Boolean exito=false;
+        if(!this.estaVacia() && this.longitud()>1){// la lista No debe estar vacia y debe tener mas de 1 nodo
+             exito=moverPosicionRec(this.cabecera,this.cabecera,pos,1);
+        }
+        return exito;
+    }
+    private Boolean moverPosicionRec(Nodo n,Nodo ant, int posBuscada,int posReal){//BUSCA LA POSICION DEL NODO QUE SE QUIERE MOVER
+        Boolean ex=false;
+        if(n!=null){
+             if(posBuscada==posReal){//se encontro la posicion Termina la busqueda
+                   moverAux(ant,n,posReal);
+                   ex=true;
+             }else{
+                ex=moverPosicionRec(n.getEnlace(),n, posBuscada, posReal+1);//me muevo al nodo con la posicion y guardo la anterior
+             }
+        }
+        return ex;
+    }
+    private void moverAux(Nodo ant,Nodo n,int pos){
+        //EL ULTIMO NODO TIENE ENLACE A NULL
+            if(pos < this.longitud() && n.getEnlace().getEnlace()!=null){//se mueve hasta la anteultimaposicion 
+
+                Nodo siguiente=n.getEnlace();//siguiente nodo
+                ant.setEnlace(siguiente);//enlazo anterior con el siguiente
+                n.setEnlace(siguiente.getEnlace());//enlazo el nodo que quiero mover con el siguiente del siguiente
+                siguiente.setEnlace(n);//enlazo el anterior al siguiente
+                moverAux(ant.getEnlace(),n,pos++);
+            }
+    }
+    public Lista obtenerMultiplos2(int pos){//retorna una lista con las posiciones multiplos de pos
+         Lista multiplos=new Lista();
+         if(this.cabecera!=null){//hay minimo un objeto en la lista
+                obtenerMultRec(this.cabecera,multiplos,pos,1);
+         }
+         return multiplos;
+    }
+    private void obtenerMultRec(Nodo n, Lista m, int pos,int i){
+          if(n!=null){
+              if( (i % pos) ==0){// si  no hay resto es multiplo de pos
+                  m.insertar(n.getElem(), m.longitud()+1);
+              }
+              obtenerMultRec(n.getEnlace(), m, pos,i+1);
+          }
+    }
+    public void elimiminarApariciones(Object x){
+           elimAparicionesR(this.cabecera, this.cabecera, x);
+    }
+    private void elimAparicionesR(Nodo n,Nodo ant,Object x){
+         if(n!=null){
+               if(n.getElem().equals(x)){
+                  if(this.cabecera==n){//es la cabecera
+                      this.cabecera=n.getEnlace();
+                  }else if(n.getEnlace()==null){//es el ultimo nodo
+                      ant.setEnlace(null);
+                  }else{//es un elemento intermedio
+                      ant.setEnlace(n.getEnlace());
+                      n.setEnlace(null);
+                  }
+               }
+               if(ant.getEnlace().getElem().equals(x)){//se realizo un cambio y el siguiente es igual a x
+                  elimAparicionesR(ant.getEnlace(),ant, x);
+               }else{
+                  elimAparicionesR(n.getEnlace(),n, x);
+               }
+               
+         }
+    }
 }

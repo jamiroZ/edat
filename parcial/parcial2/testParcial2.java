@@ -76,8 +76,11 @@ public class testParcial2 {
            A.insertar(31);
            System.out.println(A.toString());
            System.out.println(A.mejorCandidato(100));
-           A.eliminarHojaSubArbol(12);
+           //A.eliminarHojaSubArbol(12);
+           System.out.println("ELIMINA MENOR DEL DEL SUBARBOL DE IZQUIERDO DE 12 "+A.eliminarElemAnterior(12)+" elimina 3");
+           System.out.println("ELIMINA MENOR DEL DEL SUBARBOL DE IZQUIERDO DE 12"+A.eliminarElemAnterior(12)+" elimina 7 y pone 10");
            System.out.println(A.toString());
+
            /* ArbolBB B=new ArbolBB();
            ArbolBB C=new ArbolBB();
            //CARGO ARBOL BINARIO DE BUSQUEDA

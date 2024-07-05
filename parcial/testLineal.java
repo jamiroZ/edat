@@ -11,6 +11,14 @@ public class testLineal {
     public static void testL(){
         Cola c=new Cola();
         Pila p=new Pila(),p2=new Pila();
+        Lista list=new Lista();
+        cargarLista(list);
+        System.out.println(list.toString());
+        //list.moverAnteultimaPosicion(3);
+        System.out.println(list.toString());
+        System.out.println(list.obtenerMultiplos2(3).toString());
+        list.elimiminarApariciones(2);
+        System.out.println(list.toString());
         cargarPila(p);
         cargarPila2(p2);
         System.out.println(p.toString());
@@ -85,5 +93,19 @@ public class testLineal {
         p2.apilar(3);
         p2.apilar(4);
         p2.apilar(5);
+    }
+    public static void cargarLista(Lista list){
+        list.insertar(2, 1);
+        list.insertar(6, 2);
+        list.insertar(2, 3);
+        list.insertar(7, 4);
+        list.insertar(1, 5);
+        list.insertar(3, 6);
+        list.insertar(2, 7);
+        list.insertar(2, 8);
+        list.insertar(5, 9);
+        list.insertar(2, 10);
+
+        list.insertar(0, 11);
     }
 }

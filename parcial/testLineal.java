@@ -4,6 +4,10 @@ import lineales.dinamicas.Cola;
 import lineales.dinamicas.Lista;
 import lineales.dinamicas.Pila;
 
+
+
+
+
 public class testLineal {
     public static void main(String[] args) {
         testL();

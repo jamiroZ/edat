@@ -8,15 +8,11 @@ package tpFinal.dominio;
  *CONCIDERANDO EL ORDEN ALFABETICO
  */
 public class ClaveP {
-    private String clave;
+    private String equipo1;
+    private String equipo2;
     public ClaveP(String equipo1,String equipo2){
-        int resultado=equipo1.compareTo(equipo2);
-        if(resultado < 0){//el equipo1 esta antes en orden alfabetico
-            this.clave=equipo1+", "+equipo2;
-        }else{//el equipo2 esta antes en orden alfabetico
-            this.clave=equipo2+", "+equipo1;
-        }
+        this.equipo1=equipo1;
+        this.equipo2=equipo2;
     }
-
     
 }

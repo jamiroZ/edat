@@ -88,7 +88,7 @@ public class MapeoAMuchos {
     public Boolean asociar(Object tipDom, Object tipRango){
          Boolean asociado=false;
          NodoHashMapeoM aux=obtenerNodo(tipDom);//busca el nodo conde esta el elemento
-         if(aux.getDominio().equals(tipDom)){//si lo encontro lo asocia con el tipo del Rango
+         if(aux!=null){//si lo encontro lo asocia con el tipo del Rango
               aux.setRango(tipRango);//agrega el elemento a la lista RANGO dentro del nodo 
          }
          return asociado;
@@ -96,21 +96,49 @@ public class MapeoAMuchos {
     public Boolean desasociar(Object tipDom, Object tipRango){
         Boolean asociado=false;
         NodoHashMapeoM aux=obtenerNodo(tipDom);
-        if(aux.getDominio().equals(tipDom)){
-             aux.setRango(tipRango);
+        if(aux!=null){
+            aux.getRango().eliminarApariciones(tipRango);
         }
         return asociado;
    }
    public Lista obtenerValor(Object tipDom){//retora LISTA (TIPO RANGO)
         Lista list=new Lista();
+        NodoHashMapeoM n=obtenerNodo(tipDom);
+        if(n!=null){
+             list=n.getRango();//retorna el Rango del Dominio buscado
+        }
         return list;
    }
    public Lista obtenerConjuntoDominio(){//retorna LISTA (TIPO DOMINIO)
         Lista list=new Lista();
+        int i=0,j=0;
+        while(i <= this.TAMANIO && j <= this.cant){//va a recorrer lo justo
+            if(this.tabla[i]!=null){//hay al menos un nodo en la posicion
+               NodoHashMapeoM aux=this.tabla[i];
+               list.insertar(aux.getDominio(), list.longitud()+1);
+               while(aux.getEnlace()!=null){
+                    list.insertar(aux.getDominio(), list.longitud()+1);
+                    j++;//cuenta cada objeto de la lista
+               }
+            }
+            i++;
+        }
         return list; 
    }
    public Lista obtenerConjuntoRango(){//retorna LISTA (TIPO RANGO)
         Lista list=new Lista();
+        int i=0,j=0;
+        while(i <= this.TAMANIO && j <= this.cant){//va a recorrer lo justo
+            if(this.tabla[i]!=null){//hay al menos un nodo en la posicion
+               NodoHashMapeoM aux=this.tabla[i];
+               list.insertar(aux.getDominio(), list.longitud()+1);
+               while(aux.getEnlace()!=null){
+                    list.insertar(aux.getEnlace(), list.longitud()+1);
+                    j++;//cuenta cada objeto de la lista
+               }
+            }
+            i++;
+        }
         return list;
    }
    public int funcionHash(Object nuevoElem){//
@@ -118,7 +146,6 @@ public class MapeoAMuchos {
         
         return pos;
    }
-
    private NodoHashMapeoM obtenerNodo( Object elem){//busca un objeto y retorna su nodo para uso privado
       Boolean encontrado=false;
       int pos=elem.hashCode()% this.TAMANIO ;//posicion del dominio en la tabla hash
@@ -128,6 +155,9 @@ public class MapeoAMuchos {
         if(!encontrado){
             aux=aux.getEnlace();
         }
+      }
+      if(!encontrado){//SINO LO ENCONTRO retorna null
+           aux=null;
       }
       return aux;
    }
@@ -160,6 +190,9 @@ public class MapeoAMuchos {
            ret=" ";
        }
        return ret;
+   }
+   public void mostrarRango(){
+       ;
    }
 
 }

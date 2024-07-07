@@ -10,16 +10,16 @@ public class NodoHashMapeoM {
           this.enlace=ant;//enlaza con el anterior
           
     }
-    public NodoHashMapeoM getEnlace(){//enlace entre Dominio y rango
+    public NodoHashMapeoM getEnlace(){//enlace entre Dominios
          return this.enlace;
     }
-    public void setEnlace(NodoHashMapeoM n){
+    public void setEnlace(NodoHashMapeoM n){//desenlaze
         this.enlace=n;
     }
-    public Object getDominio(){//retorna dominio
+    public Object getDominio(){//retorna object dominio
         return this.dominio;
     }
-    public void setDominio(Object dom){//modificar dominio
+    public void setDominio(Object dom){//modificar object dominio
          this.dominio=dom;
     }
     public Lista getRango(){//retorna la lista de elementos en el rango correspondientes al mismo dominio
@@ -30,5 +30,8 @@ public class NodoHashMapeoM {
                this.rango.insertar(elem,rango.longitud()+1);
         }
     }
-    
+    public void eliminarElemEnRango(){
+
+    }
+  
 }

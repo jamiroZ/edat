@@ -22,5 +22,44 @@ public class Equipo {
         this.puntos=0;
         this.goles=0;
         this.golesEnContra=0;
-  }
+    }
+    //Nombre
+    public String getNombre(){
+          return this.nombre;
+    }
+    //Director Tecnico (dt)
+    public String getDt(){
+        return this.dt;
+    }
+    public void setDt(String dt){
+        this.dt=dt;
+    }
+    //GRUPOS
+    public char getGrupo(){
+        return this.grupo;
+    }
+    public void setGrupo(){
+
+    }
+    //PUNTOS
+    public int getPuntos(){
+        return this.puntos;
+    }
+    public void setPuntos(int puntos){
+        this.puntos=this.puntos + puntos;
+    }
+    //GOLES
+    public int getGoles(){
+        return this.goles;
+    }
+    public void setGoles(int goles){
+        this.goles=this.goles + goles;
+    }
+    //GOLES EN CONTRA
+    public int getGolesEnContra(){
+        return this.golesEnContra;
+    }
+    public void setGolesEnContra(int en){
+        this.golesEnContra=this.golesEnContra + en;
+    }
 }

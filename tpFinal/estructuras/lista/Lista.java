@@ -93,7 +93,7 @@ public class Lista {
          int pos=localizarRec(elem,this.cabecera,1);
          return pos;
       }
-      public int localizarRec(Object elem, Nodo aux,int i){
+      private int localizarRec(Object elem, Nodo aux,int i){
           int ret;
           if(aux==null){
               ret=-1;

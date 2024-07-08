@@ -14,5 +14,14 @@ public class ClaveP {
         this.equipo1=equipo1;
         this.equipo2=equipo2;
     }
-    
+    public String getEq1(){
+        return this.equipo1;
+    }
+    public String getEq2(){
+        return this.equipo2;
+    }
+
+    public String toString(){
+        return this.equipo1+" - "+this.equipo2;
+    }
 }

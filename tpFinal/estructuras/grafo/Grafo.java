@@ -8,7 +8,7 @@ public class Grafo {
     //METODOS QUE INVOLUCRAN EL VERTICE
     public Boolean insertarVertice(Object elem){
         Boolean flag=false;
-
+        
         return flag;
     }
     public Boolean eliminarVertice(Object elem){
@@ -21,7 +21,7 @@ public class Grafo {
         return flag;
     }
     //METODOS QUE INVOLUCRAN EL ARCO
-    public Boolean insertarArco(Object elem){
+    public Boolean insertarArco(NodoVert n, NodoAdy n2, Object tipEtiqueta){
         Boolean flag=false;
 
         return flag;
@@ -34,6 +34,20 @@ public class Grafo {
     public Boolean existeArco(Object elem){
         Boolean flag=false;
         return flag;
+    }
+    //OTROS
+    public Boolean existeCamino(Object elem){
+        Boolean flag=false;
+        return flag;
+    }
+    public Lista listarEnProfundidad(){//retorna LISTA DE ELEMENTOS TIPO VERTICE
+
+    }
+    public Lista listarEnAnchura(){//retorna LISTA DE ELEMENTOS  TIPO VERTICE
+
+    }
+    public Lista listarCaminoMasCorto(O){//retorna LISTA DE ELEMENTOS TIPO VERTICE
+
     }
     public Boolean esVacio(){
         return this.inicio==null;

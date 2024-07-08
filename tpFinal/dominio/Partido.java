@@ -17,10 +17,7 @@ public class Partido {
                this.eq1Goles=eq2Goles;
                this.eq2Goles=eq1Goles;
           }
-          if(ronda.equalsIgnoreCase("grupo") || ronda.equalsIgnoreCase("cuartos")  || ronda.equalsIgnoreCase("semifinal") ||ronda.equalsIgnoreCase("final")){
-             this.ronda=ronda;
-          }
-          
+          this.ronda=ronda;
           this.evento=evento;
           this.estadio=estadio;
      }
@@ -45,6 +42,6 @@ public class Partido {
           return eq1Goles+", "+eq2Goles;
      }
      public String toString(){
-          return clave+": "+eq1Goles+", "+eq2Goles+", "+ronda+", "+ evento.toString()+", "+estadio;
+          return eq1Goles+", "+eq2Goles+", "+ronda+", "+ evento+", "+estadio;
      }
 }

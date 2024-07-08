@@ -1,9 +1,6 @@
 package tpFinal.estructuras.conjuntistas;
 //importo la estructura LISTA
 import tpFinal.estructuras.lista.Lista;
-
-
-
 //MAPEO A MUCHOS CON HASH ABIERTO
 //
 /* */
@@ -112,14 +109,16 @@ public class MapeoAMuchos {
    public Lista obtenerConjuntoDominio(){//retorna LISTA (TIPO DOMINIO)
         Lista list=new Lista();
         int i=0,j=0;
-        while(i <= this.TAMANIO && j <= this.cant){//va a recorrer lo justo
+        while(i < this.TAMANIO-1 && j <= this.cant){//va a recorrer lo justo
             if(this.tabla[i]!=null){//hay al menos un nodo en la posicion
                NodoHashMapeoM aux=this.tabla[i];
-               list.insertar(aux.getDominio(), list.longitud()+1);
+               System.out.println("x");
                while(aux.getEnlace()!=null){
                     list.insertar(aux.getDominio(), list.longitud()+1);
+                    aux=aux.getEnlace();
                     j++;//cuenta cada objeto de la lista
                }
+               System.out.println(list.toString());
             }
             i++;
         }
@@ -128,12 +127,14 @@ public class MapeoAMuchos {
    public Lista obtenerConjuntoRango(){//retorna LISTA (TIPO RANGO)
         Lista list=new Lista();
         int i=0,j=0;
-        while(i <= this.TAMANIO && j <= this.cant){//va a recorrer lo justo
+        while(i < this.TAMANIO-1 && j <= this.cant){//va a recorrer lo justo
             if(this.tabla[i]!=null){//hay al menos un nodo en la posicion
                NodoHashMapeoM aux=this.tabla[i];
-               list.insertar(aux.getDominio(), list.longitud()+1);
+               
                while(aux.getEnlace()!=null){
-                    list.insertar(aux.getEnlace(), list.longitud()+1);
+                    System.out.println("x");
+                    list.insertar(aux.getRango(), list.longitud()+1);
+                    aux=aux.getEnlace();
                     j++;//cuenta cada objeto de la lista
                }
             }
@@ -141,9 +142,19 @@ public class MapeoAMuchos {
         }
         return list;
    }
-   public int funcionHash(Object nuevoElem){//
-        int pos=nuevoElem.hashCode()% this.TAMANIO;//obtengo la posicion
-        
+   public int funcionHash(Object nuevoElem){//retorna la posicion del elemento si existe
+        int pos= nuevoElem.hashCode()% this.TAMANIO;//obtengo la posicion
+        if( pos <= TAMANIO ){
+           if(this.tabla[pos]!=null){//existe al menos un nodo en la posicion
+               NodoHashMapeoM aux=this.tabla[pos];
+               while(!aux.getDominio().equals(nuevoElem)){//si no e el objeto
+                    aux= aux.getEnlace();//se mueve en la lista
+                    pos++;
+               }
+           }else{
+              pos=-1;//si no lo encontro devuelve -1
+           }
+        }
         return pos;
    }
    private NodoHashMapeoM obtenerNodo( Object elem){//busca un objeto y retorna su nodo para uso privado
@@ -194,6 +205,19 @@ public class MapeoAMuchos {
    public void mostrarRango(){
        ;
    }
-
+   public String mostrarPartidosConClave(Object tipDom){
+       String ret="";
+       NodoHashMapeoM aux=obtenerNodo(tipDom);//obtiene el nodo con el dominio
+       if(aux!=null){//si existe es diferente de null
+            ret= aux.getDominio().toString()+" ";//agregar toString clase claveP
+            int i=1;
+            while(i <= aux.getRango().longitud()){
+                ret=ret+aux.getRango().recuperar(i).toString()+" ; ";//agragar
+                i++;
+            }
+            
+       }
+       return ret;
+   }
 }
 

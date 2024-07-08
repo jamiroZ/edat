@@ -3,31 +3,31 @@ package tpFinal.estructuras.grafo;
 public class NodoAdy {
     private NodoVert vertice;
     private NodoAdy sigAdyacente;
-    private Object etiqueta;
-    public NodoAdy(NodoVert vertice, NodoAdy sigAdyacente ,Object etiqueta){
+    private int etiqueta;
+    public NodoAdy(NodoVert vertice, NodoAdy sigAdyacente , int etiqueta){
              this.vertice=vertice;
              this.sigAdyacente=sigAdyacente;
              this.etiqueta=etiqueta;
     }
-    //
-    public NodoVert getVert(){
+    //modifica o observa el nodo 
+    public NodoVert getVertice(){
         return this.vertice;
     }
-    public void setVert(NodoVert vertice){
+    public void setVertice(NodoVert vertice){
         this.vertice=vertice;
     }
-    //
-    public NodoAdy getAdy(){
+    //modifica o observa el enlace guardado de su siguiente nodo adyacente
+    public NodoAdy getSigAdyacente(){
         return this.sigAdyacente;
     }
-    public void setAdy(NodoAdy sigAdyacente){
+    public void setSigAdyacente(NodoAdy sigAdyacente){
         this.sigAdyacente=sigAdyacente;
     }
     //
     public Object getEtiqueta(){
         return this.etiqueta;
     }
-    public void setEtiqueta(Object etiqueta){
+    public void setEtiqueta(int etiqueta){
         this.etiqueta=etiqueta;
     }
 }

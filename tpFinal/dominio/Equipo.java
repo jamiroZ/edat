@@ -9,7 +9,7 @@ public class Equipo {
     private int golesEnContra;
     public Equipo(String nombre){
           this.nombre=nombre;
-          this.dt="";
+          this.dt=" ";
           this.grupo=' ';
           this.puntos=0;
           this.goles=0;
@@ -19,10 +19,11 @@ public class Equipo {
         this.nombre=nombre;
         this.dt=dt;
         this.grupo=grupo;
-        this.puntos=0;
-        this.goles=0;
-        this.golesEnContra=0;
+        this.puntos=puntos;
+        this.goles=goles;
+        this.golesEnContra=golesEnContra;
     }
+
     //Nombre
     public String getNombre(){
           return this.nombre;
@@ -37,9 +38,6 @@ public class Equipo {
     //GRUPOS
     public char getGrupo(){
         return this.grupo;
-    }
-    public void setGrupo(){
-
     }
     //PUNTOS
     public int getPuntos(){
@@ -62,4 +60,5 @@ public class Equipo {
     public void setGolesEnContra(int en){
         this.golesEnContra=this.golesEnContra + en;
     }
+    
 }

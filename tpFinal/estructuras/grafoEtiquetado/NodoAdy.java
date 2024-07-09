@@ -1,4 +1,4 @@
-package tpFinal.estructuras.grafo;
+package tpFinal.estructuras.grafoEtiquetado;
 
 public class NodoAdy {
     private NodoVert vertice;

@@ -2,7 +2,7 @@ package tpFinal.dominio;
 
 
 import tpFinal.estructuras.conjuntistas.MapeoAMuchos;
-
+import tpFinal.estructuras.grafoEtiquetado.Grafo;
 
 
 public class CopaAmerica{
@@ -16,11 +16,19 @@ public class CopaAmerica{
         Partido argCanada2=new Partido("arg","canada", "semi", null, " ", 3, 1);
         ClaveP clave=new ClaveP("arg", "canada");
         //PRUEBA DE ESTRUCTURAS
+        //HASH ABIERTO :MAPEAOAMUCHOS
         MapeoAMuchos hash=new MapeoAMuchos();
         hash.insertar(clave);
         hash.asociar(clave, argCanada1);
         hash.asociar(clave, argCanada2); 
         System.out.println(hash.mostrarPartidosConClave(clave));
+        //GRAFO ETIQUETADO 
+        Grafo grafo=new Grafo();
+        grafo.insertarVertice("A");
+        grafo.insertarVertice("B");
+        grafo.insertarVertice("C");
+        grafo.insertarArco("A", "C", 10);
+        System.out.println(grafo.toString());
         /*
         hash.insertar("ohal");
         hash.insertar("pan");

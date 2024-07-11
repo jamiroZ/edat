@@ -25,6 +25,7 @@ public class Grafo {
             aux=aux.getSigVertice();//SIGUE BUSCANDO
         }
         if(aux!=null){//si lo encontro
+             flag=true;
              NodoAdy adyacente=aux.getPrimerAdy();
              while(adyacente!=null){//tiene nodos adyacente
                 //a cada nodo vertice lo desenlazo del elemento que se quiere eliminar
@@ -200,16 +201,37 @@ public class Grafo {
                         ady=ady.getSigAdyacente();//recorre la lista
                    }
                    if(!flag){//si no existia un arco "camino directo" entre ini y fin que siga buscando
-                        Lista vistos=new Lista();//lista auxiliar de elementos de nodos visitados
-                        flag=existeCaminoRec(vistos,fin,aux);
+                        Lista camAct=new Lista(), vistos=new Lista();//lista auxiliar de elementos de nodos visitados
+                        caminoMasCortoRec(vistos,camAct,camino,fin,aux);
                    }
             }
         }
         return camino;
     }
-    private Lista listarCaminoMasCortoRec(){
-        Lista list=new Lista();
-        return list;
+    private void caminoMasCortoRec(Lista vistos,Lista camAct, Lista camino, Object fin ,NodoVert n){
+
+        if(n!=null){
+             //
+             vistos.insertar(n.getElem(), vistos.longitud()+1);//guardo los ya vistos
+             camAct.insertar(n.getElem(), vistos.longitud()+1);//creo el camino para comparar
+             if(fin.equals(n.getElem())){//se llego al final
+                   if(camino.longitud() < camAct.longitud()){
+                          camino=camAct.clone();//nueva lista de camino MINIMO
+                   } 
+             }else{
+                 NodoAdy ady=n.getPrimerAdy();
+                 while(ady!=null){//recorro lista de adyacentes a n
+                        if(vistos.localizar(ady.getVertice().getElem())<0){//no visito el elemento en el vertice del NodoAdyacente, lo visita
+                             caminoMasCortoRec(vistos,camAct,camino , fin ,ady.getVertice());
+                        }
+                        ady=ady.getSigAdyacente();
+                 }
+             }
+             camAct.eliminar();
+             vistos.eliminar();
+
+        }
+
     }
 
     public Lista listarEnProfundidad(){//retorna LISTA DE ELEMENTOS TIPO VERTICe
@@ -217,20 +239,20 @@ public class Grafo {
         NodoVert aux=this.inicio;
         while(aux!=null ){//ME MUEVO EN LA LISTA DE NODOS ADYACENTES
               if(vistos.localizar(aux.getElem())< 0){//no se visito el elemento de aux
-                   listarEnProfundidadDesde( aux,vistos);
+                   profundidadDesde( aux,vistos);
               }
               aux=aux.getSigVertice();
 
         }
         return vistos;
     }
-    private void listarEnProfundidadDesde(NodoVert n, Lista vistos){
+    private void profundidadDesde(NodoVert n, Lista vistos){
         vistos.insertar(n.getElem(),vistos.longitud()+1);
         NodoAdy ady=n.getPrimerAdy();
         while(ady != null){//ME MUEVO EN LA LISTA DE NODOS ADYACENTES
              //si el vertice perteneciente al nodo adyacente no se visito
              if(vistos.localizar(ady.getVertice().getElem())<0){
-                  listarEnProfundidadDesde(ady.getVertice(), vistos);
+                  profundidadDesde(ady.getVertice(), vistos);
              }
              ady=ady.getSigAdyacente();
         }

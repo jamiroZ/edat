@@ -24,17 +24,17 @@ public class ArbolAVL{
         if (n != null){
             NodoAVL izq = n.getIzquierdo(), der = n.getDerecho(); 
 
-            if (elem.compareTo(n.getElem()) == 0){ 
-                exito = false; //error el elem ya existe en el arbol
+            if (elem.compareTo(n.getElem()) == 0){
+                exito = false; //elem ya existe en el arbol
                 
-            } else if (elem.compareTo(n.getElem()) > 0) { //si el elem es mayor que la raiz voy al HD
-                if (der == null){ //si n no tiene HD inserto
+            } else if (elem.compareTo(n.getElem()) > 0) { //si el elem es mayor que la raiz voy al derecho
+                if (der == null){ //si n no tiene hijo derecho inserto
                     n.setDerecho(new NodoAVL(elem, null, null));
                 } else { //paso recursivo con subarbol der
                     exito = insertarRec(der, elem, n);
                 }
-            } else { //si el elem es menor que la raiz voy al HI
-                if (izq == null){ //si n no tiene HI inserto
+            } else { //si el elem es menor que la raiz voy al izquierdo
+                if (izq == null){ //si n no tiene  hijo izquierdo inserto
                     n.setIzquierdo(new NodoAVL(elem, null, null));
                 } else { //Paso recursivo con subarbol izq
                     exito = insertarRec(izq, elem, n);
@@ -54,41 +54,7 @@ public class ArbolAVL{
         
         return exito;
     }
-    private void casoHoja(NodoAVL n,NodoAVL padre){
-        if(padre==null){//el elemento es la raiz del arbol
-              this.raiz=null;
-        }else{//si no enlaza el nodo PADRE con el hijo de su hijo(null)
-            if(((Comparable) padre.getElem()).compareTo(n.getElem())<0){//si el hijo es menor cambia hijo izquierdo
-                  padre.setIzquierdo(null);
-            }else{//si el hijo es mayor cambia hijo derecho
-                  padre.setDerecho(null);
-            }
-        }
-    }
-    private void caso1Hijo(NodoAVL n , NodoAVL padre){
-        if(padre!=null){
-               if(n.getDerecho()==null){//si el hijo derecho es null(solo tiene hijo izquierdo)
-                       if(((Comparable) padre.getElem()).compareTo(n.getElem()) < 0 ){//y el hijo izquierdo es menor que su padre
-                           padre.setIzquierdo(n.getIzquierdo());
-                       }else{//si el hijo izquierdo es mayor que su padre
-                           padre.setDerecho(n.getIzquierdo());
-                       }
-               }else{//su hijo izquierdo es null(solo tiene hijo derecho)
-                       if(((Comparable) padre.getElem()).compareTo(n.getElem())  < 0 ){//y el hijo izquierdo es menor que su padre
-                           padre.setIzquierdo(n.getDerecho());
-                       }else{//si el hijo izquierdo es mayor que su padre
-                           padre.setDerecho(n.getDerecho());
-                       }
-               }
-        }else{//caso espacial:si el elemento es raiz lo intercambio por su hijo
-             if(n.getIzquierdo()==null){
-                  this.raiz=n.getDerecho();
-             }else{
-                  this.raiz=n.getIzquierdo();
-             }
-        }
-       
-    }
+    
     private Comparable menorEnSubArbol(NodoAVL n){//retorna el elemento minimo de un subArbol 
         Comparable minimo;
         if(n.getIzquierdo()==null){
@@ -110,7 +76,7 @@ public class ArbolAVL{
     public Boolean pertenece(Comparable elem){
         Boolean p=false;
         if(!this.esVacio()){
-            if(elem.equals(this.raiz.getElem())){//si es la raiz 
+            if(elem.compareTo(this.raiz.getElem())==0){//si es la raiz 
                 p=true;
             }else{//sino es la raiz busca por sus sub arboles
                 p=perteneceRec(this.raiz,elem);
@@ -121,7 +87,8 @@ public class ArbolAVL{
     private Boolean perteneceRec(NodoAVL n, Comparable elem){
         Boolean existe=false;
         if(n!=null){
-              if(elem.equals(n.getElem())){//caso base
+            System.out.println(n.getElem());
+              if(elem.compareTo(n.getElem())==0){//caso base
                    existe=true;
               }else{//casos recursivos
                   if(elem.compareTo(n.getElem())<0){
@@ -225,20 +192,6 @@ public class ArbolAVL{
         h.recalcularAltura();
         return h;//reotrna nueva raiz del sub Arbol
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void vaciar(){
         this.raiz=null;
     }
@@ -311,16 +264,6 @@ public class ArbolAVL{
         }
         return ret;
     }
-
-
-
-
-
-
-
-
-
-
     public Boolean eliminar(Comparable elem){ 
         Boolean elimino=false;
         if(!this.esVacio() && pertenece(elem)) {
@@ -331,13 +274,12 @@ public class ArbolAVL{
     private Boolean eliminarRec(NodoAVL n,Comparable elem,NodoAVL padre){
         Boolean elim=false;
         if(n!=null){
-             if(elem.equals(n.getElem())){
+             if(elem.compareTo(n.getElem())==0){//lo encontro
                  if(n.getDerecho()==null && n.getIzquierdo()==null){//si no tiene hijos(caso hoja)
                       casoHoja(n,padre);
                  }else if((n.getIzquierdo()!=null && n.getDerecho()!=null) ){//si tiene los 2 hijos
-                      Comparable comp = menorEnSubArbol(n.getDerecho());//candidato a reemplazar a su padre
-                      eliminarRec(n.getDerecho(), elem, n);//elimina al candidato
-                      n.setElem(comp);//remplazo el nodo actual con el candidato
+                      NodoAVL comp = obtenerCandidato(n.getDerecho(),n);//candidato a reemplazar a su padre
+                      n.setElem(comp.getElem());//remplazo con el elemento del nodo comp
                  }else{//tiene 1 hijo puede ser derecho o izquierdo
                       caso1Hijo(n,padre);
                  }
@@ -360,6 +302,61 @@ public class ArbolAVL{
         }
         return elim;
     }
+
+    private void casoHoja(NodoAVL n,NodoAVL padre){
+        if(padre==null){//el elemento es la raiz del arbol
+              this.raiz=null;
+        }else{//si no enlaza el nodo PADRE con el hijo de su hijo(null)
+            if(((Comparable) n.getElem()).compareTo(padre.getElem())<0){//si el hijo es menor cambia hijo izquierdo
+                  padre.setIzquierdo(null);
+            }else{//si el hijo es mayor cambia hijo derecho
+                  padre.setDerecho(null);
+            }
+        }
+    }
+    private void caso1Hijo(NodoAVL n , NodoAVL padre){
+        if(padre!=null){
+               if(n.getDerecho()==null){//si el hijo derecho es null(solo tiene hijo izquierdo)
+                       if(((Comparable) n.getElem()).compareTo( padre.getElem()) < 0 ){//y el hijo izquierdo es menor que su padre
+                           padre.setIzquierdo(n.getIzquierdo());
+                       }else{//si el hijo izquierdo es mayor que su padre
+                           padre.setDerecho(n.getIzquierdo());
+                       }
+               }else{//su hijo izquierdo es null(solo tiene hijo derecho)
+                       if(((Comparable) n.getElem() ).compareTo(padre.getElem())  < 0 ){//y el hijo izquierdo es menor que su padre
+                           padre.setIzquierdo(n.getDerecho());
+                       }else{//si el hijo izquierdo es mayor que su padre
+                           padre.setDerecho(n.getDerecho());
+                       }
+               }
+        }else{//caso espacial:si el elemento es raiz lo intercambio por su hijo
+             if(n.getIzquierdo()==null){
+                  this.raiz=n.getDerecho();
+             }else{
+                  this.raiz=n.getIzquierdo();
+             }
+        }
+    }
+    private NodoAVL obtenerCandidato(NodoAVL n, NodoAVL padre){
+        //busca al elem menor en el subrarbol, lo elimina y luego lo retorna
+        NodoAVL ret;
+
+        if (n.getIzquierdo() == null){
+            ret = n;
+            padre.setIzquierdo(null);
+        } else {
+            ret = obtenerCandidato(n.getIzquierdo(), n);
+            n.recalcularAltura(); //recalculo altura
+            int balance = balance(n); //veo el balance de n
+            if (balance < -1 || balance > 1){ //si esta desbalanceado
+                balancear(balance, n, padre);
+                n.recalcularAltura();
+            }  
+        }
+        
+        return ret;
+    }
+    
     public Boolean esVacio(){//RETORNA VERDADERO SI ESTA VACIO EL ARBOL
         return (this.raiz==null);
     }
@@ -392,10 +389,11 @@ public class ArbolAVL{
     private Comparable getElemRecursivo(NodoAVL n, Comparable elem){
         Comparable elemBuscado=null;
         if(n!=null){
-            if(elem.equals(n.getElem())){//caso base
+            System.out.println(n.getElem());
+            if(elem.compareTo(n.getElem())==0){//caso base
                  elemBuscado=n.getElem();
             }else{//casos recursivos
-                if(elem.compareTo(n.getElem())<0){
+                if(elem.compareTo(n.getElem())<0){//es menor el elemento que el del nodo
                       elemBuscado=getElemRecursivo(n.getIzquierdo(),elem);//recorre hijo izquierdo
                 }else{//recorre hijo derecho si no encontro por el hijo izquierdo
                       elemBuscado=getElemRecursivo(n.getDerecho(),elem);

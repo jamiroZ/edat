@@ -20,18 +20,28 @@ public class CopaAmerica{
         Ciudad ciudad=new Ciudad("neuquen",true,false);
         //EQUIPOS
         Equipo eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8;
-        eq1=new Equipo("Argentina");
+        eq1=new Equipo("argentina");
         eq2=new Equipo("chile");
         eq3=new Equipo("bolivia");
         eq4=new Equipo("EEUU");
         eq5=new Equipo("ecuador");
         eq6=new Equipo("canada");
         eq7=new Equipo("costa rica");
+        eq8=new Equipo("Argentina");
         //PRUEBA DE ESTRUCTURAS
         //AVL
         ArbolAVL arbol=new ArbolAVL();
-        arbol.insertar((Comparable) eq1);
-       
+        arbol.insertar(eq1);
+        arbol.insertar(eq2);
+        arbol.insertar(eq3);
+        arbol.insertar(eq4);
+        arbol.insertar(eq5);
+        arbol.insertar(eq6);
+        arbol.insertar(eq7);
+        //System.out.println(arbol.toString());
+        System.out.println("RECUPERAR PAIS "+ arbol.getElem(eq8));
+        //System.out.println(arbol.eliminar(eq8));
+        System.out.println(" ");
         System.out.println(arbol.toString());
         //HASH ABIERTO :MAPEAOAMUCHOS
         MapeoAMuchos hash=new MapeoAMuchos();
@@ -51,11 +61,13 @@ public class CopaAmerica{
         grafo.insertarArco("A", "C", 10);
         grafo.insertarArco("A", "B", 13);
         //grafo.insertarArco("A","E",100);
-        //grafo.insertarArco("B", "E", 13);
+        grafo.insertarArco("B", "E", 13);
         //grafo.insertarArco("E", "D", 13);
         //System.out.println(grafo.eliminarArco("A","B"));
+        System.out.println(grafo.eliminarVertice("C"));
         System.out.println("CIUDADES:");
         System.out.println(grafo.listarEnProfundidad().toString());
+        System.out.println(grafo.listarEnAnchura().toString());
         System.out.println(grafo.existeArco(ciudad,"B"));
         System.out.println(grafo.existeCamino("B","C"));
         System.out.println(grafo.toString());

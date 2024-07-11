@@ -1,6 +1,6 @@
 package tpFinal.dominio;
 
-public class Equipo {
+public class Equipo implements Comparable{
     private String nombre;//nombre del pais del equipo
     private String dt;
     private char grupo;//los grupos son A,B,C,D
@@ -60,16 +60,11 @@ public class Equipo {
     public void setGolesEnContra(int en){
         this.golesEnContra=this.golesEnContra + en;
     }
-    public int compareTo(Equipo otroEquipo){
-        int ret;
-        if(this.nombre.compareTo( otroEquipo.getNombre() ) < 0){//el otroEquipo tiene mayor valor alfabeticamente
-             ret=-1;
-        } else if(this.nombre.compareTo(otroEquipo.getNombre()) > 0){//el primer equipo tiene mayor valor alfabeticamente que el otroEquipo
-            ret=1;
-        }else{//son iguales
-            ret=0;
-        }
-        return ret;
+    public int compareTo(Object otroEquipo){
+        return this.nombre.compareToIgnoreCase( ((Equipo) otroEquipo).getNombre());//si el equipo1 es mayor que otroEquipo retorna 1,sino -1 y si son iguales 0
+    }
+    public String toString(){
+        return "Pais: "+nombre+",datos: "+dt+", Grupo: "+grupo+", puntos: "+puntos+", goles: "+goles+", encontra: "+golesEnContra;
     }
     
 }

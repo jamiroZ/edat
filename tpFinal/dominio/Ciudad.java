@@ -3,13 +3,13 @@ package tpFinal.dominio;
 public class Ciudad{
     private String nombre;//nombre unico de la ciudad
     private Boolean sede;//si o no 
-    private int alojamiento;//cant de alojamientos
+    private Boolean alojamiento;//cant de alojamientos
     public Ciudad(String nombre){
          this.nombre=nombre;
          this.sede=null;
-         this.alojamiento=0;
+         this.alojamiento=null;
     }
-    public Ciudad(String nombre,Boolean sede,int alojamiento){
+    public Ciudad(String nombre,Boolean sede,Boolean alojamiento){
         this.nombre=nombre;
         this.sede=sede;
         this.alojamiento=alojamiento;
@@ -23,11 +23,21 @@ public class Ciudad{
     public void setSede(Boolean sede){
         this.sede=sede;
     }
-    public int getAlojamiento(){
+    public Boolean getAlojamiento(){
         return this.alojamiento;
     }
-    public void setAlojamiento(int alojamiento){
+    public void setAlojamiento(Boolean alojamiento){
         this.alojamiento=alojamiento;
+    }
+    public String toString(){
+        String sed="No es sede",aloja="No hay alojamiento";
+        if(sede){//si es sede de un partido
+             sed="es sede";
+        }
+        if(alojamiento){//si tiene alojamiento
+             aloja="hay alojamiento";
+        }
+        return nombre +": "+sed+", "+aloja;
     }
 
 }

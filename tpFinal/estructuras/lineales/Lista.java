@@ -1,4 +1,4 @@
-package tpFinal.estructuras.lista;
+package tpFinal.estructuras.lineales;
 //el primer nodo de la lista tiene enlase a null
 //el ultimo insertado es la cabecera
 public class Lista {

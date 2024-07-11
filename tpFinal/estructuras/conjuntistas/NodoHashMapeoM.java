@@ -1,5 +1,5 @@
 package tpFinal.estructuras.conjuntistas;
-import tpFinal.estructuras.lista.Lista;
+import tpFinal.estructuras.lineales.Lista;
 public class NodoHashMapeoM {
     private Object dominio;
     private Lista rango;

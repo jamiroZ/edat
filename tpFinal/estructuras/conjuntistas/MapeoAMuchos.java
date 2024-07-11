@@ -1,6 +1,5 @@
 package tpFinal.estructuras.conjuntistas;
-//importo la estructura LISTA
-import tpFinal.estructuras.lista.Lista;
+import tpFinal.estructuras.lineales.Lista;
 //MAPEO A MUCHOS CON HASH ABIERTO
 //
 /* */

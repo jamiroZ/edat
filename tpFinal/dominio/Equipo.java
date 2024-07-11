@@ -1,7 +1,7 @@
 package tpFinal.dominio;
 
 public class Equipo {
-    private String nombre;//nombre del pais 
+    private String nombre;//nombre del pais del equipo
     private String dt;
     private char grupo;//los grupos son A,B,C,D
     private int puntos;
@@ -59,6 +59,17 @@ public class Equipo {
     }
     public void setGolesEnContra(int en){
         this.golesEnContra=this.golesEnContra + en;
+    }
+    public int compareTo(Equipo otroEquipo){
+        int ret;
+        if(this.nombre.compareTo( otroEquipo.getNombre() ) < 0){//el otroEquipo tiene mayor valor alfabeticamente
+             ret=-1;
+        } else if(this.nombre.compareTo(otroEquipo.getNombre()) > 0){//el primer equipo tiene mayor valor alfabeticamente que el otroEquipo
+            ret=1;
+        }else{//son iguales
+            ret=0;
+        }
+        return ret;
     }
     
 }

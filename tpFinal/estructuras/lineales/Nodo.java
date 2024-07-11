@@ -1,4 +1,4 @@
-package tpFinal.estructuras.lista;
+package tpFinal.estructuras.lineales;
 
 public class Nodo {
 

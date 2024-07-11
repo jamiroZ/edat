@@ -1,12 +1,13 @@
 package tpFinal.estructuras.grafoEtiquetado;
 
-import tpFinal.estructuras.lista.Lista;
+import tpFinal.estructuras.lineales.Cola;
+import tpFinal.estructuras.lineales.Lista;
 public class Grafo {
     private NodoVert inicio;
     public Grafo(){//constructor vacio
          this.inicio=null;
     }
-    //METODOS QUE INVOLUCRAN EL VERTICE
+    //METODOS QUE PRINCIPALES DEL VERTICE
     public Boolean insertarVertice(Object elem){
         Boolean flag=false;
         NodoVert aux=ubicarVertice(elem);
@@ -23,7 +24,7 @@ public class Grafo {
             ant=aux;
             aux=aux.getSigVertice();//SIGUE BUSCANDO
         }
-        if(aux!=null){//si lo encontro 
+        if(aux!=null){//si lo encontro
              NodoAdy adyacente=aux.getPrimerAdy();
              while(adyacente!=null){//tiene nodos adyacente
                 //a cada nodo vertice lo desenlazo del elemento que se quiere eliminar
@@ -93,7 +94,7 @@ public class Grafo {
                      flag= auxAdy.getVertice().getElem().equals(fin);//si es el objeto fin flag instancia "TRUE"
                      if(flag){
                         destino=auxAdy.getVertice();//nodo que contiene a "fin"
-                        
+
                      }else{
                         antAdy = auxAdy;//anterior 
                         auxAdy=auxAdy.getSigAdyacente();//actual
@@ -141,30 +142,131 @@ public class Grafo {
                        ady=ady.getSigAdyacente();//recorre la lista
                   }
                   
-             
         }
         return flag;
     }
 
     //OTROS
-    public Boolean existeCamino(Object elem){
+    public Boolean existeCamino(Object ini,Object fin){
         Boolean flag=false;
-        if(flag){
-
+        if(!this.esVacio()){
+            NodoVert aux=ubicarVertice(ini);
+            if(aux!=null){
+                   NodoAdy ady=aux.getPrimerAdy();//busca en sus nodos adyacentes la existencia de un camino
+                   while(ady!=null  && !flag){//mientras tenga nodos adyacentes para buscar un camino y no lo encontro que busque
+                        flag=ady.getVertice().getElem().equals(fin);//si es el elemento fin flag cambia a TRUE
+                        ady=ady.getSigAdyacente();//recorre la lista
+                   }
+                   if(!flag){//si no existia un arco "camino directo" entre ini y fin que siga buscando
+                        Lista vistos=new Lista();//lista auxiliar de elementos de nodos visitados
+                        flag=existeCaminoRec(vistos,fin,aux);
+                   }
+            }
         }
         return flag;
     }
-    public Lista listarEnProfundidad(){//retorna LISTA DE ELEMENTOS TIPO VERTICE
-         Lista list=new Lista();
-         return list;
+    private  Boolean existeCaminoRec(Lista vistos,Object fin, NodoVert n){
+        Boolean ret=false;
+        if(n!=null){
+            System.out.println(n.getElem());
+               if(fin.equals(n.getElem())){//encontro el camino
+                     ret=true;
+               }else{//sino verifica que n tiene camino a fin
+                    vistos.insertar(n.getElem(), vistos.longitud()+1);//
+                    NodoAdy ady=n.getPrimerAdy();
+                    while(!ret && ady!=null){//comprueba si sus adyacentes poseen un camino a fin
+                           //si el vertice perteneciente al nodo adyacente no se visito,revisa si este posee un camino a fin
+                           if(vistos.localizar(ady.getVertice().getElem()) < 0){
+                                 ret=existeCaminoRec(vistos, fin , ady.getVertice());
+                           }
+                           ady=ady.getSigAdyacente();
+                    }
+                    
+               }
+        }
+        return ret;
+    }
+    //retorna  lista de elementos de tipo vertice 
+    //ES EL CAMINO QUE PASA POR MENOS VERTICES PARA LLEGAR A FIN
+    public Lista listarCaminoMasCorto(Object ini, Object fin){//retorna LISTA DE ELEMENTOS TIPO VERTICE
+        Lista camino=new Lista();
+        if(!this.esVacio()){
+            NodoVert aux=ubicarVertice(ini);//busco nodo de partida
+            if(aux!=null){
+                   Boolean flag=false;
+                   NodoAdy ady=aux.getPrimerAdy();//busca en sus nodos adyacentes la existencia de un camino
+                   while(ady!=null  && !flag){//mientras tenga nodos adyacentes para buscar un camino y no lo encontro que busque
+                        flag=ady.getVertice().getElem().equals(fin);//si es el elemento fin flag cambia a TRUE
+                        ady=ady.getSigAdyacente();//recorre la lista
+                   }
+                   if(!flag){//si no existia un arco "camino directo" entre ini y fin que siga buscando
+                        Lista vistos=new Lista();//lista auxiliar de elementos de nodos visitados
+                        flag=existeCaminoRec(vistos,fin,aux);
+                   }
+            }
+        }
+        return camino;
+    }
+    private Lista listarCaminoMasCortoRec(){
+        Lista list=new Lista();
+        return list;
+    }
+
+    public Lista listarEnProfundidad(){//retorna LISTA DE ELEMENTOS TIPO VERTICe
+        Lista vistos=new Lista();
+        NodoVert aux=this.inicio;
+        while(aux!=null ){//ME MUEVO EN LA LISTA DE NODOS ADYACENTES
+              if(vistos.localizar(aux.getElem())< 0){//no se visito el elemento de aux
+                   listarEnProfundidadDesde( aux,vistos);
+              }
+              aux=aux.getSigVertice();
+
+        }
+        return vistos;
+    }
+    private void listarEnProfundidadDesde(NodoVert n, Lista vistos){
+        vistos.insertar(n.getElem(),vistos.longitud()+1);
+        NodoAdy ady=n.getPrimerAdy();
+        while(ady != null){//ME MUEVO EN LA LISTA DE NODOS ADYACENTES
+             //si el vertice perteneciente al nodo adyacente no se visito
+             if(vistos.localizar(ady.getVertice().getElem())<0){
+                  listarEnProfundidadDesde(ady.getVertice(), vistos);
+             }
+             ady=ady.getSigAdyacente();
+        }
     }
     public Lista listarEnAnchura(){//retorna LISTA DE ELEMENTOS  TIPO VERTICE
-        Lista list=new Lista();
-        return list;
+        Lista vistos=new Lista();
+        NodoVert aux=this.inicio;
+        while(aux!=null){
+             if(vistos.localizar(aux.getElem())<0){//no se habia visitado
+                  anchuraDesde(aux,vistos);
+             }
+              aux=aux.getSigVertice();
+        }
+        return vistos;
     }
-    public Lista listarCaminoMasCorto(){//retorna LISTA DE ELEMENTOS TIPO VERTICE
-        Lista list=new Lista();
-        return list;
+    private void anchuraDesde(NodoVert n,Lista vistos){
+        Cola q=new Cola();
+        vistos.insertar(n.getElem(), vistos.longitud()+1);//lo visito entonces lo guarda como visto
+        q.poner(n);//
+        NodoAdy ady;
+        NodoVert aux;
+        while(!q.esVacia()){//mientras la cola no este vacia
+             aux= (NodoVert) q.obtenerFrente();
+             q.sacar();
+             ady=aux.getPrimerAdy();
+             while(ady!=null){
+                   if(vistos.localizar(ady.getVertice().getElem())<0){//SI NO SE VISITO EL ELEMENTO DEL VERTICE DEL NODO ADYACENTE 
+                        vistos.insertar(ady.getVertice().getElem(), vistos.longitud()+1);//lo visite lo guardo
+                        q.poner(ady.getVertice());
+                   }
+                   ady=ady.getSigAdyacente();//me muevo en la lista de nodos adyacentes de aux
+             }
+
+        }
+
+
     }
     public Boolean esVacio(){
         return this.inicio==null;//retorna true si esta el grafo vacio
@@ -188,7 +290,7 @@ public class Grafo {
         NodoAdy ady=n.getPrimerAdy();
         if(ady!=null){//si tiene nodos adyacentes n que concatene las etiquetas y los nodos con arco 
             while(ady!=null){//me muevo en la lista de nodos adyacentes
-                ret=ret +" : "+ady.getVertice().getElem()+": "+ady.getEtiqueta()+"\n    ";
+                ret=ret +"-->"+ady.getEtiqueta()+" : "+ady.getVertice().getElem()+"\n    ";
                 ady=ady.getSigAdyacente();
             }
         }else{

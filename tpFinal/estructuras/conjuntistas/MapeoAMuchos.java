@@ -11,6 +11,9 @@ public class MapeoAMuchos {
         this.tabla=new NodoHashMapeoM[TAMANIO];
         this.cant=0;
     }
+    public int getCant(){
+        return this.cant;
+    }
     //METODOS DE INSERCION OBJETOS (DOMINIO)
     //hash no acepta elementos repetidos
     public Boolean insertar(Object elem){//si no lo encontro lo inserta y retorna true

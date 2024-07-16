@@ -18,7 +18,7 @@ public class ArbolAVL{
         }
         return exito;
     }
-    public Boolean insertarRec(NodoAVL n, Comparable elem,NodoAVL padre){
+    private Boolean insertarRec(NodoAVL n, Comparable elem,NodoAVL padre){
         Boolean exito=true;
         //precondicion n no es nulo
         if (n != null){

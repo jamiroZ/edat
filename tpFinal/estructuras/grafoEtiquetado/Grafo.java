@@ -41,6 +41,9 @@ public class Grafo {
         }
         return flag;
     }
+    public Object obtenerElem(Object elem){
+        return ubicarVertice(elem).getElem();//retorno el elemento ubicado en el vertice
+    }
     public Boolean existeVertice(Object elem){//retorna un boolean si existe "true" si no "false"
         Boolean flag=false;
         NodoVert aux=this.inicio;
@@ -227,8 +230,8 @@ public class Grafo {
                         ady=ady.getSigAdyacente();
                  }
              }
-             camAct.eliminar();
-             vistos.eliminar();
+             camAct.eliminar(camAct.longitud());//lo visite ,lo elimino
+             vistos.eliminar(vistos.longitud());//puede haber mas caminos que recorran ese nodo, lo elimino de visto
 
         }
 

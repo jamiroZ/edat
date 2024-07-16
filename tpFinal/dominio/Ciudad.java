@@ -39,5 +39,7 @@ public class Ciudad{
         }
         return nombre +": "+sed+", "+aloja;
     }
-
+    public Boolean equals( Ciudad otraCiudad){
+        return this.nombre.equalsIgnoreCase(otraCiudad.getNombre());
+    }
 }

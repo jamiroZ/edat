@@ -2,11 +2,11 @@ package tpFinal.dominio;
 public class Partido {
      private ClaveP clave;
      private String ronda;//grupo,cuartos,semi,final
-     private Ciudad evento;
+     private String ciudad;
      private String estadio;
      private int eq1Goles;
      private int eq2Goles;
-     public Partido(String eq1,String eq2, String ronda,Ciudad evento, String estadio ,int eq1Goles,int eq2Goles){
+     public Partido(String eq1,String eq2, String ronda,String evento, String estadio ,int eq1Goles,int eq2Goles){
           int resultado=eq1.compareTo(eq2);
           if(resultado < 0){//el equipo1 esta antes en orden alfabetico
                this.clave=new ClaveP(eq1,eq2);//creo objeto clave
@@ -18,7 +18,7 @@ public class Partido {
                this.eq2Goles=eq1Goles;
           }
           this.ronda=ronda;
-          this.evento=evento;
+          this.ciudad=evento;
           this.estadio=estadio;
      }
      public ClaveP getClaveP(){
@@ -32,6 +32,12 @@ public class Partido {
                this.ronda=ronda;
           }
      }
+     public String getCiudad(){
+          return this.ciudad;
+     }
+     public void setCiudad(String otraCiudad){
+          this.ciudad= otraCiudad;
+     }
      public String getEstadio(){
           return this.estadio;
      }
@@ -42,6 +48,6 @@ public class Partido {
           return eq1Goles+", "+eq2Goles;
      }
      public String toString(){
-          return eq1Goles+", "+eq2Goles+", "+ronda+", "+ evento+", "+estadio;
+          return eq1Goles+", "+eq2Goles+", "+ronda+", "+ciudad+", "+estadio;
      }
 }

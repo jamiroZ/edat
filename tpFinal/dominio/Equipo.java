@@ -15,13 +15,13 @@ public class Equipo implements Comparable{
           this.goles=0;
           this.golesEnContra=0;
     }
-    public Equipo(String nombre,String dt,char grupo,int puntos,int goles,int golesEnContra){
+    public Equipo(String nombre,String dt,char grupo){
         this.nombre=nombre;
         this.dt=dt;
         this.grupo=grupo;
-        this.puntos=puntos;
-        this.goles=goles;
-        this.golesEnContra=golesEnContra;
+        this.puntos=0;
+        this.goles=0;
+        this.golesEnContra=0;
     }
 
     //Nombre

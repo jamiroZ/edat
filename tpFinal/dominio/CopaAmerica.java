@@ -14,10 +14,12 @@ public class CopaAmerica{
     }
     public static void testingCopaAmerica(){
           //ESCTRUCTURAS USADAS
+          Grafo x=new Grafo();
           Grafo mapa=new Grafo();//grafo etiquetado
           MapeoAMuchos partidos=new MapeoAMuchos();//tabla hash mapeado a muchos
           ArbolAVL equipos=new ArbolAVL();
-          //
+          System.out.println("EXISTE"+mapa.existeVertice(new Ciudad("LAS VEGAS")));
+          System.out.println("OBTENER:"+mapa.obtenerElem(new Ciudad("LAS VEGAS")));
           Archivo.crearLog();
           Archivo.leerArchivo(mapa, equipos, partidos);//leo el txt y cargo en las estructuras la informacion 
           //VALOR NUMERICO PARA USO DEL MENU
@@ -89,23 +91,25 @@ public class CopaAmerica{
          Boolean alojamiento,sede;
          System.out.println("ingrese el nombre de la ciudad: ");
          String nombre=sc.nextLine();
-         System.out.println("ingrese 'SI' pose alojamiento disponible o 'NO' en caso contrario: " );
-         String alo=sc.nextLine();
-         if(alo.equalsIgnoreCase("SI")){
-              alojamiento=true;
-         }else{
-              alojamiento=false;
-         }
-         System.out.println("ingrese 'SI' es sede de un partido o 'NO' si no es asi: ");
-         String se=sc.nextLine();
-         if(se.equalsIgnoreCase("SI")){
-              sede=true;
-         }else{
-              sede=false;
-         }
-         
-         if(mapa.insertarVertice(new Ciudad(nombre,sede,alojamiento))){
-            System.out.println("LA CIUDAD "+nombre+" SE UBICO EN EL MAPA");
+         System.out.println(mapa.existeVertice(new Ciudad(nombre)));
+
+         if(!mapa.existeVertice(new Ciudad(nombre)) ){//si la ciudad no existe la inserto
+               System.out.println("ingrese 'SI' pose alojamiento disponible o 'NO' en caso contrario: " );
+               String alo=sc.nextLine();
+               if(alo.equalsIgnoreCase("SI")){
+                     alojamiento=true;
+               }else{
+                     alojamiento=false;
+               }
+               System.out.println("ingrese 'SI' es sede de un partido o 'NO' si no es asi: ");
+               String se=sc.nextLine();
+               if(se.equalsIgnoreCase("SI")){
+                   sede=true;
+               }else{
+                  sede=false;
+               }
+            System.out.println(mapa.insertarVertice(new Ciudad(nombre,alojamiento,sede)));
+               System.out.println("LA CIUDAD "+nombre+" SE UBICO EN EL MAPA");
          }else{
             System.out.println("LA CIUDAD "+nombre+" YA EXISTE EN EL MAPA");
          }

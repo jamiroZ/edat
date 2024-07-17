@@ -6,8 +6,8 @@ public class Ciudad{
     private Boolean alojamiento;//cant de alojamientos
     public Ciudad(String nombre){
          this.nombre=nombre;
-         this.sede=null;
-         this.alojamiento=null;
+         this.sede=false;
+         this.alojamiento=false;
     }
     public Ciudad(String nombre,Boolean sede,Boolean alojamiento){
         this.nombre=nombre;
@@ -37,13 +37,12 @@ public class Ciudad{
         if(alojamiento){//si tiene alojamiento
              aloja="hay alojamiento";
         }
-        return nombre +": "+sed+", "+aloja;
+        return nombre ;
     }
-     @Override
     public boolean equals(Object obj) {
-             Ciudad otraCiudad = (Ciudad) obj; // Casting seguro porque hemos comprobado la clase
-             // Comparación 
-            return this.nombre.equals(otraCiudad.nombre);
+         Ciudad otraCiudad=(Ciudad) obj;
+         return this.nombre.equals(otraCiudad.getNombre());//comparo los nombres
     }
+   
 
 }

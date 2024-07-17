@@ -64,7 +64,7 @@ public class Equipo implements Comparable{
         return this.nombre.compareToIgnoreCase( ((Equipo) otroEquipo).getNombre());//si el equipo1 es mayor que otroEquipo retorna 1,sino -1 y si son iguales 0
     }
     public String toString(){
-        return "Pais: "+nombre+",datos: "+dt+", Grupo: "+grupo+", puntos: "+puntos+", goles: "+goles+", encontra: "+golesEnContra;
+        return "Pais: "+nombre;
     }
     
 }

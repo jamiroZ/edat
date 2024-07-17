@@ -1,4 +1,5 @@
 package tpFinal.estructuras.conjuntistas;
+
 import tpFinal.estructuras.lineales.Lista;
 //MAPEO A MUCHOS CON HASH ABIERTO
 //
@@ -88,7 +89,8 @@ public class MapeoAMuchos {
          Boolean asociado=false;
          NodoHashMapeoM aux=obtenerNodo(tipDom);//busca el nodo conde esta el elemento
          if(aux!=null){//si lo encontro lo asocia con el tipo del Rango
-              aux.setRango(tipRango);//agrega el elemento a la lista RANGO dentro del nodo 
+             asociado= aux.agregarRango(tipRango);//agrega el elemento a la lista RANGO dentro del nodo 
+
          }
          return asociado;
     }

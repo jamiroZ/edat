@@ -44,12 +44,13 @@ public class Grafo {
     public Object obtenerElem(Object elem){
         return ubicarVertice(elem).getElem();//retorno el elemento ubicado en el vertice
     }
-    public Boolean existeVertice(Object elem){//retorna un boolean si existe "true" si no "false"
-        Boolean flag=false;
-        NodoVert aux=this.inicio;
-        while(aux != null && !flag){//NO LO ENCONTRO
-            flag=aux.getElem().equals(elem);//si lo encontro flag se instancia true
-            aux=aux.getSigVertice();//SIGUE BUSCANDO
+    public boolean existeVertice(Object elem){
+        //verifica si un vertice esta en el grafo
+        boolean flag;
+        if (this.ubicarVertice(elem) == null){
+            flag = false;
+        } else {
+            flag = true;
         }
         return flag;
     }
@@ -65,10 +66,13 @@ public class Grafo {
     public Boolean insertarArco(Object ini,Object fin, int etiqueta){
         Boolean flag=false;
         if(!ini.equals(fin)){//no puede un nodo enlazarse a si mismo
+
              NodoVert origen=ubicarVertice(ini);//nodo con el elemento ini
              if(origen != null){//existe un nodo vertice con el objeto ini
+
                    NodoVert destino=ubicarVertice(fin);//nodo con el elemento fin
                    NodoAdy ady=origen.getPrimerAdy();
+
                    while(!flag && ady!=null){//busca la existencia de un arco entre ini y fin
                           flag=fin.equals(ady.getVertice().getElem());
                           if(!flag){

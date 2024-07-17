@@ -2,6 +2,7 @@ package tpFinal.txt;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,33 +50,34 @@ public class Archivo {
 	}
     
     public static void leerArchivo(Grafo mapa,ArbolAVL equipos,MapeoAMuchos partidos){
-        FileReader archivo;//se usa para leer caracteres del archivo
-
         try{//FileReader y BufferedReader se inicializan dentro de este bloque
+            FileReader archivo;//se usa para leer caracteres del archivo
             archivo=new FileReader("C:\\Users\\jamir\\OneDrive\\Documentos\\facultad\\segundoAño\\edat\\EDAT\\edat-1\\tpFinal\\txt\\datos.txt");
             BufferedReader lector=new BufferedReader(archivo);//bufer de lectura
 
             String linea; //lee linea por linea del archivo y la guarda en la variable
 
-            while(( linea= lector.readLine() ) != null ){//se repite hasta que se alcanza el final del archivo (null).
-
-                 chequearLinea(linea, mapa, equipos, partidos);
+            while(( linea = lector.readLine() ) != null ){//se repite hasta que se alcanza el final del archivo (null).
+                
+                if (!linea.trim().isEmpty()) { // Verificar si la línea no está vacía
+                    chequearLinea(linea, mapa, equipos, partidos);
+                }
             }
             archivo.close();
-            System.out.println("INFO DE COPA AMERICA CARGADA");
-        }catch (Exception e){//caso de excepcion
-             System.out.println("ERROR: "+e.getMessage());
+            escribir("INFO DE COPA AMERICA CARGADA"); 
+            
+        }catch (FileNotFoundException exception){//caso de excepcion
+             System.err.println("ERROR: "+exception.getMessage());
+        }catch(IOException exception){
+             System.err.println("error leyendo  ARCHIVO");
         }
 
     }
     public static void chequearLinea(String linea, Grafo mapa, ArbolAVL equipos,MapeoAMuchos partidos){
-        StringTokenizer parte = new StringTokenizer(linea, ":"); // separador del objeto E,C,R,P
-        StringTokenizer atributo = new StringTokenizer(linea.substring(2), ";"); // separa los atributos de la linea
-    
-        
-        switch (parte.nextToken()){
+        StringTokenizer atributo = new StringTokenizer(linea, ";"); // separa los atributos de la linea
+ 
+        switch (atributo.nextToken()){
             case "C"://Ciudad(vertices del grafo)
-               
                 //Ciudad: (nombre; Disponibilidad de alojamiento ; sede de la copa )
                 String nombre = atributo.nextToken();//NOMBRE DE LA CIUDAD
                 Boolean alojamiento = atributo.nextToken().equalsIgnoreCase("TRUE");//SI HAY ALOJAMIENTO O NO
@@ -91,28 +93,28 @@ public class Archivo {
                 String ciudad2= atributo.nextToken();
                 int etiqueta=Integer.parseInt(atributo.nextToken());//casteo a entero
                 //si las 2 ciudades existen y no existe ya una ruta la crea
-                if(mapa.insertarArco(new Ciudad(ciudad1), new Ciudad(ciudad2), etiqueta)){
-                    escribir("RUTA CARGADA: ENTRE "+ciudad1+"Y"+ciudad2+" TIEMPO "+etiqueta);
+                if(!mapa.insertarArco((Object) new Ciudad(ciudad1),(Object) new Ciudad(ciudad2), etiqueta)){
+                    escribir("RUTA CARGADA: ENTRE "+ciudad1+" Y "+ciudad2+" TIEMPO "+etiqueta);
                 }
                 break;
             case "P"://PARTIDO
                 //Partido:(equipo1, equipo2, instancia, ciudad, estadio, golesEq1 ,golesEq2)
+               
                 String eq1=atributo.nextToken();
                 String eq2=atributo.nextToken();
 
                 String ins=atributo.nextToken();
                 String ciu=atributo.nextToken();
                 String estadio=atributo.nextToken();
+       
                 int golEq1=Integer.parseInt(atributo.nextToken());
                 int golEq2=Integer.parseInt(atributo.nextToken());
-                ClaveP clave=new ClaveP(eq1,eq2);
-                System.out.println(mapa.existeVertice(new Ciudad(ciu)));
-                if(mapa.existeVertice(new Ciudad(ciu))){//si la ciudad donde se juega existe
 
-                    System.out.println(partidos.insertar(clave));//inserta el dominio (clave del Partido: nombre eq1 y eq2)
-                    if(partidos.asociar(clave, new Partido(eq1, eq2, ins, ciu, estadio, golEq1, golEq2 ))){//relaciona el partido con su clave si existe
-                         System.out.println("PARTIDO CARGADO: "+clave.toString());
-                    }
+                ClaveP clave=new ClaveP(eq1,eq2);
+              
+                partidos.insertar(clave);//inserta el dominio (clave del Partido: nombre eq1 y eq2
+                if(partidos.asociar( clave, new Partido(eq1, eq2, ins, ciu, estadio, golEq1, golEq2 ))){//relaciona el partido con su clave si existe
+                         System.out.println("PARTIDO CARGADO: ");
                 }
                 break;
             case "E"://EQUIPO

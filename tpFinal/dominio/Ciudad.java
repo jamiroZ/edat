@@ -39,7 +39,11 @@ public class Ciudad{
         }
         return nombre +": "+sed+", "+aloja;
     }
-    public Boolean equals( Ciudad otraCiudad){
-        return this.nombre.equalsIgnoreCase(otraCiudad.getNombre());
+     @Override
+    public boolean equals(Object obj) {
+             Ciudad otraCiudad = (Ciudad) obj; // Casting seguro porque hemos comprobado la clase
+             // Comparación 
+            return this.nombre.equals(otraCiudad.nombre);
     }
+
 }

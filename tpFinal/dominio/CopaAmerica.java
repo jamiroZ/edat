@@ -6,20 +6,18 @@ import java.util.Scanner;
 import tpFinal.estructuras.conjuntistas.ArbolAVL;
 import tpFinal.estructuras.conjuntistas.MapeoAMuchos;
 import tpFinal.estructuras.grafoEtiquetado.Grafo;
+import tpFinal.estructuras.lineales.Lista;
 import tpFinal.txt.Archivo;
-
 public class CopaAmerica{
     public static void main(String[] args) {
         testingCopaAmerica();
     }
     public static void testingCopaAmerica(){
           //ESCTRUCTURAS USADAS
-          Grafo x=new Grafo();
           Grafo mapa=new Grafo();//grafo etiquetado
           MapeoAMuchos partidos=new MapeoAMuchos();//tabla hash mapeado a muchos
           ArbolAVL equipos=new ArbolAVL();
-          System.out.println("EXISTE"+mapa.existeVertice(new Ciudad("LAS VEGAS")));
-          System.out.println("OBTENER:"+mapa.obtenerElem(new Ciudad("LAS VEGAS")));
+         
           Archivo.crearLog();
           Archivo.leerArchivo(mapa, equipos, partidos);//leo el txt y cargo en las estructuras la informacion 
           //VALOR NUMERICO PARA USO DEL MENU
@@ -36,7 +34,7 @@ public class CopaAmerica{
 
                      case 4: consultasEquipos(equipos); break;
 
-                     case 5: consultasPartidos(partidos); break;
+                     case 5: consultasPartidos(partidos, equipos); break;
 
                      case 6: consultasViajes(mapa); break;
 
@@ -176,7 +174,7 @@ public class CopaAmerica{
                   }
               }while(opcion!=3);
             }else{
-                System.out.println("No exist esa ciudad en el mapa");
+                System.out.println("No existe esa ciudad en el mapa");
             }
         }else{
             System.out.println();
@@ -200,6 +198,7 @@ public class CopaAmerica{
                  case 3: modificarEquipos(equipos); break;
                  default: System.out.println(" ERROR "); break;
            }
+           System.out.println(" ");
         }while(i!=4);
     }
     public static void altaEquipos(ArbolAVL equipos){
@@ -219,14 +218,16 @@ public class CopaAmerica{
                }else{
                     System.out.println("EL EQUIPO "+pais+" YA EXISTE ");
                }
+        }else{
+            System.out.println("ESE EQUIPO YA EXISTE");
         }
-        
+        System.out.println(" ");
     }
     public static void bajaEquipos(ArbolAVL equipo,MapeoAMuchos partidos){
         Scanner sc=new Scanner(System.in);
         if(!equipo.esVacio()){
             System.out.println(" ingrese el nombre del equipo :");
-            String pais=sc.nextLine();
+            String pais=" "+sc.nextLine();
             if(equipo.eliminar(new Equipo(pais))){//lo elimina
                 System.out.println("EQUIPO "+pais+" SE ELIMINO DE LA COPA");
             }else{
@@ -296,7 +297,10 @@ public class CopaAmerica{
                     partidos.insertar(new ClaveP(eq1,eq2));
             }
             
+        }else{
+            System.out.println(" NO HAY EQUIPOS ");
         }
+        System.out.println();
     }
     public static void consultasEquipos(ArbolAVL equipos){
         Scanner sc=new Scanner(System.in);
@@ -334,14 +338,100 @@ public class CopaAmerica{
         }else{
             System.out.println("NO EXISTEN EQUIPOS PARA CONSULTAR");
         }
+        System.out.println(" ");
     }
 
 
-    public static void consultasPartidos(MapeoAMuchos partidos){
-        
+    public static void consultasPartidos(MapeoAMuchos partidos,ArbolAVL equipos){ //Dados 2 equipos, si jugaron algún partido entre sí, mostrar los resultados.
+
+        Scanner sc=new Scanner(System.in);
+        if(!partidos.esVacio()){//si hay equipos consulta
+            int opcion;
+            do{
+                System.out.println("1. buscar partido");
+                System.out.println("2. SALIR");
+                opcion=sc.nextInt();
+                if(opcion==1){
+
+                         System.out.println("ingrese el pais del primer equipo: ");
+                         String pais1=sc.nextLine();
+                         System.out.println("ingrese el pais del segundo equipo: ");
+                         String pais2=sc.nextLine();
+                        
+                         if(equipos.pertenece(new Equipo(pais1)) && equipos.pertenece(new Equipo(pais2))){//los 2 equipos deben existir
+                             ClaveP clave=new ClaveP(pais1,pais2);
+                             Lista rango= partidos.obtenerValor(clave);
+
+                             if(!rango.estaVacia()){//hay partidos con la clave
+                                  System.out.println("ingrese instancia del partido 'GRUPO,SEMIFINAL,CUARTOS,FINAL' :");
+                                  String ronda=sc.nextLine();
+
+                                  if(ronda.equalsIgnoreCase("grupo") || ronda.equalsIgnoreCase("cuartos")  || ronda.equalsIgnoreCase("semifinal") ||ronda.equalsIgnoreCase("final")){
+                                      int i=1;
+                                      while( ! ( ((Partido) rango.recuperar(i) ).getRonda() ).equals(ronda) ){//si no lo encontro que siga buscando
+                                          i++;
+                                      }
+                                      if( ((Partido) rango.recuperar(i) ).getRonda().equals(ronda)){//si es la ronda 
+
+                                      }else{
+                                        System.out.println("NO SE JUGO UN PARTIDO ( "+clave.toString()+") EN LA FASE"+ronda);
+                                      }
+                                  }
+                             }else{
+                                System.out.println(" NO HAY PARTIDO ORGANIZADO CON ESTOS EQUIPOS ");//espacio
+                             }
+            
+                         }else{
+                            System.out.println("EL EQUIPO "+pais1+" O "+pais2+" NO JUEGAN LA CAPA AMERICA 2024");
+                         }
+                   
+                }
+                System.out.println(" ");//espacio
+            }while(opcion!=2);
+        }else{
+            System.out.println("NO HAY PARTIDOS ORGANIZADOS");
+        }
+        System.out.println(" ");//espacio
     }
     public static void consultasViajes(Grafo mapa){
-        
+        Scanner sc=new Scanner(System.in);
+        if(!mapa.esVacio()){//si hay equipos consulta
+            int opcion;
+            do{
+            System.out.println("1. obtener el viaje mas corto entre 2 ciudades");
+            System.out.println("2. obtener el camino que pase por menos ciudades entre ");
+            System.out.println("3. el vuelo mas corto entre 2 ciudades que NO haga escala en una ciudad");
+            System.out.println("4. todos los vuelos posibles entre 2 ciudades");
+            System.out.println("5. SALIR");
+            opcion=sc.nextInt();
+            System.out.println("ingrese la primer ciudad: ");
+            String ciu1=sc.nextLine();
+            System.out.println("ingrese la segunda ciudad: ");
+            String ciu2=sc.nextLine();
+            if(mapa.existeVertice(new Ciudad(ciu1)) && mapa.existeVertice(new Ciudad(ciu2))){//las iudades deben existir
+                switch(opcion){
+                    case 1://
+                        
+                    break;
+                    case 2://
+                        
+                    break;
+                    case 3://
+                        
+                    break;
+                    case 4://
+                        
+                    break;
+                }
+            }else{
+                System.out.println("LAS CIUDADES "+ciu1+" O "+ciu2+" NO EXISTEN");
+            }
+                System.out.println(" ");//espacio
+            }while(opcion!=5);
+        }else{
+            System.out.println("NO INFORMACION DE CIUDADES O VIAJES ALMACENADOS");
+        }
+        System.out.println(" ");
     }
     public static void mostrarEquiposOrdenados(ArbolAVL equipos){
         

@@ -59,9 +59,9 @@ public class Archivo {
 
             while(( linea = lector.readLine() ) != null ){//se repite hasta que se alcanza el final del archivo (null).
                 
-                if (!linea.trim().isEmpty()) { // Verificar si la línea no está vacía
+                //if (!linea.trim().isEmpty()) { // Verificar si la línea no está vacía
                     chequearLinea(linea, mapa, equipos, partidos);
-                }
+                //}
             }
             archivo.close();
             escribir("INFO DE COPA AMERICA CARGADA"); 
@@ -121,7 +121,7 @@ public class Archivo {
                 //Equipo:(nombre del pais, apellido del dt, grupo inicial(A,B,C,D), los puntos se cargan a parte despues de terminado el partido)
                 String pais = atributo.nextToken();
                 String dt = atributo.nextToken();
-                char grupo= atributo.nextToken().charAt(1);
+                char grupo= atributo.nextToken().charAt(0);
                 if(grupo=='A' ||grupo=='B' || grupo=='C' || grupo=='D'){//EL GRUPO TIENE QUE SER UNO DE ESTOS 4
                     Equipo equipo=new Equipo(pais,dt,grupo);
                     if(equipos.insertar(equipo) ){

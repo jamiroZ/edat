@@ -52,15 +52,9 @@ public class Partido {
      }
      @Override
      public boolean equals(Object obj) {
-         
-         if (obj == null || getClass() != obj.getClass()) {
-             return false;
-         }else{
-              // Convertir obj a la clase actual
             Partido otra = (Partido) obj;
              // Comparar los atributos que componen la clave doble
              return this.ronda.equalsIgnoreCase(otra.ronda) ;//campara equipo 1 y equipo2 deben ser iguales
-         }
-        
      }
+     
 }

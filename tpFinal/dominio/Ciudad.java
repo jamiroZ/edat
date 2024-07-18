@@ -1,5 +1,7 @@
 package tpFinal.dominio;
 
+import java.util.Objects;
+
 public class Ciudad{
     private String nombre;//nombre unico de la ciudad
     private Boolean sede;//si o no 
@@ -39,10 +41,26 @@ public class Ciudad{
         }
         return nombre ;
     }
+     @Override
     public boolean equals(Object obj) {
-         Ciudad otraCiudad=(Ciudad) obj;
-         return this.nombre.equals(otraCiudad.getNombre());//comparo los nombres
+        // Verificar si es la misma instancia
+        if (this == obj) {
+            return true;
+        }
+        // Verificar si el objeto es nulo o de distinto tipo
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        // Cast del objeto a Ciudad para comparar
+        Ciudad otraCiudad = (Ciudad) obj;
+        // Comparar las claves (en este caso, el nombre)
+        return nombre.equals(otraCiudad.nombre);
     }
-   
+
+    // Método hashCode (opcional, pero recomendado si se sobrescribe equals)
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre);
+    }
 
 }

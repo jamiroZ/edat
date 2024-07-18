@@ -39,6 +39,9 @@ public class Equipo implements Comparable{
     public char getGrupo(){
         return this.grupo;
     }
+    public void setGrupo(char at){
+        this.grupo=at;
+    }
     //PUNTOS
     public int getPuntos(){
         return this.puntos;

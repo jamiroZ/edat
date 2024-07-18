@@ -403,5 +403,26 @@ public class ArbolAVL{
         }
         return elemBuscado;
     }
+    public Lista moverseEnRango(Comparable min,Comparable max){
+        Lista list=new Lista();
+         moverseEnRangoRec(this.raiz, min, max, list );
+        return list;
+    }
+     private void moverseEnRangoRec(NodoAVL n,Comparable min,Comparable max,Lista list){
+        if( n!= null &&  min.compareTo((Comparable) n.getElem()) <= 0 && max.compareTo((Comparable) n.getElem()) >= 0 ){
+              
+              //si el objeto es mas grande que el min se mueve a la izquierda
+              if(min.compareTo((Comparable) n.getElem())<=0 ){
+                
+                  moverseEnRangoRec(n.getIzquierdo(), min, max, list);
+                  //si estoy en el subArbol izquierdo me muevo al sub arbol derecho del nodo 
+                  list.insertar(n.getElem(),list.longitud()+1);
+                
+              }else{ //si estoy en el subArbol derecho me muevo al subArbol izquierdo del nodo
+                  moverseEnRangoRec(n.getDerecho(), min, max, list);
+                  list.insertar(n.getElem(),list.longitud()+1);
     
+              }
+        }
+     }
 }

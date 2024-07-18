@@ -1,6 +1,5 @@
 package tpFinal.estructuras.grafoEtiquetado;
 
-import tpFinal.dominio.Ciudad;
 import tpFinal.estructuras.lineales.Cola;
 import tpFinal.estructuras.lineales.Lista;
 public class Grafo {
@@ -64,7 +63,7 @@ public class Grafo {
     private NodoVert ubicarVertice(Object elem){//retorna el nodo que contiene el elemento buscado para uso privado
         NodoVert aux=this.inicio;//arranca desde el inicio
         System.out.println("INGRESO :"+elem.getClass());
-        while(aux != null && ((Ciudad) aux.getElem()).equals((Ciudad) elem) ){//NO LO ENCONTRO
+        while(aux != null && !aux.getElem().equals(elem)){//NO LO ENCONTRO
               System.out.println(aux.getElem().equals(elem)+":"+ aux.getElem()+" y "+elem);
               aux=aux.getSigVertice();//SIGUE BUSCANDO
         }

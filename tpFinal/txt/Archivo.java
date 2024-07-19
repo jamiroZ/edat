@@ -114,7 +114,7 @@ public class Archivo {
               
                 partidos.insertar(clave);//inserta el dominio (clave del Partido: nombre eq1 y eq2
                 if(partidos.asociar( clave, new Partido(eq1, eq2, ins, ciu, estadio, golEq1, golEq2 ))){//relaciona el partido con su clave si existe
-                         System.out.println("PARTIDO CARGADO: ");
+                         System.out.println("PARTIDO CARGADO: "+clave.toString());
                 }
                 break;
             case "E"://EQUIPO

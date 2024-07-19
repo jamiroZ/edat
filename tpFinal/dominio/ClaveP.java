@@ -34,15 +34,20 @@ public class ClaveP {
     }
     @Override
     public boolean equals(Object obj) {
-        
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }else{
-             // Convertir obj a la clase actual
-           ClaveP otra = (ClaveP) obj;
-            // Comparar los atributos que componen la clave doble
-            return this.equipo1.equalsIgnoreCase(otra.equipo1) && this.equipo2.equalsIgnoreCase(otra.equipo2) ;//campara equipo 1 y equipo2 deben ser iguales
+        ClaveP otra = (ClaveP) obj;// Convertir obj a la clase actual
+        System.out.println(this.equipo1+"-"+this.equipo2+","+otra.getEq1()+"-"+otra.getEq2());
+         // Comparar los atributos que componen la clave doble
+        return ((this.equipo1).equalsIgnoreCase(otra.getEq1()) && (this.equipo2).equalsIgnoreCase(otra.getEq2())) ;//campara equipo 1 y equipo2 deben ser iguales
+    }
+    @Override
+    public int hashCode(){
+        int suma = 0;
+        String texto=equipo1+"-"+equipo2;
+        for (int i = 0; i < texto.length(); i++) {
+            char caracter = texto.charAt(i);
+            int valorASCII = (int) caracter;
+            suma += valorASCII;
         }
-       
+        return suma;
     }
 }

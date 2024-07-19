@@ -1,6 +1,6 @@
 package tpFinal.estructuras.conjuntistas;
 
-import lineales.dinamicas.Lista;
+import tpFinal.estructuras.lineales.Lista;
 
 public class ArbolAVL{
     
@@ -23,7 +23,7 @@ public class ArbolAVL{
         //precondicion n no es nulo
         if (n != null){
             NodoAVL izq = n.getIzquierdo(), der = n.getDerecho(); 
-
+           
             if (elem.compareTo(n.getElem()) == 0){
                 exito = false; //elem ya existe en el arbol
                 
@@ -87,8 +87,8 @@ public class ArbolAVL{
     private Boolean perteneceRec(NodoAVL n, Comparable elem){
         Boolean existe=false;
         if(n!=null){
-            System.out.println(n.getElem());
-              if(elem.compareTo(n.getElem())==0){//caso base
+            
+              if(elem.compareTo(n.getElem())==0){//es el objeto
                    existe=true;
               }else{//casos recursivos
                   if(elem.compareTo(n.getElem())<0){
@@ -228,6 +228,7 @@ public class ArbolAVL{
     }
     private void listarRec(Lista list, NodoAVL n){
            if(n!=null){
+               //System.out.println(n.getElem());
                list.insertar(n.getElem(), list.longitud()+1);
                listarRec(list,n.getIzquierdo());
                listarRec(list, n.getDerecho());
@@ -389,8 +390,8 @@ public class ArbolAVL{
     private Comparable getElemRecursivo(NodoAVL n, Comparable elem){
         Comparable elemBuscado=null;
         if(n!=null){
-            System.out.println(n.getElem());
-            if(elem.compareTo(n.getElem())==0){//caso base
+            //System.out.println(n.getElem());
+            if(elem.compareTo(n.getElem())==0){//es el objeto
                  elemBuscado=n.getElem();
             }else{//casos recursivos
                 if(elem.compareTo(n.getElem())<0){//es menor el elemento que el del nodo
@@ -409,10 +410,10 @@ public class ArbolAVL{
         return list;
     }
      private void moverseEnRangoRec(NodoAVL n,Comparable min,Comparable max,Lista list){
-        if( n!= null &&  min.compareTo((Comparable) n.getElem()) <= 0 && max.compareTo((Comparable) n.getElem()) >= 0 ){
+        if( n!= null &&  min.compareTo( n.getElem()) <= 0 && max.compareTo( n.getElem()) >= 0 ){
               
               //si el objeto es mas grande que el min se mueve a la izquierda
-              if(min.compareTo((Comparable) n.getElem())<=0 ){
+              if(min.compareTo(n.getElem())<=0 ){
                 
                   moverseEnRangoRec(n.getIzquierdo(), min, max, list);
                   //si estoy en el subArbol izquierdo me muevo al sub arbol derecho del nodo 

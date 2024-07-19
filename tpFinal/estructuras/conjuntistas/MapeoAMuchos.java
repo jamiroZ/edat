@@ -21,6 +21,7 @@ public class MapeoAMuchos {
         Boolean encontrado=false;
         int pos=elem.hashCode()% this.TAMANIO ;//posicion del dominio en la tabla hash
         NodoHashMapeoM aux=this.tabla[pos];
+        System.out.println(pos);
         while(!encontrado && aux!=null){
             encontrado=aux.getDominio().equals(elem);
             aux=aux.getEnlace();
@@ -105,8 +106,10 @@ public class MapeoAMuchos {
    public Lista obtenerValor(Object tipDom){//retora LISTA (TIPO RANGO)
         Lista list=new Lista();
         NodoHashMapeoM n=obtenerNodo(tipDom);
+        //System.out.println((Object) n.getDominio());
         if(n!=null){
              list=n.getRango();//retorna el Rango del Dominio buscado
+             System.out.println(list.toString());
         }
         return list;
    }
@@ -116,7 +119,7 @@ public class MapeoAMuchos {
         while(i < this.TAMANIO-1 && j <= this.cant){//va a recorrer lo justo
             if(this.tabla[i]!=null){//hay al menos un nodo en la posicion
                NodoHashMapeoM aux=this.tabla[i];
-               System.out.println("x");
+            
                while(aux.getEnlace()!=null){
                     list.insertar(aux.getDominio(), list.longitud()+1);
                     aux=aux.getEnlace();
@@ -136,7 +139,7 @@ public class MapeoAMuchos {
                NodoHashMapeoM aux=this.tabla[i];
                
                while(aux.getEnlace()!=null){
-                    System.out.println("x");
+                  
                     list.insertar(aux.getRango(), list.longitud()+1);
                     aux=aux.getEnlace();
                     j++;//cuenta cada objeto de la lista
@@ -163,10 +166,12 @@ public class MapeoAMuchos {
    }
    private NodoHashMapeoM obtenerNodo( Object elem){//busca un objeto y retorna su nodo para uso privado
       Boolean encontrado=false;
-      int pos=elem.hashCode()% this.TAMANIO ;//posicion del dominio en la tabla hash
+      int pos= elem.hashCode() % this.TAMANIO ;//posicion del dominio en la tabla hash
       NodoHashMapeoM aux=this.tabla[pos];
+      System.out.println (pos);
       while(!encontrado && aux!=null){
-        encontrado=aux.getDominio().equals(elem);
+        System.out.println(aux.getDominio()+" "+elem);
+        encontrado=((aux.getDominio()).equals(elem));
         if(!encontrado){
             aux=aux.getEnlace();
         }
@@ -188,6 +193,7 @@ public class MapeoAMuchos {
            ret="[ ";
            while(i < TAMANIO){
               if(this.tabla[i]!=null){
+                  System.out.println(i);
                   ret= ret + this.tabla[i].getDominio()+", " +toStringR(this.tabla[i].getEnlace())+" ; ";
               }
               i++;
@@ -209,7 +215,7 @@ public class MapeoAMuchos {
    public void mostrarRango(){
        ;
    }
-   public String mostrarPartidosConClave(Object tipDom){
+   public String mostrarDomConRango(Object tipDom){
        String ret="";
        NodoHashMapeoM aux=obtenerNodo(tipDom);//obtiene el nodo con el dominio
        if(aux!=null){//si existe es diferente de null

@@ -7,6 +7,7 @@ import tpFinal.estructuras.conjuntistas.ArbolAVL;
 import tpFinal.estructuras.conjuntistas.MapeoAMuchos;
 import tpFinal.estructuras.grafoEtiquetado.Grafo;
 import tpFinal.estructuras.lineales.Lista;
+//import tpFinal.dominio.EquipoGoles;
 import tpFinal.txt.Archivo;
 public class CopaAmerica{
     public static void main(String[] args) {
@@ -23,6 +24,7 @@ public class CopaAmerica{
           //VALOR NUMERICO PARA USO DEL MENU
           int opcion;
           do{ 
+               System.out.println(" ");//espacio
                opcion=menu();//MENU PRINCIPAL DE OPCIONES
                switch(opcion){
 
@@ -44,6 +46,7 @@ public class CopaAmerica{
                      
                      default: System.out.println(" ERROR "); break;
                }
+               System.out.println(" ");//espacio
           }while(opcion!=9);
 
 
@@ -307,30 +310,29 @@ public class CopaAmerica{
         if(!equipos.esVacio()){//si hay equipos consulta
             int opcion;
             do{
-            System.out.println("1. mostrar datos de un equipo");
-            System.out.println("2. listar entre (min y max) alfabeticamente equipos");
-            System.out.println("3. SALIR");
-            opcion=sc.nextInt();
-           
+                System.out.println("1. mostrar datos de un equipo");
+                System.out.println("2. listar entre (min y max) alfabeticamente equipos");
+                System.out.println("3. SALIR");
+                opcion=sc.nextInt();
+
                 switch(opcion){
                     case 1://Dado un país, mostrar puntos ganados, goles a favor y en contra y diferencia de goles
                          System.out.println("ingrese el pais del equipo: ");
-                         
-                         String pais=sc.nextLine();
+                         String pais=sc.next();
                          if(equipos.pertenece(new Equipo(pais))){//el pais del equipo existe
                              Equipo eq=(Equipo) equipos.getElem(new Equipo(pais));
                              System.out.println("puntos: "+eq.getPuntos()+", goles: "+eq.getGoles()+", goles encontra: "+eq.getGolesEnContra()+" diferencia: "+ (eq.getGoles()-eq.getGolesEnContra()));
             
                          }else{
-                            System.out.println("EL EQUIPO DEL PAIS NO JUEGA EN LA COPA AMERICA 2024");
+                             System.out.println("EL EQUIPO DEL PAIS NO JUEGA EN LA COPA AMERICA 2024");
                          }
                     break;
                     case 2://Dadas dos cadenas (min y max) devolver todos los equipos cuyo nombre esté alfabéticamente en el rango [min, max].
                          System.out.println("ingrese cadena min: ");
-                         String min=sc.nextLine();
+                         String min=sc.next();
                          System.out.println("ingrese cadena max: ");
-                         String max=sc.nextLine();
-                         System.out.println(equipos.moverseEnRango(min, max).toString());
+                         String max=sc.next();
+                         System.out.println(equipos.moverseEnRango(new Equipo(min),new Equipo(max) ).toString());
                     break;
                 }
                 System.out.println(" ");//espacio
@@ -352,20 +354,24 @@ public class CopaAmerica{
                 System.out.println("2. SALIR");
                 opcion=sc.nextInt();
                 if(opcion==1){
-
+                         sc.nextLine();
                          System.out.println("ingrese el pais del primer equipo: ");
                          String pais1=sc.nextLine();
+                         sc.nextLine();
+
                          System.out.println("ingrese el pais del segundo equipo: ");
                          String pais2=sc.nextLine();
-                        
+
+                         
                          if(equipos.pertenece(new Equipo(pais1)) && equipos.pertenece(new Equipo(pais2))){//los 2 equipos deben existir
                              ClaveP clave=new ClaveP(pais1,pais2);
                              Lista rango= partidos.obtenerValor(clave);
-
+                             System.out.println(partidos.funcionHash(clave));
                              if(!rango.estaVacia()){//hay partidos con la clave
+                                   sc.nextLine();
                                   System.out.println("ingrese instancia del partido 'GRUPO,SEMIFINAL,CUARTOS,FINAL' :");
                                   String ronda=sc.nextLine();
-
+                                  
                                   if(ronda.equalsIgnoreCase("grupo") || ronda.equalsIgnoreCase("cuartos")  || ronda.equalsIgnoreCase("semifinal") ||ronda.equalsIgnoreCase("final")){
                                       int i=1;
                                       while( ! ( ((Partido) rango.recuperar(i) ).getRonda() ).equals(ronda) ){//si no lo encontro que siga buscando
@@ -434,7 +440,24 @@ public class CopaAmerica{
         System.out.println(" ");
     }
     public static void mostrarEquiposOrdenados(ArbolAVL equipos){
-        
+        if(!equipos.esVacio()){
+            Lista clon=equipos.listar();//copio una lista con todos los objetos del arbol
+            ArbolAVL equiposGol=new ArbolAVL();
+            int i=1;
+            //NOTA: SI TODOS LOS EQUIPOS TIENEN 0 GOLES INSERTA LA RAIZ SOLAMENTE
+            while(i <= clon.longitud()){
+                //System.out.println(clon.recuperar(i));
+                 Equipo eq = (Equipo) (clon.recuperar(i));//
+                 //System.out.println(eq);
+                 EquipoGoles eqGol=new EquipoGoles(eq.getNombre(), eq.getDt(), eq.getGrupo(), eq.getPuntos(), eq.getGoles(), eq.getGolesEnContra());
+                 equiposGol.insertar(eqGol);
+                 i++;
+            }
+            System.out.println(equiposGol.toString());
+        }else{
+            System.out.println(" NO HAY EQUIPOS PARA ORDENAR ");
+        }
+        System.out.println(" ");
     }
     public static void mostrarSistema(Grafo mapa,ArbolAVL equipos,MapeoAMuchos partidos){
         System.out.println(" ");//espacio

@@ -3,8 +3,8 @@ package tpFinal.estructuras.grafoEtiquetado;
 public class NodoAdy {
     private NodoVert vertice;
     private NodoAdy sigAdyacente;
-    private int etiqueta;
-    public NodoAdy(NodoVert vertice, NodoAdy sigAdyacente , int etiqueta){
+    private Double etiqueta;
+    public NodoAdy(NodoVert vertice, NodoAdy sigAdyacente , double etiqueta){
              this.vertice=vertice;
              this.sigAdyacente=sigAdyacente;
              this.etiqueta=etiqueta;
@@ -27,7 +27,7 @@ public class NodoAdy {
     public Object getEtiqueta(){
         return this.etiqueta;
     }
-    public void setEtiqueta(int etiqueta){
+    public void setEtiqueta(Double etiqueta){
         this.etiqueta=etiqueta;
     }
 }

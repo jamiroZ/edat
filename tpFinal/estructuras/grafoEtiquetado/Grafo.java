@@ -70,7 +70,7 @@ public class Grafo {
     }
 
     //METODOS QUE INVOLUCRAN EL ARCO
-    public Boolean insertarArco(Object ini,Object fin, int etiqueta){
+    public Boolean insertarArco(Object ini,Object fin, Double etiqueta){
         Boolean flag=false;
         if(!ini.equals(fin)){//no puede un nodo enlazarse a si mismo
 

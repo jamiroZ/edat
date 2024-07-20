@@ -406,34 +406,27 @@ public class CopaAmerica{
             do{
             System.out.println("1. obtener el viaje mas corto entre 2 ciudades");
             System.out.println("2. obtener el camino que pase por menos ciudades entre ");
-            System.out.println("3. el vuelo mas corto entre 2 ciudades que NO haga escala en una ciudad");
-            System.out.println("4. todos los vuelos posibles entre 2 ciudades");
-            System.out.println("5. SALIR");
+            System.out.println("3. SALIR");
             opcion=sc.nextInt();
             System.out.println("ingrese la primer ciudad: ");
             String ciu1=sc.nextLine();
             System.out.println("ingrese la segunda ciudad: ");
             String ciu2=sc.nextLine();
-            if(mapa.existeVertice(new Ciudad(ciu1)) && mapa.existeVertice(new Ciudad(ciu2))){//las iudades deben existir
+            if(mapa.existeVertice(new Ciudad(ciu1)) && mapa.existeVertice(new Ciudad(ciu2))){//las Ciudades deben existir
                 switch(opcion){
                     case 1://
-                        
+                        System.out.println(mapa.listarCaminoMasCorto(new Ciudad(ciu1), new Ciudad(ciu2)).toString());
                     break;
                     case 2://
-                        
+                    
                     break;
-                    case 3://
-                        
-                    break;
-                    case 4://
-                        
-                    break;
+                    
                 }
             }else{
                 System.out.println("LAS CIUDADES "+ciu1+" O "+ciu2+" NO EXISTEN");
             }
                 System.out.println(" ");//espacio
-            }while(opcion!=5);
+            }while(opcion!=3);
         }else{
             System.out.println("NO INFORMACION DE CIUDADES O VIAJES ALMACENADOS");
         }

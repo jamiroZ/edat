@@ -23,7 +23,7 @@ public class ArbolAVL{
         //precondicion n no es nulo
         if (n != null){
             NodoAVL izq = n.getIzquierdo(), der = n.getDerecho(); 
-           
+            // System.out.println(elem+"-"+n.getElem());
             if (elem.compareTo(n.getElem()) == 0){
                 exito = false; //elem ya existe en el arbol
                 

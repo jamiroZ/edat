@@ -35,7 +35,7 @@ public class ClaveP {
     @Override
     public boolean equals(Object obj) {
         ClaveP otra = (ClaveP) obj;// Convertir obj a la clase actual
-        System.out.println(this.equipo1+"-"+this.equipo2+","+otra.getEq1()+"-"+otra.getEq2());
+        //System.out.println(this.equipo1+"-"+this.equipo2+","+otra.getEq1()+"-"+otra.getEq2());
          // Comparar los atributos que componen la clave doble
         return ((this.equipo1).equalsIgnoreCase(otra.getEq1()) && (this.equipo2).equalsIgnoreCase(otra.getEq2())) ;//campara equipo 1 y equipo2 deben ser iguales
     }

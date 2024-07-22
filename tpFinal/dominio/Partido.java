@@ -48,7 +48,7 @@ public class Partido {
           return eq1Goles+", "+eq2Goles;
      }
      public String toString(){
-          return eq1Goles+", "+eq2Goles+", "+ronda+", "+ciudad+", "+estadio;
+          return "goles: "+eq1Goles+", goles encontra: "+eq2Goles+", ronda: "+ronda+",Ciudad: "+ciudad+", estadio: "+estadio;
      }
      @Override
      public boolean equals(Object obj) {

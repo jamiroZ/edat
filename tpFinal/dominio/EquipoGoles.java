@@ -66,6 +66,7 @@ public class EquipoGoles implements Comparable{
     }
     public int compareTo(Object otroEquipo){
         int ret=(Integer.compare(this.goles, (((EquipoGoles) otroEquipo).getGoles()) ));
+        System.out.println(ret);
         return ret;//comparo  cual equipo tiene mayor cant goles
     }
     public String toString(){

@@ -32,7 +32,7 @@ public class CopaAmerica{
 
                      case 2: opcionesEquipos(equipos,partidos); break;
 
-                     case 3: altasPartidos(partidos); break;
+                     case 3: altasPartidos(partidos,mapa,equipos); break;
 
                      case 4: consultasEquipos(equipos); break;
 
@@ -71,8 +71,8 @@ public class CopaAmerica{
     public static void opcionesCiudades(Grafo mapa,MapeoAMuchos partidos){
         Scanner sc=new Scanner(System.in);
          int i;
-        do{ 
-            //MENU 
+        do{ //MENU 
+
             System.out.println("1. Dar Alta a Ciudades ");
             System.out.println("2. Dar Baja a Ciudades ");
             System.out.println("3. Modificar Ciudades  ");
@@ -84,6 +84,7 @@ public class CopaAmerica{
                   case 3: modificarCiudades(mapa,partidos); break;
                   default: System.out.println(" ERROR "); break;
             }
+            System.out.println(" ");
        }while(i!=4);
     }
     //METODOS DE ALTA,BAJA Y MODIFICACION DE CIUDAD
@@ -136,6 +137,7 @@ public class CopaAmerica{
         }else{//CASO MAPA VACIO
             System.out.println("NO HAY CIUDADES PARA ELIMINAR");
         }
+        System.out.println(" ");
     }
     public static void modificarCiudades(Grafo mapa,MapeoAMuchos equipos){
         Scanner sc=new Scanner(System.in);
@@ -215,12 +217,16 @@ public class CopaAmerica{
                System.out.println("ingrese la letra del grupo inicial 'A,B,C,D'");
                char grupo=sc.next().charAt(0);
                Equipo equipo=new Equipo(pais,dt,grupo);
-               System.out.println(equipos.pertenece(equipo));
-               if(equipos.insertar(equipo)){
-                     System.out.println("EL EQUIPO "+pais+" SE GUARDO");
+               if(grupo=='A' || grupo=='B' || grupo=='C'|| grupo=='D'){
+                   if(equipos.insertar(equipo)){
+                       System.out.println("EL EQUIPO "+pais+" SE GUARDO");
+                   }else{
+                       System.out.println("EL EQUIPO "+pais+" YA EXISTE ");
+                   }
                }else{
-                    System.out.println("EL EQUIPO "+pais+" YA EXISTE ");
+                   System.out.println("ERROR: NO HAY UN GRUPO"+grupo);
                }
+               
         }else{
             System.out.println("ESE EQUIPO YA EXISTE");
         }
@@ -230,7 +236,7 @@ public class CopaAmerica{
         Scanner sc=new Scanner(System.in);
         if(!equipo.esVacio()){
             System.out.println(" ingrese el nombre del equipo :");
-            String pais=" "+sc.nextLine();
+            String pais=sc.nextLine();
             if(equipo.eliminar(new Equipo(pais))){//lo elimina
                 System.out.println("EQUIPO "+pais+" SE ELIMINO DE LA COPA");
             }else{
@@ -248,11 +254,7 @@ public class CopaAmerica{
             int opcion;
             do{
                System.out.println("1. modificar apellido del dt");
-               System.out.println("2. modificar grupo 'A,B,C,D' ");
-               System.out.println("3. modificar modificar puntaje");
-               System.out.println("4. modificar goles hechos");
-               System.out.println("5. modificar goles en contra");
-               System.out.println("6. SALIR");
+               System.out.println("2. SALIR");
                opcion=sc.nextInt();
                Equipo eq= (Equipo) equipo.getElem(new Equipo(pais));
                switch(opcion){
@@ -261,35 +263,15 @@ public class CopaAmerica{
                         String dt=sc.nextLine();
                         eq.setDt(dt);
                      break;
-                     case 2: 
-                        System.out.println("ingrese letra del grupo 'A,B,C o D': ");
-                        char grupo=sc.next().charAt(0);
-                        eq.setGrupo(grupo);
-                     break;
-                     case 3: 
-                        System.out.println("ingrese si suma o resta puntaje: ");
-                        int punt=sc.nextInt();
-                        eq.setPuntos(punt);
-                     break;
-                     case 4: 
-                        System.out.println("cant goles: ");
-                        int gol=sc.nextInt();
-                        eq.setGoles(gol);
-                     break;
-                     case 5: 
-                        System.out.println("cant goles encontra: ");
-                        int encontra=sc.nextInt();
-                        eq.setGolesEnContra(encontra);
-                     break;
                }
-            }while(opcion!= 6);
+            }while(opcion!= 2);
 
         }else{
             System.out.println("EL EQUIPO NO JUEGA EN LA COPA AMERICA 2024");
         }
     }
     //ALTA DE PARTIDOS
-    public static void altasPartidos(MapeoAMuchos partidos){
+    public static void altasPartidos(MapeoAMuchos partidos, Grafo mapa,ArbolAVL equipos){
         Scanner sc=new Scanner(System.in);
         if(!partidos.esVacio()){//existen partidos
             System.out.println("ingrese el primer equipo: ");
@@ -297,7 +279,45 @@ public class CopaAmerica{
             System.out.println("ingrese el segundo equipo: ");
             String eq2=sc.nextLine();
             if(partidos.pertenece(new ClaveP(eq1,eq2))){//si el partido no existe lo crea
-                    partidos.insertar(new ClaveP(eq1,eq2));
+                    System.out.println(" ingrese ronda 'GRUPO, CUARTOS, SEMIFINAL, FINAL':");
+                    String rond=sc.nextLine();
+                    if(rond.equalsIgnoreCase("GRUPO") || rond.equalsIgnoreCase("CUARTOS") || rond.equalsIgnoreCase("SEMIFINAL") || rond.equalsIgnoreCase("FINAL")){
+                         System.out.println(" ingrese ciudad: ");
+                         String ciudad=sc.nextLine();
+                         if(mapa.existeVertice(new Ciudad(ciudad))){
+                               System.out.println(" ingrese estadio " );
+                               String estadio=sc.nextLine();
+                               System.out.println(" ingrese goles del primer equipo: ");
+                               int golEq1=sc.nextInt();
+                               System.out.println(" ingrese goles del segundo equipo: ");
+                               int golEq2=sc.nextInt();
+                               if( golEq1 >=0 && 0<= golEq2){
+                                     partidos.asociar(new ClaveP(eq1,eq2), new Partido(eq1, eq2, rond, ciudad, estadio, golEq1, golEq2));
+                                    //ACTUALIZO LOS EQUIPOS QUE JUEGAN EL PARTIDO
+                                     Equipo equipo1=(Equipo) equipos.getElem(new Equipo(eq1));
+                                     equipo1.setGoles(golEq1);
+                                     equipo1.setGolesEnContra(golEq2);
+                                     equipo1.setPuntos(golEq1,golEq2);
+
+                                     Equipo equipo2=(Equipo) equipos.getElem(new Equipo(eq2));
+                                     equipo2.setGoles(golEq2);
+                                     equipo2.setGolesEnContra(golEq1);
+                                     equipo2.setPuntos(golEq2,golEq1);
+
+                               }else{
+                                     System.out.println("VALORES DE GOLES DEBEN SER MAYORES O IGUALES A 0");
+                               }
+                         }else{
+                            System.out.println("LA CIUDAD "+ciudad+" NO FORMA PARTE DEL MAPA");
+                         }
+                    }else{
+                        System.out.println("EL GRUPO INGRESADO NO EXISTE INGRESE ALGUNA DE LAS SIGUIENTES OPCIONES: 'GRUPO, CUARTOS, SEMIFINAL, FINAL'");
+                    }
+                   
+
+                    
+            }else{
+                System.out.println("NO HAY UN PARTIDO ENTRE LOS EQUIPOS "+eq1+" "+eq2);
             }
             
         }else{
@@ -350,50 +370,54 @@ public class CopaAmerica{
         if(!partidos.esVacio()){//si hay equipos consulta
             int opcion;
             do{
-                System.out.println("1. buscar partido");
-                System.out.println("2. SALIR");
+                System.out.println("1. buscar partido por instancia");
+                System.out.println("2. buscar todos los partidos entre 2 equipos");
+                System.out.println("3. SALIR");
                 opcion=sc.nextInt();
-                if(opcion==1){
-                         sc.nextLine();
-                         System.out.println("ingrese el pais del primer equipo: ");
-                         String pais1=sc.nextLine();
-                         sc.nextLine();
-
-                         System.out.println("ingrese el pais del segundo equipo: ");
-                         String pais2=sc.nextLine();
-
-                         
-                         if(equipos.pertenece(new Equipo(pais1)) && equipos.pertenece(new Equipo(pais2))){//los 2 equipos deben existir
-                             ClaveP clave=new ClaveP(pais1,pais2);
-                             Lista rango= partidos.obtenerValor(clave);
-                             System.out.println(partidos.funcionHash(clave));
-                             if(!rango.estaVacia()){//hay partidos con la clave
-                                   sc.nextLine();
-                                  System.out.println("ingrese instancia del partido 'GRUPO,SEMIFINAL,CUARTOS,FINAL' :");
-                                  String ronda=sc.nextLine();
-                                  
-                                  if(ronda.equalsIgnoreCase("grupo") || ronda.equalsIgnoreCase("cuartos")  || ronda.equalsIgnoreCase("semifinal") ||ronda.equalsIgnoreCase("final")){
+                sc.nextLine();
+                System.out.println("ingrese el pais del primer equipo: ");
+                String pais1=sc.nextLine();
+                sc.nextLine();
+                System.out.println("ingrese el pais del segundo equipo: ");
+                String pais2=sc.nextLine();
+                if(equipos.pertenece(new Equipo(pais1)) && equipos.pertenece(new Equipo(pais2))){//los 2 equipos deben existir
+                        ClaveP clave=new ClaveP(pais1,pais2);
+                        Lista rango= partidos.obtenerValor(clave);
+                        //System.out.println(partidos.funcionHash(clave));
+                        if(!rango.estaVacia()){//hay partidos con la clave
+                            
+                            if(opcion==1){
+    
+                                sc.nextLine();
+                                System.out.println("ingrese instancia del partido 'GRUPO,SEMIFINAL,CUARTOS,FINAL' :");
+                                String ronda=sc.nextLine();
+                                
+                                if(ronda.equalsIgnoreCase("grupo") || ronda.equalsIgnoreCase("cuartos")  || ronda.equalsIgnoreCase("semifinal") ||ronda.equalsIgnoreCase("final")){
                                       int i=1;
                                       while( ! ( ((Partido) rango.recuperar(i) ).getRonda() ).equals(ronda) ){//si no lo encontro que siga buscando
                                           i++;
                                       }
-                                      if( ((Partido) rango.recuperar(i) ).getRonda().equals(ronda)){//si es la ronda 
-
+                                      Partido part=(Partido) rango.recuperar(i);
+                                      if( (part ).getRonda().equals(ronda)){//si es la ronda 
+                                            System.out.println(part.toString());
                                       }else{
-                                        System.out.println("NO SE JUGO UN PARTIDO ( "+clave.toString()+") EN LA FASE"+ronda);
+                                            System.out.println("NO SE JUGO UN PARTIDO ( "+clave.toString()+") EN LA FASE"+ronda);
                                       }
-                                  }
-                             }else{
+                                }
+                            }else if(opcion==2){
+                                System.out.println(rango.toString());
+                            }
+                        }else{
                                 System.out.println(" NO HAY PARTIDO ORGANIZADO CON ESTOS EQUIPOS ");//espacio
-                             }
+                        }
+                       
             
-                         }else{
-                            System.out.println("EL EQUIPO "+pais1+" O "+pais2+" NO JUEGAN LA CAPA AMERICA 2024");
-                         }
-                   
+                }else{
+                    System.out.println("EL EQUIPO "+pais1+" O "+pais2+" NO JUEGAN LA CAPA AMERICA 2024");
                 }
+                   
                 System.out.println(" ");//espacio
-            }while(opcion!=2);
+            }while(opcion!=3);
         }else{
             System.out.println("NO HAY PARTIDOS ORGANIZADOS");
         }
@@ -408,17 +432,26 @@ public class CopaAmerica{
             System.out.println("2. obtener el camino que pase por menos ciudades entre ");
             System.out.println("3. SALIR");
             opcion=sc.nextInt();
+            sc.nextLine();
             System.out.println("ingrese la primer ciudad: ");
             String ciu1=sc.nextLine();
+            sc.nextLine();
             System.out.println("ingrese la segunda ciudad: ");
             String ciu2=sc.nextLine();
+            //sc.nextLine();
+            
+            System.out.println(mapa.existeVertice(new Ciudad(ciu2)));
+
             if(mapa.existeVertice(new Ciudad(ciu1)) && mapa.existeVertice(new Ciudad(ciu2))){//las Ciudades deben existir
                 switch(opcion){
                     case 1://
-                        System.out.println(mapa.listarCaminoMasCorto(new Ciudad(ciu1), new Ciudad(ciu2)).toString());
+                        System.out.println(" VIAJE CON MENOR TIEMPO ENTRE "+ciu1+" y "+ciu2);
+                        System.out.println(mapa.caminoConMenosPeso(new Ciudad(ciu1), new Ciudad(ciu2)).toString());
                     break;
                     case 2://
-                    
+                        System.out.println("     VIAJE CON MENOR CANTIDAD DE ESCALAS ENTRE "+ciu1+" y "+ciu2+"    ");
+                        System.out.println("REALIZA ESCALA EN LAS SIGUIENTES CIUDADES: ");
+                        System.out.println(mapa.listarCaminoMasCorto(new Ciudad(ciu1), new Ciudad(ciu2)).toString());
                     break;
                     
                 }

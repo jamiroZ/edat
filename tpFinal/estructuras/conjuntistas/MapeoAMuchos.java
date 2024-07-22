@@ -21,7 +21,7 @@ public class MapeoAMuchos {
         Boolean encontrado=false;
         int pos=elem.hashCode()% this.TAMANIO ;//posicion del dominio en la tabla hash
         NodoHashMapeoM aux=this.tabla[pos];
-        System.out.println(pos);
+        //System.out.println(pos);
         while(!encontrado && aux!=null){
             encontrado=aux.getDominio().equals(elem);
             aux=aux.getEnlace();
@@ -49,7 +49,7 @@ public class MapeoAMuchos {
     public Boolean eliminarRec(NodoHashMapeoM n, NodoHashMapeoM ant, Object elem){
         Boolean flag=false;
         if(n!=null){
-            System.out.println(n.getDominio());
+            //System.out.println(n.getDominio());
             if(n.getDominio().equals(elem)){//lo encontro
                 if(n.getEnlace()!=null){
                      ant.setEnlace(n.getEnlace());//enlazo anterior con el siguiente de n
@@ -73,7 +73,7 @@ public class MapeoAMuchos {
     public Boolean perteneceRec(NodoHashMapeoM n, Object elem){
           Boolean encontrado=false;
           if(n!=null){
-              System.out.println(n.getDominio());
+              //System.out.println(n.getDominio());
               if(elem.equals(n.getDominio())){//lo encontro termina
                  encontrado=true;
               }else{
@@ -109,7 +109,7 @@ public class MapeoAMuchos {
         //System.out.println((Object) n.getDominio());
         if(n!=null){
              list=n.getRango();//retorna el Rango del Dominio buscado
-             System.out.println(list.toString());
+             //System.out.println(list.toString());
         }
         return list;
    }
@@ -125,7 +125,7 @@ public class MapeoAMuchos {
                     aux=aux.getEnlace();
                     j++;//cuenta cada objeto de la lista
                }
-               System.out.println(list.toString());
+               //System.out.println(list.toString());
             }
             i++;
         }
@@ -168,9 +168,9 @@ public class MapeoAMuchos {
       Boolean encontrado=false;
       int pos= elem.hashCode() % this.TAMANIO ;//posicion del dominio en la tabla hash
       NodoHashMapeoM aux=this.tabla[pos];
-      System.out.println (pos);
+      //System.out.println (pos);
       while(!encontrado && aux!=null){
-        System.out.println(aux.getDominio()+" "+elem);
+        // System.out.println(aux.getDominio()+" "+elem);
         encontrado=((aux.getDominio()).equals(elem));
         if(!encontrado){
             aux=aux.getEnlace();
@@ -193,7 +193,7 @@ public class MapeoAMuchos {
            ret="[ ";
            while(i < TAMANIO){
               if(this.tabla[i]!=null){
-                  System.out.println(i);
+                  //System.out.println(i);
                   ret= ret + this.tabla[i].getDominio()+", " +toStringR(this.tabla[i].getEnlace())+" ; ";
               }
               i++;

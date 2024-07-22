@@ -143,7 +143,7 @@ public class Lista {
                 cad = cad + aux.getElem().toString();
                 aux = aux.getEnlace();
                 if (aux != null){
-                    cad = cad + ", ";
+                    cad = cad + " ; ";
                 }
             }
             cad = cad + " |";

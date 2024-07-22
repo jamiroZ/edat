@@ -27,19 +27,19 @@ public class Archivo {
         }
     }
     public static void escribir(String entrada) {
-		FileWriter fichero = null;
+		FileWriter fichero = null;//
         PrintWriter pw = null;
 
         System.out.println(entrada);
 
         try{
             fichero = new FileWriter("C:\\Users\\jamir\\OneDrive\\Documentos\\facultad\\segundoAño\\edat\\EDAT\\edat-1\\tpFinal\\txt\\log.txt", true);
-            pw = new PrintWriter(fichero);
+            pw = new PrintWriter(fichero);//para escribir en el archivo atraves del fichero
 
             pw.println(entrada);
-        } catch (Exception e) {
+        } catch (Exception e) {//excepción que pueda ocurrir durante la apertura, escritura o cierre del archivo 
             e.printStackTrace();
-        } finally {
+        } finally {//cierro el archivo
            try {
               if (fichero != null)
                   fichero.close();
@@ -48,7 +48,6 @@ public class Archivo {
            }
         }
 	}
-    
     public static void leerArchivo(Grafo mapa,ArbolAVL equipos,MapeoAMuchos partidos){
         try{//FileReader y BufferedReader se inicializan dentro de este bloque
             FileReader archivo;//se usa para leer caracteres del archivo
@@ -61,11 +60,11 @@ public class Archivo {
 
                 //if (!linea.trim().isEmpty()) { // Verificar si la línea no está vacía
                     chequearLinea(linea, mapa, equipos, partidos);
-                //}
+                //}R
             }
-            archivo.close();
-            escribir("INFO DE COPA AMERICA CARGADA"); 
-            
+            lector.close();
+            escribir("INFO DE COPA AMERICA CARGADA");//
+            System.out.println(" ");//espacio
         }catch (FileNotFoundException exception){//caso de excepcion
              System.err.println("ERROR: "+exception.getMessage());
         }catch(IOException exception){
@@ -93,6 +92,7 @@ public class Archivo {
                 String ciudad2= atributo.nextToken().trim();
                 String par=atributo.nextToken().trim();
                 int etiqueta= Integer.parseInt( par );//casteo a entero
+                //System.out.println(ciudad1+ciudad2+par);
                 Double cast= (double) etiqueta;
                 //si las 2 ciudades existen y no existe ya una ruta la crea
                 if(!mapa.insertarArco((Object) new Ciudad(ciudad1),(Object) new Ciudad(ciudad2), cast)){
@@ -101,25 +101,39 @@ public class Archivo {
                 break;
             case "P"://PARTIDO
                 //Partido:(equipo1, equipo2, instancia, ciudad, estadio, golesEq1 ,golesEq2)
-               
+                
                 String eq1=atributo.nextToken().trim();
                 String eq2=atributo.nextToken().trim();
+                if(equipos.pertenece(new Equipo(eq1)) && equipos.pertenece(new Equipo(eq1)) ){
 
-                String ins=atributo.nextToken().trim();
-                String ciu=atributo.nextToken().trim();
-                String estadio=atributo.nextToken().trim();
+                    String ins=atributo.nextToken().trim();
+                    String ciu=atributo.nextToken().trim();
+                    if(mapa.existeVertice(new Ciudad(ciu))){
+                        String estadio=atributo.nextToken().trim();
 
-                String part=atributo.nextToken().trim();
-                int golEq1=Integer.parseInt(part);
+                        String part=atributo.nextToken().trim();
+                        int golEq1=Integer.parseInt(part);
 
-                String part2=atributo.nextToken().trim();
-                int golEq2=Integer.parseInt(part2);
-                
-                ClaveP clave=new ClaveP(eq1,eq2);
+                        String part2=atributo.nextToken().trim();
+                        int golEq2=Integer.parseInt(part2);
+                        //ACTUALIZO LOS EQUIPOS QUE JUEGAN EL PARTIDO
+                        Equipo equipo1=(Equipo) equipos.getElem(new Equipo(eq1));
+                        equipo1.setGoles(golEq1);
+                        equipo1.setGolesEnContra(golEq2);
+                        equipo1.setPuntos(golEq1, golEq2);
+
+                        Equipo equipo2=(Equipo) equipos.getElem(new Equipo(eq2));
+                        equipo2.setGoles(golEq2);
+                        equipo2.setGolesEnContra(golEq1);
+                        equipo2.setPuntos(golEq2, golEq1);
+                        //CREO EL PARTIDO 
+                        ClaveP clave=new ClaveP(eq1,eq2);
               
-                partidos.insertar(clave);//inserta el dominio (clave del Partido: nombre eq1 y eq2
-                if(partidos.asociar( clave, new Partido(eq1, eq2, ins, ciu, estadio, golEq1, golEq2 ))){//relaciona el partido con su clave si existe
-                         System.out.println("PARTIDO CARGADO: "+clave.toString());
+                        partidos.insertar(clave);//inserta el dominio (clave del Partido: nombre eq1 y eq2
+                        if(partidos.asociar( clave, new Partido(eq1, eq2, ins, ciu, estadio, golEq1, golEq2 ))){//relaciona el partido con su clave si existe
+                             System.out.println("PARTIDO CARGADO: "+clave.toString());
+                        }
+                   }
                 }
                 break;
             case "E"://EQUIPO

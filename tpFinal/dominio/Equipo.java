@@ -46,8 +46,15 @@ public class Equipo implements Comparable{
     public int getPuntos(){
         return this.puntos;
     }
-    public void setPuntos(int puntos){
-        this.puntos=this.puntos + puntos;
+    
+    // metodo practico con respecto a los partidos
+    public void setPuntos(int golEq1, int golEq2){
+       if(golEq1> golEq2){//si gano suma puntos (3)
+           this.puntos=this.puntos +3;
+       }if(golEq1==golEq2){//si empataron  suma 1 punto
+        this.puntos=this.puntos +1;
+       }
+       
     }
     //GOLES
     public int getGoles(){

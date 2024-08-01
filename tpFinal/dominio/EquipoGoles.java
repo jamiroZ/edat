@@ -64,11 +64,15 @@ public class EquipoGoles implements Comparable{
     public void setGolesEnContra(int en){
         this.golesEnContra=this.golesEnContra + en;
     }
-    public int compareTo(Object otroEquipo){
+    public int compareTo(Object otroEquipo){//comparo primero goles y si son iguales, despues los nombres
         int ret=(Integer.compare(this.goles, (((EquipoGoles) otroEquipo).getGoles()) ));
-        System.out.println(ret);
+        if(ret==0){//si tienen la misma cantidad de goles compara por nombres
+             ret=this.nombre.compareToIgnoreCase( ((EquipoGoles) otroEquipo).getNombre());//si el equipo1 es mayor que otroEquipo retorna 1,sino -1 y si son iguales 0
+        }
+        //System.out.println(ret);
         return ret;//comparo  cual equipo tiene mayor cant goles
     }
+    //FALTA EQUALS
     public String toString(){
         return "Pais: "+nombre;
     }

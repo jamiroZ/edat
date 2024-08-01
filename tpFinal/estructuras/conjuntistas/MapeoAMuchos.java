@@ -137,10 +137,17 @@ public class MapeoAMuchos {
         while(i < this.TAMANIO-1 && j <= this.cant){//va a recorrer lo justo
             if(this.tabla[i]!=null){//hay al menos un nodo en la posicion
                NodoHashMapeoM aux=this.tabla[i];
-               
-               while(aux.getEnlace()!=null){
-                  
-                    list.insertar(aux.getRango(), list.longitud()+1);
+              
+               while(aux!=null){//ME MUEVO EN LA LISTA DOMINIO DE LA POSICION (i)
+                    System.out.println(aux.getDominio());
+                    Lista rang=aux.getRango();//obtengo la lista rango del dominio
+                    int pos=1;
+                    while(pos <= rang.longitud()){//ME MUEVO EN EL RANGO DEL DOMINIO
+                        list.insertar(rang.recuperar(pos), list.longitud()+1);
+                        //System.out.println(list.toString());
+                        pos++;
+                    }
+                    
                     aux=aux.getEnlace();
                     j++;//cuenta cada objeto de la lista
                }

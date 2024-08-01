@@ -71,8 +71,10 @@ public class Equipo implements Comparable{
         this.golesEnContra=this.golesEnContra + en;
     }
     public int compareTo(Object otroEquipo){
+       // System.out.println(this.nombre+" "+otroEquipo.toString());
         return this.nombre.compareToIgnoreCase( ((Equipo) otroEquipo).getNombre());//si el equipo1 es mayor que otroEquipo retorna 1,sino -1 y si son iguales 0
     }
+    //agregar equals
     public String toString(){
         return "Pais: "+nombre;
     }

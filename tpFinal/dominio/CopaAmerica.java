@@ -15,15 +15,15 @@ public class CopaAmerica{
     }
     public static void testingCopaAmerica(){
           //ESCTRUCTURAS USADAS
-          Grafo mapa=new Grafo();//grafo etiquetado
-          MapeoAMuchos partidos=new MapeoAMuchos();//tabla hash mapeado a muchos
-          ArbolAVL equipos=new ArbolAVL();
+          Grafo mapa=new Grafo();//grafo etiquetado(ciudades y rutas)
+          MapeoAMuchos partidos=new MapeoAMuchos();//tabla hash mapeado a muchos(partidos )
+          ArbolAVL equipos=new ArbolAVL();//arbol avl(equipos)
          
-          Archivo.crearLog();
+          Archivo.crearLog();//AGREGAR ACTUALIZACIONES LOG EN EL MENU
           Archivo.leerArchivo(mapa, equipos, partidos);//leo el txt y cargo en las estructuras la informacion 
           //VALOR NUMERICO PARA USO DEL MENU
           int opcion;
-          do{ 
+          do{
                System.out.println(" ");//espacio
                opcion=menu();//MENU PRINCIPAL DE OPCIONES
                switch(opcion){
@@ -43,7 +43,7 @@ public class CopaAmerica{
                      case 7: mostrarEquiposOrdenados(equipos); break;
 
                      case 8: mostrarSistema(mapa,equipos,partidos); break;
-                     
+
                      default: System.out.println(" ERROR "); break;
                }
                System.out.println(" ");//espacio
@@ -64,7 +64,7 @@ public class CopaAmerica{
         System.out.println("7. Mostrar equipos ordenados por cantidad de goles a favor");
         System.out.println("8. Mostrar Sistema");
         System.out.println("9. SALIR");
-        System.out.println("                                          \n");
+        System.out.println(" ");
         int ret=sc.nextInt();
         return ret;
     }
@@ -93,7 +93,7 @@ public class CopaAmerica{
          Boolean alojamiento,sede;
          System.out.println("ingrese el nombre de la ciudad: ");
          String nombre=sc.nextLine();
-         System.out.println(mapa.existeVertice(new Ciudad(nombre)));
+        // System.out.println(mapa.existeVertice(new Ciudad(nombre)));
 
          if(!mapa.existeVertice(new Ciudad(nombre)) ){//si la ciudad no existe la inserto
                System.out.println("ingrese 'SI' pose alojamiento disponible o 'NO' en caso contrario: " );
@@ -110,8 +110,8 @@ public class CopaAmerica{
                }else{
                   sede=false;
                }
-            System.out.println(mapa.insertarVertice(new Ciudad(nombre,alojamiento,sede)));
-               System.out.println("LA CIUDAD "+nombre+" SE UBICO EN EL MAPA");
+               // System.out.println(mapa.insertarVertice(new Ciudad(nombre,alojamiento,sede)));
+               Archivo.escribir("LA CIUDAD "+nombre+" SE UBICO EN EL MAPA");
          }else{
             System.out.println("LA CIUDAD "+nombre+" YA EXISTE EN EL MAPA");
          }
@@ -120,17 +120,35 @@ public class CopaAmerica{
         Scanner sc=new Scanner(System.in);
         if(!mapa.esVacio()){
             System.out.println("Ingrese el nombre de la ciudad para darle de baja: ");
-            String nombre=sc.nextLine();
-            if(mapa.existeVertice(new Ciudad(nombre) ) ){//EXISTE LA CIUDAD
-                  if(((Ciudad) mapa.obtenerElem( new Ciudad(nombre))).getSede()){// si es sede de un partido hay que re ubicarlo
-                           System.out.println("la ciudad es sede de un partido");
+            String ciudadP=sc.nextLine();
+            if(mapa.existeVertice(new Ciudad(ciudadP) ) ){//EXISTE LA CIUDAD
+                  System.out.println(" ");
+                  if(((Ciudad) mapa.obtenerElem( new Ciudad(ciudadP))).getSede()){// si es sede de un partido hay que re ubicarlo
+                           System.out.println("LA CIUDAD ES SEDE DE UN PARTIDO");
+                           System.out.println(" ");
                            System.out.println("ingrese ciudad donde re ubicar el partido: ");
-                           nombre=sc.nextLine();
-                           int i=0;
-                           
+                           String ciudadS=sc.nextLine();
+                           //obtengo todos los partidos para buscar los que tengan sede la ciudad
+                           Lista rangoS=partidos.obtenerConjuntoRango();
+                           System.out.println(rangoS.longitud());
+                           if(!rangoS.estaVacia()){
+                                int i=1;
+                                while(i <= rangoS.longitud()){
+                                    Partido part= (Partido) rangoS.recuperar(i);
+                                    if(part.getCiudad().equals(ciudadP)){
+                                        part.setCiudad(ciudadS);
+                                    }
+                                    i++;
+                                }
+                            
+                           }else{
+                                System.out.println(" ");
+                                System.out.println("NO HAY PARTIDOS REGISTRADOS");
+                           }
+
                   }
-                  mapa.eliminarVertice(new Ciudad(nombre));//ELIMINO LA CIUDAD
-                  System.out.println("ciudad"+nombre+" eliminada");
+                  mapa.eliminarVertice(new Ciudad(ciudadP));//ELIMINO LA CIUDAD
+                  Archivo.escribir("ciudad "+ciudadP+" eliminada");
             }else{//NO EXISTE
                 System.out.println("La ciudad No existe en el mapa para la copa");
             }
@@ -163,6 +181,7 @@ public class CopaAmerica{
                              alojamiento=false;
                          }
                          ciudad.setAlojamiento(alojamiento);
+                         Archivo.escribir("LA CIUDAD "+nombre+"ACTUALIZO SU ALOJAMIENTO");
                          break;
                     case 2:
                          System.out.println("ingrese 'SI' es sede de un partido o 'NO' si no es asi: ");
@@ -173,6 +192,8 @@ public class CopaAmerica{
                              sede=false;
                          }
                          ciudad.setSede(sede);
+                         Archivo.escribir("LA CIUDAD "+nombre+"ACTUALIZO SI ES SEDE");
+
                          break;
                     default:
                         break;
@@ -219,7 +240,7 @@ public class CopaAmerica{
                Equipo equipo=new Equipo(pais,dt,grupo);
                if(grupo=='A' || grupo=='B' || grupo=='C'|| grupo=='D'){
                    if(equipos.insertar(equipo)){
-                       System.out.println("EL EQUIPO "+pais+" SE GUARDO");
+                      Archivo.escribir("EL EQUIPO "+pais+" SE GUARDO");
                    }else{
                        System.out.println("EL EQUIPO "+pais+" YA EXISTE ");
                    }
@@ -238,7 +259,7 @@ public class CopaAmerica{
             System.out.println(" ingrese el nombre del equipo :");
             String pais=sc.nextLine();
             if(equipo.eliminar(new Equipo(pais))){//lo elimina
-                System.out.println("EQUIPO "+pais+" SE ELIMINO DE LA COPA");
+                Archivo.escribir("EQUIPO "+pais+" SE ELIMINO DE LA COPA");
             }else{
                 System.out.println("EL EQUIPO "+pais+" NO EXISTE");
             }
@@ -303,6 +324,7 @@ public class CopaAmerica{
                                      equipo2.setGoles(golEq2);
                                      equipo2.setGolesEnContra(golEq1);
                                      equipo2.setPuntos(golEq2,golEq1);
+                                     Archivo.escribir("PARTIDO CARGADO :"+eq1+"-"+eq2);
 
                                }else{
                                      System.out.println("VALORES DE GOLES DEBEN SER MAYORES O IGUALES A 0");
@@ -349,9 +371,10 @@ public class CopaAmerica{
                     break;
                     case 2://Dadas dos cadenas (min y max) devolver todos los equipos cuyo nombre esté alfabéticamente en el rango [min, max].
                          System.out.println("ingrese cadena min: ");
-                         String min=sc.next();
+                         String min=sc.nextLine();
+                         sc.nextLine();
                          System.out.println("ingrese cadena max: ");
-                         String max=sc.next();
+                         String max=sc.nextLine();
                          System.out.println(equipos.moverseEnRango(new Equipo(min),new Equipo(max) ).toString());
                     break;
                 }
@@ -471,7 +494,7 @@ public class CopaAmerica{
             ArbolAVL equiposGol=new ArbolAVL();
             int i=1;
             //NOTA: SI TODOS LOS EQUIPOS TIENEN 0 GOLES INSERTA LA RAIZ SOLAMENTE
-            while(i <= clon.longitud()){
+            while(i <= clon.longitud()){//vaciar LISTA 
                 //System.out.println(clon.recuperar(i));
                  Equipo eq = (Equipo) (clon.recuperar(i));//
                  //System.out.println(eq);

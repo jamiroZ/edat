@@ -52,9 +52,9 @@ public class Partido {
      }
      @Override
      public boolean equals(Object obj) {
-            Partido otra = (Partido) obj;
-             // Comparar los atributos que componen la clave doble
-             return this.ronda.equalsIgnoreCase(otra.ronda) ;//campara equipo 1 y equipo2 deben ser iguales
+             Partido otra = (Partido) obj;
+             //falta comparar clave partido ,usar equals de claveP
+             return this.ronda.equalsIgnoreCase(otra.ronda) && ( ((ClaveP) this.clave).equals(  otra.getClaveP()));
      }
      
 }

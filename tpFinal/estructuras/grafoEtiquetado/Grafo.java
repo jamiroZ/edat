@@ -210,34 +210,35 @@ public class Grafo {
             NodoVert auxFin=ubicarVertice(fin);//busco el nodo final
             if(auxIni != null && auxFin != null){//ambos deben existir
                         Lista camAct=new Lista();//lista para comparar y guardar el recorrido
-                        Lista vistos=new Lista();//lista auxiliar de elementos de nodos visitados
-                        camino=caminoMasCortoRec(vistos,camAct,camino,fin,auxIni);
+                        camino=caminoMasCortoRec(camAct,camino,fin,auxIni);
                    
             }
         }
         return camino;
     }
-    private Lista caminoMasCortoRec(Lista vistos,Lista camAct, Lista camino, Object fin ,NodoVert n){
+    private Lista caminoMasCortoRec(Lista camAct, Lista camino, Object fin ,NodoVert n){
 
-        if(n!=null){
+        if(n!=null && (camino.estaVacia() || (camino.longitud() > camAct.longitud()))){
              // System.out.println(n.getElem());
-             vistos.insertar(n.getElem(), vistos.longitud()+1);//guardo los ya vistos
              camAct.insertar(n.getElem(), camAct.longitud()+1);//creo el camino para comparar
+            // System.out.println("camAct"+camAct.toString());
              if(fin.equals(n.getElem())){//se llego al final
+                  
                    if( camino.estaVacia() ||(camino.longitud() > camAct.longitud())){//si hay una lista con un camino menor 
                           camino=camAct.clone();//nueva lista de camino MINIMO
-                   } 
-             }else{
+                   }
+                   
+                   //System.out.println(camino.toString()+" LLEGUE AL DISTINO");
+             }else if( camino.estaVacia() || (camino.longitud() > camAct.longitud()) ){
                  NodoAdy ady=n.getPrimerAdy();
                  while(ady!=null){//recorro lista de adyacentes a n
-                        if(vistos.localizar(ady.getVertice().getElem())<0){//no visito el elemento en el vertice del NodoAdyacente, lo visita
-                            camino=caminoMasCortoRec(vistos,camAct,camino , fin ,ady.getVertice());
+                        if((camAct.localizar(ady.getVertice().getElem())<0 ) && ( camino.estaVacia() ||(camino.longitud() > camAct.longitud()))){//no visito el elemento en el vertice del NodoAdyacente, lo visita
+                            camino=caminoMasCortoRec(camAct,camino , fin ,ady.getVertice());
                         }
                         ady=ady.getSigAdyacente();
                  }
              }
              camAct.eliminar(camAct.longitud());//lo visite ,lo elimino
-             vistos.eliminar(vistos.longitud());//puede haber mas caminos que recorran ese nodo, lo elimino de visto
 
         }
         return camino;
@@ -253,39 +254,38 @@ public class Grafo {
                         double peso[]=new double[1];
                         peso[0]=0;
                         Lista camAct=new Lista();//lista auxiliar para guardar recorrido
-                        Lista vistos=new Lista();//lista auxiliar de elementos de nodos visitados
-                        camino=caminoConMenosPesoRec(vistos, camAct, camino, fin, auxIni, peso,0);
+                        camino=caminoConMenosPesoRec( camAct, camino, fin, auxIni, peso,0);
             }
             
         }
          return camino;
     }
-    private Lista caminoConMenosPesoRec(Lista vistos,Lista camAct,Lista camino, Object fin, NodoVert n, double peso[] ,double contAct){
-        if(n!=null){
-            //
-            vistos.insertar(n.getElem(), vistos.longitud()+1);//guardo los ya vistos
-            camAct.insertar(n.getElem(), camAct.longitud()+1);//creo el camino para comparar
 
+    private Lista caminoConMenosPesoRec(Lista camAct,Lista camino, Object fin, NodoVert n, double peso[] ,double contAct){
+        if(n!=null && (peso[0]==0 || peso[0] > contAct)){
+            //
+            camAct.insertar(n.getElem(), camAct.longitud()+1);//creo el camino para comparar
+            //System.out.println("camAct"+camAct.toString());
             if(fin.equals(n.getElem())){//se llego al final
                 
-                if(peso[0]==0 ||( peso[0] > contAct)){//si el camino actual es menor que el anterior recorrido
+                if(peso[0]==0 ||( peso[0] > contAct)){//si el camino actual tiene menor peso que el anterior recorrido
                         peso[0]=contAct;//actualizo el minimo
                         camino=camAct.clone();//nueva lista de camino MINIMO
-                } 
+                }
+               System.out.println(camino.toString()+" LLEGUE AL DISTINO");
             }else{
                 NodoAdy ady=n.getPrimerAdy();
                 while(ady!=null){//recorro lista de adyacentes a n
 
-                       if(vistos.localizar(ady.getVertice().getElem())<0){//no visito el elemento en el vertice del NodoAdyacente, lo visita
+                       if( (camAct.localizar(ady.getVertice().getElem()) < 0 ) && (peso[0]==0 || peso[0] > contAct)){//no visito el elemento en el vertice del NodoAdyacente, lo visita
 
                              double aux= contAct + ady.getEtiqueta();
-                            camino=caminoConMenosPesoRec(vistos, camAct, camino , fin ,ady.getVertice(), peso, aux);
+                            camino=caminoConMenosPesoRec( camAct, camino , fin ,ady.getVertice(), peso, aux);
                        }
                        ady=ady.getSigAdyacente();
                 }
             }
             camAct.eliminar(camAct.longitud());//lo visite ,lo elimino
-            vistos.eliminar(vistos.longitud());//puede haber mas caminos que recorran ese nodo, lo elimino de visto
 
        }
        return camino;

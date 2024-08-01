@@ -47,7 +47,7 @@ public class ArbolAVL{
 
                 if (balance < -1 || balance > 1){ //si esta desbalanceado
                     balancear(balance, n, padre);
-                    n.recalcularAltura();
+                    //n.recalcularAltura();
                 } 
             }                     
         }   
@@ -105,7 +105,7 @@ public class ArbolAVL{
     private int balance(NodoAVL n){
         //modulo que calcula el balance de un nodoAVL
         int izq = -1, der = -1; //altura de null es -1
-    
+        //si existen obtengo las alturas de ambos hijos
         if (n.getIzquierdo() != null){
             izq = n.getIzquierdo().getAltura();
         } 
@@ -409,21 +409,25 @@ public class ArbolAVL{
          moverseEnRangoRec(this.raiz, min, max, list );
         return list;
     }
-     private void moverseEnRangoRec(NodoAVL n,Comparable min,Comparable max,Lista list){
-        if( n!= null &&  min.compareTo( n.getElem()) <= 0 && max.compareTo( n.getElem()) >= 0 ){
-              
-              //si el objeto es mas grande que el min se mueve a la izquierda
-              if(min.compareTo(n.getElem())<=0 ){
-                
-                  moverseEnRangoRec(n.getIzquierdo(), min, max, list);
-                  //si estoy en el subArbol izquierdo me muevo al sub arbol derecho del nodo 
-                  list.insertar(n.getElem(),list.longitud()+1);
-                
-              }else{ //si estoy en el subArbol derecho me muevo al subArbol izquierdo del nodo
-                  moverseEnRangoRec(n.getDerecho(), min, max, list);
-                  list.insertar(n.getElem(),list.longitud()+1);
+    private void moverseEnRangoRec(NodoAVL n, Comparable min, Comparable max, Lista list) {
+        if (n != null) {
+            // Comprobamos si el elemento del nodo está dentro del rango
+            Comparable elem = n.getElem();
+            // Si el elemento es mayor o igual que min, buscamos en el subárbol izquierdo
+            if (min.compareTo(elem) <= 0) {
+                moverseEnRangoRec(n.getIzquierdo(), min, max, list);
+            }
+            
+            // Solo insertamos el elemento si está dentro del rango [min, max]
+            if (min.compareTo(elem) <= 0 && max.compareTo(elem) >= 0) {
+                //System.out.println(n.toString());
+                list.insertar(elem, list.longitud() + 1);
+            }
     
-              }
+            // Si el elemento es menor o igual que max, buscamos en el subárbol derecho
+            if (max.compareTo(elem) >= 0) {
+                moverseEnRangoRec(n.getDerecho(), min, max, list);
+            }
         }
-     }
+    }
 }

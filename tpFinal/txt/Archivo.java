@@ -64,7 +64,7 @@ public class Archivo {
             }
             lector.close();
             escribir("INFO DE COPA AMERICA CARGADA");//
-            System.out.println(" ");//espacio
+            //System.out.println(" ");//espacio
         }catch (FileNotFoundException exception){//caso de excepcion
              System.err.println("ERROR: "+exception.getMessage());
         }catch(IOException exception){
@@ -82,7 +82,7 @@ public class Archivo {
                 Boolean alojamiento = atributo.nextToken().trim().equalsIgnoreCase("TRUE");//SI HAY ALOJAMIENTO O NO
                 Boolean sede = atributo.nextToken().trim().equalsIgnoreCase("TRUE");//SI ES SEDE DE LA COPA O NO
                 Ciudad ciudad=new Ciudad(nombre,sede, alojamiento);
-                if(mapa.insertarVertice(ciudad)){
+                 if(mapa.insertarVertice(ciudad)){
                     escribir("CIUDAD CARGADA: "+nombre);
                 }
                 break;
@@ -96,7 +96,7 @@ public class Archivo {
                 Double cast= (double) etiqueta;
                 //si las 2 ciudades existen y no existe ya una ruta la crea
                 if(!mapa.insertarArco((Object) new Ciudad(ciudad1),(Object) new Ciudad(ciudad2), cast)){
-                    escribir("RUTA CARGADA: ENTRE "+ciudad1+" Y "+ciudad2+" TIEMPO "+etiqueta);
+                   escribir("RUTA CARGADA: ENTRE "+ciudad1+" Y "+ciudad2+" TIEMPO "+etiqueta);
                 }
                 break;
             case "P"://PARTIDO
@@ -128,10 +128,10 @@ public class Archivo {
                         equipo2.setPuntos(golEq2, golEq1);
                         //CREO EL PARTIDO 
                         ClaveP clave=new ClaveP(eq1,eq2);
-              
+                        //System.out.println(clave.toString());
                         partidos.insertar(clave);//inserta el dominio (clave del Partido: nombre eq1 y eq2
                         if(partidos.asociar( clave, new Partido(eq1, eq2, ins, ciu, estadio, golEq1, golEq2 ))){//relaciona el partido con su clave si existe
-                             System.out.println("PARTIDO CARGADO: "+clave.toString());
+                             escribir("PARTIDO CARGADO: "+clave.toString());
                         }
                    }
                 }
@@ -144,7 +144,7 @@ public class Archivo {
                 if(grupo=='A' ||grupo=='B' || grupo=='C' || grupo=='D'){//EL GRUPO TIENE QUE SER UNO DE ESTOS 4
                     Equipo equipo=new Equipo(pais,dt,grupo);
                     if(equipos.insertar(equipo) ){
-                          System.out.println("EQUIPO CARGADO: "+pais);
+                          escribir("EQUIPO CARGADO: "+pais);
                     }
                 }
                 break;

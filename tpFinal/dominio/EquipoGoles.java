@@ -74,7 +74,7 @@ public class EquipoGoles implements Comparable{
     }
     //FALTA EQUALS
     public String toString(){
-        return "Pais: "+nombre;
+        return nombre+" "+goles;
     }
     
 }

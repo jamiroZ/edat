@@ -158,17 +158,6 @@ public class MapeoAMuchos {
    }
    public int funcionHash(Object nuevoElem){//retorna la posicion del elemento si existe
         int pos= nuevoElem.hashCode()% this.TAMANIO;//obtengo la posicion
-        if( pos <= TAMANIO ){
-           if(this.tabla[pos]!=null){//existe al menos un nodo en la posicion
-               NodoHashMapeoM aux=this.tabla[pos];
-               while(!aux.getDominio().equals(nuevoElem)){//si no e el objeto
-                    aux= aux.getEnlace();//se mueve en la lista
-                    pos++;
-               }
-           }else{
-              pos=-1;//si no lo encontro devuelve -1
-           }
-        }
         return pos;
    }
    private NodoHashMapeoM obtenerNodo( Object elem){//busca un objeto y retorna su nodo para uso privado

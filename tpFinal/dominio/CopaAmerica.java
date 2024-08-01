@@ -132,13 +132,12 @@ public class CopaAmerica{
                            Lista rangoS=partidos.obtenerConjuntoRango();
                            System.out.println(rangoS.longitud());
                            if(!rangoS.estaVacia()){
-                                int i=1;
-                                while(i <= rangoS.longitud()){
-                                    Partido part= (Partido) rangoS.recuperar(i);
+                                while(!rangoS.estaVacia()){
+                                    Partido part= (Partido) rangoS.recuperar(1);
                                     if(part.getCiudad().equals(ciudadP)){
                                         part.setCiudad(ciudadS);
                                     }
-                                    i++;
+                                     rangoS.eliminar(1);
                                 }
                             
                            }else{
@@ -299,7 +298,7 @@ public class CopaAmerica{
             String eq1=sc.nextLine();
             System.out.println("ingrese el segundo equipo: ");
             String eq2=sc.nextLine();
-            if(partidos.pertenece(new ClaveP(eq1,eq2))){//si el partido no existe lo crea
+            if(!partidos.pertenece(new ClaveP(eq1,eq2))){//si el partido no existe lo crea
                     System.out.println(" ingrese ronda 'GRUPO, CUARTOS, SEMIFINAL, FINAL':");
                     String rond=sc.nextLine();
                     if(rond.equalsIgnoreCase("GRUPO") || rond.equalsIgnoreCase("CUARTOS") || rond.equalsIgnoreCase("SEMIFINAL") || rond.equalsIgnoreCase("FINAL")){
@@ -313,6 +312,7 @@ public class CopaAmerica{
                                System.out.println(" ingrese goles del segundo equipo: ");
                                int golEq2=sc.nextInt();
                                if( golEq1 >=0 && 0<= golEq2){
+                                     partidos.insertar(new ClaveP(eq1,eq2));//creo la nueva clave partido
                                      partidos.asociar(new ClaveP(eq1,eq2), new Partido(eq1, eq2, rond, ciudad, estadio, golEq1, golEq2));
                                     //ACTUALIZO LOS EQUIPOS QUE JUEGAN EL PARTIDO
                                      Equipo equipo1=(Equipo) equipos.getElem(new Equipo(eq1));
@@ -492,15 +492,15 @@ public class CopaAmerica{
         if(!equipos.esVacio()){
             Lista clon=equipos.listar();//copio una lista con todos los objetos del arbol
             ArbolAVL equiposGol=new ArbolAVL();
-            int i=1;
             //NOTA: SI TODOS LOS EQUIPOS TIENEN 0 GOLES INSERTA LA RAIZ SOLAMENTE
-            while(i <= clon.longitud()){//vaciar LISTA 
+            while(!clon.estaVacia()){//vaciar LISTA 
                 //System.out.println(clon.recuperar(i));
-                 Equipo eq = (Equipo) (clon.recuperar(i));//
+                 Equipo eq = (Equipo) (clon.recuperar(1));//
                  //System.out.println(eq);
                  EquipoGoles eqGol=new EquipoGoles(eq.getNombre(), eq.getDt(), eq.getGrupo(), eq.getPuntos(), eq.getGoles(), eq.getGolesEnContra());
                  equiposGol.insertar(eqGol);
-                 i++;
+                 clon.eliminar(1);
+                 
             }
             System.out.println(equiposGol.toString());
         }else{

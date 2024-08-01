@@ -30,7 +30,7 @@ public class Archivo {
 		FileWriter fichero = null;//
         PrintWriter pw = null;
 
-        System.out.println(entrada);
+       // System.out.println(entrada);
 
         try{
             fichero = new FileWriter("C:\\Users\\jamir\\OneDrive\\Documentos\\facultad\\segundoAño\\edat\\EDAT\\edat-1\\tpFinal\\txt\\log.txt", true);

@@ -221,14 +221,14 @@ public class Grafo {
         if(n!=null && (camino.estaVacia() || (camino.longitud() > camAct.longitud()))){
              // System.out.println(n.getElem());
              camAct.insertar(n.getElem(), camAct.longitud()+1);//creo el camino para comparar
-            // System.out.println("camAct"+camAct.toString());
+             System.out.println("camAct"+camAct.toString());
              if(fin.equals(n.getElem())){//se llego al final
                   
                    if( camino.estaVacia() ||(camino.longitud() > camAct.longitud())){//si hay una lista con un camino menor 
                           camino=camAct.clone();//nueva lista de camino MINIMO
                    }
                    
-                   //System.out.println(camino.toString()+" LLEGUE AL DISTINO");
+                   System.out.println(camino.toString()+" LLEGUE AL DISTINO");
              }else if( camino.estaVacia() || (camino.longitud() > camAct.longitud()) ){
                  NodoAdy ady=n.getPrimerAdy();
                  while(ady!=null){//recorro lista de adyacentes a n
@@ -265,7 +265,7 @@ public class Grafo {
         if(n!=null && (peso[0]==0 || peso[0] > contAct)){
             //
             camAct.insertar(n.getElem(), camAct.longitud()+1);//creo el camino para comparar
-            //System.out.println("camAct"+camAct.toString());
+            System.out.println("camAct"+camAct.toString());
             if(fin.equals(n.getElem())){//se llego al final
                 
                 if(peso[0]==0 ||( peso[0] > contAct)){//si el camino actual tiene menor peso que el anterior recorrido
@@ -278,9 +278,8 @@ public class Grafo {
                 while(ady!=null){//recorro lista de adyacentes a n
 
                        if( (camAct.localizar(ady.getVertice().getElem()) < 0 ) && (peso[0]==0 || peso[0] > contAct)){//no visito el elemento en el vertice del NodoAdyacente, lo visita
-
-                             double aux= contAct + ady.getEtiqueta();
-                            camino=caminoConMenosPesoRec( camAct, camino , fin ,ady.getVertice(), peso, aux);
+                            
+                            camino=caminoConMenosPesoRec( camAct, camino , fin ,ady.getVertice(), peso, contAct + ady.getEtiqueta() );
                        }
                        ady=ady.getSigAdyacente();
                 }
